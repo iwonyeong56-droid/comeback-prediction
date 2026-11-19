@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>참고 자료 · K-pop 컴백 예측</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="머리">
+  <div class="감싸기">
+    <a class="로고" href="index.html">K-pop <span>컴백 예측</span></a>
+    <button class="메뉴버튼" type="button" aria-expanded="false" aria-label="메뉴 열기">☰</button>
+    <ul class="메뉴">
+      <li><a href="index.html">예측해보기</a></li>
+      <li><a href="about.html">프로젝트 소개</a></li>
+      <li><a href="results.html">결과·시각화</a></li>
+      <li><a href="limits.html">장점·한계</a></li>
+      <li><a href="refs.html" aria-current="page">참고 자료</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="감싸기 글페이지">
+  <h1 class="페이지제목">참고 자료</h1>
+  <p class="페이지설명">각 자료를 어느 결정의 근거로 썼는지 함께 적었습니다.</p>
+
+  <nav class="차례" aria-label="이 페이지 차례">
+    <a href="#논문">1 논문·교재</a>
+    <a href="#기사">2 기사</a>
+    <a href="#공식">3 공식 문서</a>
+    <a href="#선행">4 선행 연구</a>
+    <a href="#직접">5 직접 만든 자료</a>
+    <a href="#목록출처">6 사이트 목록 출처</a>
+  </nav>
+
+  <section id="논문" class="장">
+    <h2><span class="장번호">1</span>논문·교재</h2>
+    <div class="표감싸기">
+      <table class="표 자료표">
+        <thead><tr><th>자료</th><th>어디에 썼는지</th></tr></thead>
+        <tbody>
+          <tr><td>김정섭 (2026). K-pop 아이돌 음악산업의 생존과 히트 구조. 한국엔터테인먼트산업학회논문지 20(4)</td><td>초동 등급 기준 30만 (손익분기점)</td></tr>
+          <tr><td>Hastie, Tibshirani &amp; Friedman. The Elements of Statistical Learning, 7.10절</td><td>1-표준오차 규칙 (비슷하면 단순한 값)</td></tr>
+          <tr><td>Breiman 외 (1984). Classification and Regression Trees</td><td>1-표준오차 규칙의 원래 출처 (나무 가지치기)</td></tr>
+          <tr><td>Cawley &amp; Talbot (2010). On Over-fitting in Model Selection and Subsequent Selection Bias in Performance Evaluation. JMLR</td><td>validation과 test를 나누는 이유, 후보를 늘리면 생기는 선택 편향</td></tr>
+          <tr><td>Frank &amp; Hall (2001). A Simple Approach to Ordinal Classification. ECML</td><td>순서형 로지스틱</td></tr>
+          <tr><td>Platt (1999). Probabilistic Outputs for Support Vector Machines</td><td>SVM 확률 보정</td></tr>
+          <tr><td>Gama 외 (2014). A Survey on Concept Drift Adaptation. ACM Computing Surveys</td><td>최근 데이터 가중치 시도 (뺌)</td></tr>
+          <tr><td>Saerens, Latinne &amp; Decaestecker (2002). Adjusting the Outputs of a Classifier to New a Priori Probabilities. Neural Computation</td><td>등급 비율 보정 시도 (뺌)</td></tr>
+          <tr><td>Montero-Manso &amp; Hyndman (2021). Principles and Algorithms for Forecasting Groups of Time Series: Locality and Globality. International Journal of Forecasting</td><td>그룹별 학습 vs 전체 학습 비교</td></tr>
+          <tr><td>Breiman (2001). Random Forests. Machine Learning 45</td><td>랜덤포레스트, 순열 중요도</td></tr>
+          <tr><td>Friedman (2001). Greedy Function Approximation: A Gradient Boosting Machine. Annals of Statistics 29(5)</td><td>그래디언트 부스팅</td></tr>
+          <tr><td>Gelman &amp; Hill (2007)</td><td>시기 후보 재료 '팀경향'의 부분 풀링</td></tr>
+          <tr><td>Cox (1972)</td><td>끝난 공백 보강 (생존분석에서 끝나지 않은 기록도 쓰는 생각)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="기사" class="장">
+    <h2><span class="장번호">2</span>기사</h2>
+    <div class="표감싸기">
+      <table class="표 자료표">
+        <thead><tr><th>기사</th><th>어디에 썼는지</th></tr></thead>
+        <tbody>
+          <tr><td>노컷뉴스: 김정섭 교수 논문 소개</td><td>논문 내용 확인</td></tr>
+          <tr><td>경향신문: 단일 앨범 30만 장 = 손익분기점</td><td>30만 기준</td></tr>
+          <tr><td>더팩트: 점점 빨라지는 K팝 컴백 주기</td><td>시기 등급 (연 2회 ≈ 180일)</td></tr>
+          <tr><td>OSEN (2010): 리패키지 앨범, 음반 시장 더 위축시킨다</td><td>리패키지의 성격 (시기에서 제외)</td></tr>
+          <tr><td>더팩트 (2026-09-28): 보이넥스트도어 정규 1집 리패키지</td><td>정규 9곡 + 신곡으로 만드는 리패키지 사례</td></tr>
+          <tr><td>일간스포츠 (2026-08): 보이넥스트도어 하반기 계획</td><td>리패키지를 미리 일정에 넣어둠</td></tr>
+          <tr><td>더팩트 (2022-11-30): 카라 15주년 스페셜 앨범</td><td>스페셜 앨범의 성격</td></tr>
+          <tr><td>뉴시스 (2024-12-02): 여자친구 10주년 스페셜 앨범</td><td>스페셜 앨범의 성격</td></tr>
+          <tr><td>엑스포츠뉴스: 리센느 미니 4집 초동 602,688장</td><td>13장 예측 결과 확인</td></tr>
+          <tr><td>iMBC 연예: 리센느 초동 60만 장, 화제성과 구매력</td><td>PULSE 오답 원인 풀이</td></tr>
+          <tr><td>데일리안: 2026년 상반기 K팝 음반 판매량</td><td>시장 변화 맥락</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="공식" class="장">
+    <h2><span class="장번호">3</span>공식 문서</h2>
+    <div class="표감싸기">
+      <table class="표 자료표">
+        <thead><tr><th>문서</th><th>어디에 썼는지</th></tr></thead>
+        <tbody>
+          <tr><td>scikit-learn 사용자 가이드: TimeSeriesSplit</td><td>시간 순서 검증</td></tr>
+          <tr><td>scikit-learn 사용자 가이드: Common pitfalls</td><td>데이터 누수와 파이프라인</td></tr>
+          <tr><td>scikit-learn 사용자 가이드: Nested versus non-nested cross-validation</td><td>중첩 교차검증</td></tr>
+          <tr><td>scikit-learn 사용자 가이드: Time-related feature engineering</td><td>발매월 sin·cos</td></tr>
+          <tr><td>scikit-learn 사용자 가이드: Permutation feature importance</td><td>재료별 영향력 (순열 중요도)</td></tr>
+          <tr><td>scikit-learn: validation_curve</td><td>하이퍼파라미터 하나씩 바꾸기</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="선행" class="장">
+    <h2><span class="장번호">4</span>선행 연구 (방법 비교용)</h2>
+    <div class="표감싸기">
+      <table class="표 자료표">
+        <thead><tr><th>연구</th><th>가져온 것</th></tr></thead>
+        <tbody>
+          <tr><td>고려대 아이돌 생존 예측 연구 (2020)</td><td>깊이를 제한한 의사결정나무</td></tr>
+          <tr><td>Spotify 차트 성공 예측 (arXiv, 2025)</td><td>연속값을 등급으로 나눠 분류, 한 등급 쏠림을 피해야 하는 이유</td></tr>
+          <tr><td>경상국립대 음원 차트 구간화 연구</td><td>구간으로 나눠 분류</td></tr>
+          <tr><td>동덕여대 음원 순위 예측</td><td>과거 성적을 재료로 씀</td></tr>
+          <tr><td>stanstats</td><td>직전 앨범·공백 재료, 연도별 반복 검증</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="직접" class="장">
+    <h2><span class="장번호">5</span>직접 만든 자료</h2>
+    <div class="표감싸기">
+      <table class="표 자료표">
+        <thead><tr><th>자료</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td><code>comeback_data_v16.xlsx</code></td><td>SM·JYP·스타쉽 2015~2025 앨범 437개 (컴필 4개 빼고 433개·100팀). 초동은 <b>나무위키의 한터차트 기록</b>을 <b>위키백과</b> 디스코그래피로 대조해 만듦.</td></tr>
+          <tr><td>설문</td><td>네이버 폼, 70명, 초동 10문제. 이 사이트의 <a href="quiz.html">나도 맞혀보기</a>가 같은 문제입니다.</td></tr>
+          <tr><td>노트북 (Colab)</td><td>1~13장 분석, 14장에서 사이트용 파일(<code>model.js</code>, <code>chartData.js</code>) 내보내기</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="목록출처" class="장">
+    <h2><span class="장번호">6</span>사이트 아티스트 목록 출처</h2>
+    <p>1페이지 목록(<span id="팀수"></span>팀)은 <code>comeback_data_v16.xlsx</code>의 100팀에, 학습 데이터 밖 팀과 2026년 앨범을 더해 만들었습니다.
+      더한 값은 <b>한터뉴스·스포츠경향·위키백과</b> 등에서 확인했습니다. 사이트용 엑셀(<code>사이트용_아티스트.xlsx</code>)로 처음 더한 팀의 기준 앨범 출처는 아래와 같습니다.</p>
+    <div class="표감싸기">
+      <table class="표 자료표">
+        <thead><tr><th>팀</th><th>기준 앨범 (초동)</th><th>출처</th></tr></thead>
+        <tbody id="출처표"></tbody>
+      </table>
+    </div>
+    <p class="작게">뉴진스 등 초동을 찾지 못한 팀은 아직 목록에 없습니다.</p>
+
+    <h3>1페이지 앨범 목록에 엑셀 밖에서 더한 앨범</h3>
+    <p>엑셀에 없어서 웹 조사, 직접 모은 한터차트 초동표(<code>초동_2015_2025.xlsx</code>), 직접 조사(<code>data/웹조사_앨범.csv</code>)로 넣은 앨범입니다.
+      빅뱅·아이즈원·워너원·러블리즈·아이들·에이핑크·세븐틴·비투비·스테이씨는 이렇게 더한 팀이라 1페이지에만 나옵니다. 초동 칸이 비어 있으면 날짜·유형만 확인한 것입니다.</p>
+    <div class="표감싸기">
+      <table class="표 자료표">
+        <thead><tr><th>팀</th><th>앨범 (날짜·유형·초동)</th><th>출처</th></tr></thead>
+        <tbody id="웹조사표"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="장">
+    <h2><span class="장번호">7</span>사이트에 쓴 프로그램</h2>
+    <div class="표감싸기">
+      <table class="표 자료표">
+        <tbody>
+          <tr><td>Chart.js v4.4.1 (MIT License)</td><td>3페이지 그래프. 인터넷 없이도 돌아가도록 <code>js/vendor/</code>에 넣었습니다.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="작게">아티스트 사진·앨범 커버·로고는 초상권·저작권 때문에 쓰지 않았습니다.</p>
+  </section>
+</main>
+
+<footer class="바닥">
+  <div class="감싸기">
+    K-pop 컴백 예측 · AI 동아리 개인 프로젝트 · <a href="quiz.html">나도 맞혀보기</a><br>
+    데이터 기준: 2015~2025 학습, 사이트 목록은 2026-11-18까지 반영
+  </div>
+</footer>
+
+<script src="js/artists.js"></script>
+<script src="js/albums.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  "use strict";
+  var A = window.ARTISTS || [];
+  function 글(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  // 출처 칸: "URL" 이거나 "설명 / 설명: URL" 형태 → URL만 링크로
+  function 출처칸(s) {
+    return 글(s).replace(/https?:\/\/[^\s<]+/g, function (u) {
+      var 짧게 = u.replace(/^https?:\/\/(www\.)?/, "").split("/")[0];
+      return "<a href='" + u + "' target='_blank' rel='noopener noreferrer'>" + 짧게 + "</a>";
+    });
+  }
+  document.getElementById("팀수").textContent = (window.TEAMS || A).length;   // 1페이지 목록(albums.js) 기준
+  document.getElementById("출처표").innerHTML = A.filter(function (a) { return !a.데이터; }).map(function (a) {
+    var c = a.초동기준;
+    return "<tr><th>" + 글(a.이름) + "</th><td>" + 글(c.앨범) + " (" + c.날짜 + ") · " + c.초동.toLocaleString("ko-KR") + "장</td><td>" + 출처칸(c.출처 || "") + "</td></tr>";
+  }).join("");
+
+  // 엑셀 밖에서 더한 앨범 (albums.js에서 출처가 '추가 조사:'로 시작하는 것)
+  var AL = window.ALBUMS || {}, 줄 = [];
+  Object.keys(AL).forEach(function (팀) {
+    AL[팀].forEach(function (x) {
+      if (!x.출처 || x.출처.indexOf("추가 조사") !== 0) return;
+      줄.push("<tr><th>" + 글(팀) + "</th><td>" + 글(x.앨범) + " (" + x.날짜 + ", " + 글(x.유형) + ")" +
+        (x.초동 != null ? " · " + x.초동.toLocaleString("ko-KR") + "장" : " · 초동 없음") + "</td><td>" + 출처칸(x.출처.replace(/^추가 조사:\s*/, "")) + "</td></tr>");
+    });
+  });
+  document.getElementById("웹조사표").innerHTML = 줄.join("");
+})();
+</script>
+</body>
+</html>

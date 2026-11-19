@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정답지 확인</title>
+<style>
+  body { font-family: system-ui, "Malgun Gothic", sans-serif; margin: 16px; color: #222; background: #fff; }
+  h1 { font-size: 1.3rem; }
+  #요약 { font-size: 1.4rem; font-weight: 700; margin: 12px 0; }
+  .통과 { color: #1a7f37; } .실패 { color: #c62828; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+  th, td { border: 1px solid #c9c8c3; padding: 6px 8px; text-align: left; vertical-align: top; }
+  th { background: #f3f3f1; }
+  .작게 { font-size: .8rem; color: #6b6a66; }
+  pre { white-space: pre-wrap; margin: 0; font-size: .78rem; }
+</style>
+</head>
+<body>
+<h1>정답지 확인 — predict.js vs model.js 정답지 6개</h1>
+<p class="작게">① 입력 → 재료값이 정답지와 같은지 ② 재료값 → 확률이 소수 6자리까지 같은지(차이 &lt; 0.0000005) ③ PDF 13장 퍼센트와 같은지.
+정답지 입력에 없는 유형·성별·그룹여부는 Colab 14-1 함수 기본값(미니·여·그룹)을 그대로 쓴다.</p>
+<div id="요약">계산 중…</div>
+<table>
+  <thead><tr><th>#</th><th>문제</th><th>이름</th><th>① 재료값</th><th>② 확률 (사이트 / 정답지)</th><th>예측 등급</th><th>③ PDF 13장</th><th>결과</th></tr></thead>
+  <tbody id="표"></tbody>
+</table>
+<p class="작게" id="모델정보"></p>
+
+<script src="../js/model.js"></script>
+<script src="../js/predict.js"></script>
+<script>
+(function () {
+  var M = window.MODEL, P = window.Predict;
+  var PDF = [90.2, 63.4, 56.9, 52.4, 57.4, 52.5];    // CLAUDE.md '검증' — 정답지 순서와 같음
+  // Colab 14-1 초동값()/시기값() 기본값
+  var 기본 = { 유형: "미니", 성별: "여", 그룹여부: 1 };
+  var 통과수 = 0, 줄들 = [];
+
+  M.정답지.forEach(function (정, i) {
+    var 입 = 정.입력, 재, 결과, 이름들 = M[정.문제 === "초동" ? "초동_이름" : "시기_이름"];
+    var 오류 = null;
+    try {
+      if (정.문제 === "초동") {
+        재 = P.초동재료({ 직전초동: 입.직전초동, 발매일: 입.발매일, 직전발매일: 입.직전발매일, 유형: 기본.유형 }, M.초동.재료);
+        결과 = P.초동확률(재);
+      } else {
+        재 = P.시기재료({ 초동: 입.초동, 발매일: 입.발매일, 직전발매일: 입.직전발매일, 앨범순번: 입.앨범순번,
+                          회사: 입.회사 || "그 외", 유형: 기본.유형, 성별: 기본.성별, 그룹여부: 기본.그룹여부 });
+        결과 = P.시기확률(재);
+      }
+    } catch (e) { 오류 = e.message; }
+
+    var 재료틀림 = [], 확률틀림 = false, 등급같음 = false, pdf같음 = false;
+    if (!오류) {
+      Object.keys(정.재료값).forEach(function (k) {
+        if (!(k in 재) || Math.abs(재[k] - 정.재료값[k]) > 1e-9) 재료틀림.push(k + ": " + 재[k] + " ≠ " + 정.재료값[k]);
+      });
+      Object.keys(재).forEach(function (k) { if (!(k in 정.재료값)) 재료틀림.push(k + ": 정답지에 없음"); });
+      확률틀림 = 정.확률.some(function (p, k) { return Math.abs(p - 결과.확률[k]) >= 5e-7; });
+      등급같음 = 결과.등급 === 정.등급;
+      pdf같음 = (Math.round(결과.확률[결과.등급] * 1000) / 10).toFixed(1) === PDF[i].toFixed(1);
+    }
+    var ok = !오류 && !재료틀림.length && !확률틀림 && 등급같음 && pdf같음;
+    if (ok) 통과수++;
+
+    var 확률칸 = 오류 ? "" : 결과.확률.map(function (p, k) {
+      return 이름들[k] + ": " + p.toFixed(6) + " / " + 정.확률[k].toFixed(6);
+    }).join("\n");
+    줄들.push("<tr><td>" + (i + 1) + "</td><td>" + 정.문제 + "</td><td>" + 정.이름 + "</td>" +
+      "<td>" + (오류 ? "<span class='실패'>" + 오류 + "</span>" :
+               재료틀림.length ? "<span class='실패'>✗</span><pre>" + 재료틀림.join("\n") + "</pre>" :
+               "<span class='통과'>✓ " + Object.keys(재).length + "개 같음</span>") + "</td>" +
+      "<td>" + (오류 ? "" : (확률틀림 ? "<span class='실패'>✗</span>" : "<span class='통과'>✓</span>") + "<pre>" + 확률칸 + "</pre>") + "</td>" +
+      "<td>" + (오류 ? "" : 이름들[결과.등급] + (등급같음 ? "" : " <span class='실패'>(정답지 " + 이름들[정.등급] + ")</span>")) + "</td>" +
+      "<td>" + (오류 ? "" : (결과.확률[결과.등급] * 100).toFixed(1) + "% / PDF " + PDF[i] + "% " + (pdf같음 ? "<span class='통과'>✓</span>" : "<span class='실패'>✗</span>")) + "</td>" +
+      "<td class='" + (ok ? "통과'>통과" : "실패'>실패") + "</td></tr>");
+  });
+
+  document.getElementById("표").innerHTML = 줄들.join("");
+  var 요약 = document.getElementById("요약");
+  요약.textContent = 통과수 + " / " + M.정답지.length + " 통과" + (통과수 === M.정답지.length ? " ✓" : " — 실패 있음");
+  요약.className = 통과수 === M.정답지.length ? "통과" : "실패";
+  document.getElementById("모델정보").textContent = "model.js 만든날 " + M.만든날 + " · 초동 쓰는재료: " +
+    M.초동.쓰는재료.join(", ") + " · 시기 방식: " + M.시기.방식;
+  window.테스트결과 = { 통과: 통과수, 전체: M.정답지.length };
+})();
+</script>
+</body>
+</html>

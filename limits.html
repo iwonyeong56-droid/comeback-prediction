@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>장점·한계 · K-pop 컴백 예측</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="머리">
+  <div class="감싸기">
+    <a class="로고" href="index.html">K-pop <span>컴백 예측</span></a>
+    <button class="메뉴버튼" type="button" aria-expanded="false" aria-label="메뉴 열기">☰</button>
+    <ul class="메뉴">
+      <li><a href="index.html">예측해보기</a></li>
+      <li><a href="about.html">프로젝트 소개</a></li>
+      <li><a href="results.html">결과·시각화</a></li>
+      <li><a href="limits.html" aria-current="page">장점·한계</a></li>
+      <li><a href="refs.html">참고 자료</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="감싸기 글페이지">
+  <h1 class="페이지제목">장점·한계</h1>
+  <p class="페이지설명">잘한 점과 부족한 점을 숫자와 함께 정리했습니다. 1~3·5번의 숫자는 모두 PDF '모델 정리'에 있는 값입니다.</p>
+
+  <nav class="차례" aria-label="이 페이지 차례">
+    <a href="#장점">1 장점</a>
+    <a href="#한계">2 한계</a>
+    <a href="#오답">3 실전 오답</a>
+    <a href="#사이트">4 사이트 목록의 한계</a>
+    <a href="#뺀것">5 시도했지만 뺀 것</a>
+  </nav>
+
+  <!-- 1. 장점 -->
+  <section id="장점" class="장">
+    <h2><span class="장번호">1</span>장점</h2>
+    <div class="장점들">
+      <article class="카드 장점카드">
+        <div class="장점숫자"><b>7년</b><span>/ 7년</span></div>
+        <h3>컴백 시기는 7년 모두 AI가 앞섰습니다</h3>
+        <p>2018~2024년 테스트에서 해마다 AI가 사람 기준보다 더 맞혔습니다. 합치면 208문제 중 AI 70.2%, 사람 기준 54.3%로 33문제 차이입니다.</p>
+      </article>
+      <article class="카드 장점카드">
+        <div class="장점숫자"><b>79.2%</b><span>vs 사람 58.3%</span></div>
+        <h3>직전 앨범이 리패키지일 때 AI가 확실히 앞섭니다</h3>
+        <p>리패키지는 팬이 이미 원본을 사서 덜 팔리므로, 그다음 앨범은 등급이 오르는 경우가 많습니다 (41.7%). 직전만 따라가는 사람 기준은 이를 따라가지 못합니다 (24문제).</p>
+      </article>
+      <article class="카드 장점카드">
+        <div class="장점숫자"><b>0</b><span>미래 정보 사용</span></div>
+        <h3>미래 정보를 쓰지 않는 검증</h3>
+        <p>테스트 연도마다 그 해보다 앞인 데이터로만 모델을 고르고 학습했으며, 그 해는 한 번만 평가했습니다 (중첩 시계열 교차검증). 재료도 발매일 전에 알 수 있는 정보만 썼습니다.</p>
+      </article>
+      <article class="카드 장점카드">
+        <div class="장점숫자"><b>70명</b><span>설문</span></div>
+        <h3>비교 기준을 실제 선택으로 정했습니다</h3>
+        <p>'흐름을 봤다'고 말한 사람도 실제로는 직전 쪽을 60% 골랐습니다. 그래서 자기 보고가 아니라 설문 70명의 실제 답으로 사람 기준(직전 따라가기)을 정했습니다.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- 2. 한계 -->
+  <section id="한계" class="장">
+    <h2><span class="장번호">2</span>한계</h2>
+    <ol class="한계목록">
+      <li><b>데이터 범위</b>대형 기획사 3곳의 앨범뿐입니다. 논문에서 30만을 넘긴 그룹은 3.55%인데 우리 데이터는 앨범의 26%라, 중소 기획사에 그대로 쓰기 어렵습니다.</li>
+      <li><b>등급 기준</b>'10만 = 팬덤 형성 시작'은 논문 원문에서 확인하지 못했고, 논문 기준은 초동이 아니라 단일 앨범 판매량입니다. 150·300일은 업계가 쓰는 숫자가 아닙니다.</li>
+      <li><b>작은 차이와 표본</b>초동은 274문제 중 5문제 차이입니다. 시기는 연도당 27~32문제라 한 문제가 약 3%p입니다.</li>
+      <li><b>짧은 공백</b>시기 '150일 이하'는 26문제 중 하나도 못 맞혔습니다. 사이트의 최종 모델도 학습 데이터 276개 중 한 번도 '150일 이하'를 예측하지 않습니다 (최대 확률 14.5%).</li>
+      <li><b>설문 범위</b>설문은 초동만 물었습니다. 시기의 사람 기준은 초동에서 확인된 방식을 옮겨 쓴 것입니다.</li>
+      <li><b>엑셀에 없는 요인</b>화제성(리센느 PULSE), 입대, 회사 사정은 모델이 볼 수 없습니다. 실전 초동 나무는 직전초동만 써서 리패키지 다음 앨범도 구분하지 못합니다.</li>
+      <li><b>시드 반복</b>후보 8종 버전의 시드 반복은 아직 돌리지 않았습니다.</li>
+    </ol>
+  </section>
+
+  <!-- 3. 실전 오답 -->
+  <section id="오답" class="장">
+    <h2><span class="장번호">3</span>실전 오답 2건과 이유 <span class="장출처">노트북 13장</span></h2>
+    <p>결과가 이미 나온 2026년 앨범 4건 중 2건을 맞혔고, 사람 기준도 같은 2건만 맞혔습니다. 틀린 2건은 둘 다 엑셀에 없는 정보 때문입니다.</p>
+    <div class="두열">
+      <article class="카드 사례 틀림">
+        <div class="사례머리"><span class="표시">틀림</span><span class="종류">초동</span></div>
+        <h3>리센느 PULSE</h3>
+        <dl>
+          <dt>AI 예측</dt><dd>10~30만 (63.4%)</dd>
+          <dt>실제</dt><dd><b>602,688장</b> (30만 이상)</dd>
+        </dl>
+        <p class="틀린이유">리센느는 데이터에 없는 회사(더뮤즈)라 회사 정보 없이 예측했습니다. 직전 10.4만의 5.8배가 팔렸는데,
+          유튜브로 쌓인 화제성이 음반 구매로 옮겨간 결과라는 풀이가 있습니다 (iMBC).</p>
+      </article>
+      <article class="카드 사례 틀림">
+        <div class="사례머리"><span class="표시">틀림</span><span class="종류">시기</span></div>
+        <h3>리센느 lip bomb → PULSE</h3>
+        <dl>
+          <dt>AI 예측</dt><dd>151~300일 (52.4%)</dd>
+          <dt>실제</dt><dd><b>343일 뒤</b> (2026-11-03)</dd>
+        </dl>
+        <p class="틀린이유">lip bomb과 PULSE 사이에 디지털 싱글 활동이 있었습니다. 데이터는 실물 앨범만 세서 공백이 343일로 잡혔습니다.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- 4. 사이트 목록의 한계 -->
+  <section id="사이트" class="장">
+    <h2><span class="장번호">4</span>사이트 아티스트 목록의 한계</h2>
+    <ul class="한계목록 점">
+      <li><b>학습 데이터 밖 소속사의 팀은 회사 정보 없이 예측합니다</b>
+        <span>SM·JYP·스타쉽이 아닌 소속사의 팀은 시기 모델의 회사 칸(JYP·SM·STARSHIP)을 모두 0으로 넣습니다. 리센느 예측과 같은 방식입니다.</span>
+        <span class="팀칩들" id="밖팀"></span></li>
+      <li><b>학습 데이터 밖 팀의 초동은 따로 모은 값입니다</b>
+        <span>학습 데이터(<code>comeback_data_v16.xlsx</code>)에 없는 팀의 앨범은 사이트용 엑셀, 웹 조사, 직접 모은 초동표로 채웠습니다. 일부는 반올림된 값('약')이고, 출처는 <a href="refs.html#목록출처">참고 자료 6번</a>에 있습니다.</span></li>
+      <li><b>아직 반영하지 못한 앨범이 있습니다</b>
+        <span>나온 것은 알지만 유형이나 초동을 확인하지 못한 앨범은 목록에 넣지 않았습니다. 1페이지에서 그 팀을 고르면 작은 글씨로 보입니다.</span>
+        <span class="미반영표" id="미반영"></span></li>
+      <li><b>초동을 찾지 못한 앨범·팀이 있습니다</b>
+        <span>뉴진스 등은 초동 기록을 찾지 못해 아직 목록에 없습니다. 목록에 있어도 초동이 빈 앨범은 1페이지에서 누를 수 없습니다.</span>
+        <span class="미반영표" id="빈초동"></span></li>
+      <li><b>활동을 마친 그룹은 앞으로의 앨범을 예측하지 않습니다</b>
+        <span>원더걸스·미쓰에이(2017), 워너원(2019), 아이즈원·러블리즈(2021)는 마지막 앨범을 누를 수 없게 했습니다. 지난 앨범으로 '그다음 앨범'을 맞혔는지는 볼 수 있습니다.</span></li>
+      <li><b>스페셜·리패키지만 있는 팀은 시기 예측이 없습니다</b>
+        <span>시기는 스페셜·리패키지를 빼고 계산하므로, 그런 앨범만 있는 팀은 시기 기준 앨범이 없습니다.</span>
+        <span class="팀칩들" id="시기없음"></span></li>
+      <li><b>엔믹스 Heavy Serenade 초동 값이 두 개입니다</b>
+        <span>한터 공식 322,987장 vs 노트북 13장 345,806장. 사이트 목록에는 공식값을 쓰고, 노트북 값은 계산 확인(정답지)에만 씁니다.
+          어느 쪽이든 30만 이상이라 Strange Muse 초동 예측 등급은 같습니다.</span></li>
+    </ul>
+  </section>
+
+  <!-- 5. 시도했지만 뺀 것 -->
+  <section id="뺀것" class="장">
+    <h2><span class="장번호">5</span>시도했지만 뺀 것</h2>
+    <p>시험해 본 뒤 최종 모델에서 뺀 것입니다. 넣을지 말지는 validation 점수나 평가의 공정성으로 판단했습니다.</p>
+    <div class="표감싸기">
+      <table class="표">
+        <thead><tr><th>시도</th><th>결과</th><th>뺀 이유</th></tr></thead>
+        <tbody>
+          <tr><th>3분할 한 번 나누기<br><span class="작게">train ~2021 / val 2022~23 / test 2024~25</span></th><td>초동 AI 81.1% = 사람 기준 81.1% (74문제)</td><td>test가 62~74문제뿐이고 그 연도는 중첩 시계열 교차검증에서 전부 테스트됨</td></tr>
+          <tr><th>찍기 기준선 (가장 흔한 등급)</th><td>초동 36.1%</td><td>목표가 '사람보다 나은가'라서 비교 대상을 사람 기준 하나로 정함</td></tr>
+          <tr><th>맥니마 검정</th><td>초동 AI vs 사람 차이는 우연 범위</td><td>'차이가 있긴 하지만 크지 않다'로 표현하고 검정은 뺌</td></tr>
+          <tr><th>최근 데이터 가중치<br><span class="작게">반감기, Gama 외 2014</span></th><td>15번 중 1번만 뽑힘</td><td>시기 val이 어느 해도 오르지 않음</td></tr>
+          <tr><th>등급 비율 보정<br><span class="작게">Saerens 외 2002</span></th><td>한 번도 뽑히지 않음</td><td>위와 같음</td></tr>
+          <tr><th>사람+AI 협업<br><span class="작게">AI 확신이 문턱 미만이면 사람 기준 답</span></th><td>후보 6종 기준, 넣었을 때 초동 78.1%, 뺐을 때 78.5% (시기는 70.2%로 같음)</td><td>점수를 올리지 못하고 구조만 복잡해짐</td></tr>
+          <tr><th>그룹별 따로 학습</th><td>그룹마다 val로 고르기 55.7% vs 전체 모델 57.4% (이전 시기 정의, 237문제)</td><td>가장 많은 트와이스도 시기 정답 22개뿐이라 표본이 부족함. 유닛·솔로는 300일 초과가 55%로 본 그룹(20%)과 달라 묶으면 더 떨어짐</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="점목록">
+      <li>후보와 옵션을 늘리면 val에서 우연히 1등을 한 설정이 뽑힐 가능성도 커집니다 (Cawley &amp; Talbot 2010). 이전 시기 정의에서 반감기·비율보정·부스팅을 넣었을 때 시기가 57.4%에서 51.1%로 떨어진 것이 그 예입니다.</li>
+      <li>그룹별 학습은 표본이 작은 것이 약점입니다 (그룹별 vs 전체 학습 비교는 Montero-Manso &amp; Hyndman 2021 참고).</li>
+      <li>채택한 것: 시기 후보 재료 5묶음과 끝난 공백 보강(탐색 후보로 남김), 시기에서 스페셜·리패키지 제외, 랜덤포레스트·그래디언트 부스팅(후보 8종).</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="바닥">
+  <div class="감싸기">
+    K-pop 컴백 예측 · AI 동아리 개인 프로젝트 · <a href="quiz.html">나도 맞혀보기</a><br>
+    데이터 기준: 2015~2025 학습, 사이트 목록은 2026-11-18까지 반영
+  </div>
+</footer>
+
+<script src="js/artists.js"></script>
+<script src="js/albums.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  "use strict";
+  var A = window.ARTISTS || [], T = window.TEAMS || [], AL = window.ALBUMS || {}, P = window.ALBUMS_PENDING || {};
+  function 글(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function 이름(t) { return t.정식이름 || t.이름; }
+  function 칩(t) { return "<span>" + 글(이름(t)) + "</span>"; }
+
+  // 1페이지 목록(albums.js의 TEAMS) 기준
+  var 밖 = T.filter(function (t) { return t.회사 === "그 외"; });
+  document.getElementById("밖팀").innerHTML = "<small>" + 밖.length + "팀:</small> " + 밖.map(칩).join("");
+
+  var 미 = Object.keys(P).filter(function (k) { return P[k].length; });
+  document.getElementById("미반영").innerHTML = 미.length
+    ? "<details><summary>" + 미.length + "팀 펼쳐 보기</summary><ul>" + 미.map(function (k) {
+        return "<li><b>" + 글(k) + "</b> " + P[k].map(function (p) { return 글(p.앨범) + " (" + p.날짜 + ")"; }).join(", ") + "</li>";
+      }).join("") + "</ul></details>"
+    : "";
+
+  var 빈 = [];
+  T.forEach(function (t) { (AL[t.이름] || []).forEach(function (x) { if (x.초동 == null) 빈.push("<li><b>" + 글(이름(t)) + "</b> " + 글(x.앨범) + " (" + x.날짜 + ")</li>"); }); });
+  document.getElementById("빈초동").innerHTML = 빈.length ? "<details><summary>초동이 빈 앨범 " + 빈.length + "개 펼쳐 보기</summary><ul>" + 빈.join("") + "</ul></details>" : "";
+
+  var 시없 = A.filter(function (a) { return !a.시기기준; });
+  document.getElementById("시기없음").innerHTML = 시없.length ? "<small>" + 시없.length + "팀:</small> " + 시없.map(function (a) {
+    var t = T.filter(function (x) { return x.이름 === a.이름; })[0] || a; return 칩(t);
+  }).join("") : "";
+})();
+</script>
+</body>
+</html>

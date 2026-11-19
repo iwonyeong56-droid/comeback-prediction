@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>결과·시각화 · K-pop 컴백 예측</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="머리">
+  <div class="감싸기">
+    <a class="로고" href="index.html">K-pop <span>컴백 예측</span></a>
+    <button class="메뉴버튼" type="button" aria-expanded="false" aria-label="메뉴 열기">☰</button>
+    <ul class="메뉴">
+      <li><a href="index.html">예측해보기</a></li>
+      <li><a href="about.html">프로젝트 소개</a></li>
+      <li><a href="results.html" aria-current="page">결과·시각화</a></li>
+      <li><a href="limits.html">장점·한계</a></li>
+      <li><a href="refs.html">참고 자료</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="감싸기 글페이지">
+  <h1 class="페이지제목">결과·시각화</h1>
+  <p class="페이지설명">그래프의 막대나 점에 마우스를 올리거나 탭하면 자세한 숫자가 나옵니다. 장 번호는 노트북의 장 번호입니다.</p>
+
+  <!-- 핵심 결과 한 줄 -->
+  <section class="핵심" aria-label="핵심 결과">
+    <div class="핵심줄">
+      <div class="핵심칸">
+        <span class="핵심이름">다음 컴백 시기</span>
+        <span><b class="ai">AI 70.2%</b> <span class="vs">vs</span> <b class="사람">사람 54.3%</b></span>
+      </div>
+      <div class="핵심칸">
+        <span class="핵심이름">초동</span>
+        <span><b class="ai">AI 78.8%</b> <span class="vs">vs</span> <b class="사람">사람 77.0%</b></span>
+      </div>
+    </div>
+    <p class="주의">이 숫자는 해마다 validation 1등 모델을 중첩 시계열 교차검증으로 확인한 결과입니다 (초동 274문제, 시기 208문제).
+      1페이지에서 돌아가는 것은 최종 모델 2개이고, 그 val 점수는 초동 82.6%(의사결정나무)·시기 68.5%(로지스틱 회귀)입니다.
+      사람 = 직전 앨범 따라가기 (설문 70명으로 확인).</p>
+  </section>
+  <p class="주의 왼쪽">이 페이지의 'AI'는 모델 하나가 아니라 <b>테스트 연도마다 validation 1등을 한 모델</b>입니다 (노트북 8~10장).
+    0번(실전 예측)과 7번만 최종 모델 결과입니다.</p>
+
+  <nav class="차례" aria-label="이 페이지 차례">
+    <a href="#실전">0 실전 예측</a>
+    <a href="#한눈">1 사람 vs AI</a>
+    <a href="#연도">2 연도별</a>
+    <a href="#산점">3 직전 vs 이번</a>
+    <a href="#혼동">4 어디를 틀렸나</a>
+    <a href="#리팩">5 리패키지</a>
+    <a href="#분포">6 시장 변화</a>
+    <a href="#몇개">7 직전 몇 개</a>
+    <a href="#설문">8 설문</a>
+    <a href="#재료">9 재료별 영향</a>
+    <a href="#사람ai">10 사람 vs AI</a>
+    <a href="#그림">11 학습 과정</a>
+  </nav>
+
+  <!-- 0. 이미 결과가 나온 예측 (PDF 12~13장) -->
+  <section id="실전" class="장">
+    <h2><span class="장번호">0</span>이미 결과가 나온 예측 (최종 모델) <span class="장출처">노트북 13장</span></h2>
+    <p>학습 데이터에 없는 2026년 앨범으로 최종 모델을 확인했습니다. 4건 중 2건을 맞혔고, 사람 기준도 같은 2건만 맞혔습니다.
+      컴백 시기는 직전 앨범이 나온 시점에서 예측한 것입니다. 1페이지에서 같은 앨범을 눌러 보면 똑같은 예측이 나옵니다.</p>
+    <div class="사례들">
+      <article class="카드 사례 맞음">
+        <div class="사례머리"><span class="표시">맞음</span><span class="종류">초동</span></div>
+        <h3>엔믹스 Strange Muse</h3>
+        <dl>
+          <dt>AI 예측</dt><dd>30만 이상 (90.2%)</dd>
+          <dt>실제</dt><dd><b>349,988장</b></dd>
+          <dt>사람 기준</dt><dd>맞음</dd>
+        </dl>
+      </article>
+      <article class="카드 사례 맞음">
+        <div class="사례머리"><span class="표시">맞음</span><span class="종류">시기</span></div>
+        <h3>엔믹스 Heavy Serenade → Strange Muse</h3>
+        <dl>
+          <dt>AI 예측</dt><dd>151~300일 (56.9%)<br><span class="작게">2026-10-09 ~ 2027-03-07</span></dd>
+          <dt>실제</dt><dd><b>2026-10-19</b> (161일 뒤)</dd>
+          <dt>사람 기준</dt><dd>맞음</dd>
+        </dl>
+      </article>
+      <article class="카드 사례 틀림">
+        <div class="사례머리"><span class="표시">틀림</span><span class="종류">초동</span></div>
+        <h3>리센느 PULSE</h3>
+        <dl>
+          <dt>AI 예측</dt><dd>10~30만 (63.4%)</dd>
+          <dt>실제</dt><dd><b>602,688장</b> (30만 이상)</dd>
+          <dt>사람 기준</dt><dd>10~30만 — 같이 틀림</dd>
+        </dl>
+        <p class="틀린이유"><b>왜 틀렸나:</b> 리센느는 데이터에 없는 회사(더뮤즈)라 회사 정보 없이 예측했습니다.
+          직전 10.4만의 5.8배가 팔렸는데, 유튜브로 쌓인 화제성이 음반 구매로 옮겨간 결과라는 풀이가 있습니다 (iMBC). 엑셀에 없는 요인입니다.</p>
+      </article>
+      <article class="카드 사례 틀림">
+        <div class="사례머리"><span class="표시">틀림</span><span class="종류">시기</span></div>
+        <h3>리센느 lip bomb → PULSE</h3>
+        <dl>
+          <dt>AI 예측</dt><dd>151~300일 (52.4%)<br><span class="작게">2026-04-25 ~ 2026-09-21</span></dd>
+          <dt>실제</dt><dd><b>2026-11-03</b> (343일 뒤)</dd>
+          <dt>사람 기준</dt><dd>150일 이하 — 같이 틀림</dd>
+        </dl>
+        <p class="틀린이유"><b>왜 틀렸나:</b> lip bomb과 PULSE 사이에 디지털 싱글 활동이 있었습니다.
+          데이터는 실물 앨범만 세서 공백이 343일로 잡혔습니다.</p>
+      </article>
+    </div>
+    <h3>아직 결과가 없는 예측 (다음 컴백)</h3>
+    <div class="표감싸기">
+      <table class="표">
+        <thead><tr><th>앨범</th><th>다음 컴백 예측</th></tr></thead>
+        <tbody>
+          <tr><th>엔믹스 Strange Muse (2026-10-19)</th><td>151~300일 (57.4%) → 2027-03-19 ~ 2027-08-15</td></tr>
+          <tr><th>리센느 PULSE (2026-11-03)</th><td>151~300일 (52.5%) → 2027-04-03 ~ 2027-08-30</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="작게">시기 예측에는 스페셜·리패키지를 뺀 기준의 직전 발매일과 앨범 순번을 넣습니다.</p>
+  </section>
+
+  <!-- 1 -->
+  <section id="한눈" class="장">
+    <h2><span class="장번호">1</span>사람 기준 vs AI <span class="장출처">노트북 9장</span></h2>
+    <div class="카드 차트카드">
+      <div class="차트틀"><canvas id="차트_정답률" aria-label="사람 기준, 튜닝 전 로지스틱, AI의 정답률 막대그래프" role="img"></canvas></div>
+    </div>
+    <ul class="점목록">
+      <li><b>초동</b>: AI가 사람 기준보다 5문제 더 맞혔습니다 (연도별 4승 1무 3패). '차이가 있긴 하지만 크지 않다'고 표현합니다.</li>
+      <li><b>컴백 시기</b>: AI가 33문제 더 맞혔고, 7년 모두 앞섰습니다.</li>
+      <li><b>튜닝 효과</b>: 기본 설정 로지스틱(튜닝 전)보다 AI가 초동 +2.9%p, 시기 +5.8%p 높습니다.</li>
+    </ul>
+  </section>
+
+  <!-- 2 -->
+  <section id="연도" class="장">
+    <h2><span class="장번호">2</span>연도별 맞힌 개수 <span class="장출처">노트북 9장</span></h2>
+    <div class="카드 차트카드">
+      <div class="토글" data-for="연도별" role="group" aria-label="문제 고르기">
+        <button type="button" data-값="초동" aria-pressed="true">초동 (2018~2025)</button>
+        <button type="button" data-값="시기" aria-pressed="false">컴백 시기 (2018~2024)</button>
+      </div>
+      <div class="차트틀"><canvas id="차트_연도별" role="img" aria-label="테스트 연도별 사람 기준과 AI가 맞힌 문제 수"></canvas></div>
+      <p class="차트요약" id="연도요약"></p>
+    </div>
+    <p class="작게">시기 테스트에서 2025년은 뺍니다. 다음 앨범이 이미 나온 2025년 앨범은 빨리 컴백한 경우뿐이라 치우치기 때문입니다.</p>
+  </section>
+
+  <!-- 3 -->
+  <section id="산점" class="장">
+    <h2><span class="장번호">3</span>직전 vs 이번 초동 <span class="장출처">노트북 11장 그림 1</span></h2>
+    <p>앨범 하나가 점 하나입니다 (점 <span id="산점수"></span>개). 가로가 직전 앨범, 세로가 이번 앨범 초동이고, 점선은 10만·30만 경계, 회색 대각선은 '직전과 똑같이 팔림'입니다.
+      <b>78.4%가 직전과 같은 등급</b>이라 사람 기준(직전 따라가기)이 이미 강합니다.</p>
+    <div class="카드 차트카드">
+      <div class="차트틀 높게"><canvas id="차트_산점" role="img" aria-label="직전 앨범 초동과 이번 앨범 초동의 산점도, 로그축"></canvas></div>
+      <p class="작게"><span class="점표시 주황"></span> 주황 점 = 직전 앨범이 리패키지인 앨범 (<span id="리팩수"></span>개). 대부분 대각선 위에 있습니다 → 리패키지 다음에는 더 팔리는 경우가 많습니다 (<a href="#리팩">5번</a>).
+        위 범례를 누르면 그 묶음을 끄고 켤 수 있습니다.</p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section id="혼동" class="장">
+    <h2><span class="장번호">4</span>어느 등급을 틀렸나 (AI 혼동행렬) <span class="장출처">노트북 10장</span></h2>
+    <p>행이 정답, 열이 AI 예측입니다. 파란 대각선이 맞힌 칸, 주황 칸이 틀린 칸이고 진할수록 많습니다.</p>
+    <div class="두열">
+      <div class="카드"><h3 class="카드제목">초동</h3><div class="혼동감싸기" id="혼동_초동"></div>
+        <p class="작게">두 칸 차이 오답(10만 미만 ↔ 30만 이상)이 2개뿐입니다.</p></div>
+      <div class="카드"><h3 class="카드제목">컴백 시기</h3><div class="혼동감싸기" id="혼동_시기"></div>
+        <p class="작게">'150일 이하'를 하나도 못 맞혔습니다 (26문제). 스페셜·리패키지를 빼면서 짧은 간격이 12%로 줄어, 사실상 151~300일과 300일 초과를 고르는 문제가 됐습니다.</p></div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section id="리팩" class="장">
+    <h2><span class="장번호">5</span>직전 앨범이 리패키지일 때 (초동) <span class="장출처">노트북 10장</span></h2>
+    <div class="두열 넓은왼쪽">
+      <div class="카드 차트카드"><div class="차트틀"><canvas id="차트_리팩" role="img" aria-label="직전 앨범이 리패키지일 때와 아닐 때 사람 기준과 AI 정답률"></canvas></div></div>
+      <div>
+        <div class="표감싸기" id="리팩표"></div>
+        <p>AI가 사람을 확실히 이기는 경우입니다. 리패키지는 팬이 이미 원본을 사서 덜 팔리므로, 그다음 앨범은 등급이 올라가는 경우가 많습니다 (41.7%).
+          직전만 따라가는 사람 기준은 이 상승을 따라가지 못합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="분포" class="장">
+    <h2><span class="장번호">6</span>시장 변화를 따라가나 (연도별 등급 비율) <span class="장출처">노트북 10장</span></h2>
+    <div class="카드 차트카드">
+      <div class="토글줄">
+        <div class="토글" data-for="분포문제" role="group" aria-label="문제 고르기">
+          <button type="button" data-값="초동" aria-pressed="true">초동</button>
+          <button type="button" data-값="시기" aria-pressed="false">컴백 시기</button>
+        </div>
+        <div class="토글" data-for="분포등급" role="group" aria-label="등급 고르기">
+          <button type="button" data-값="0" aria-pressed="false">10만 미만</button>
+          <button type="button" data-값="1" aria-pressed="false">10~30만</button>
+          <button type="button" data-값="2" aria-pressed="true">30만 이상</button>
+        </div>
+      </div>
+      <div class="차트틀"><canvas id="차트_분포" role="img" aria-label="연도별 실제 등급 비율과 AI 예측 비율"></canvas></div>
+      <p class="작게">실선 = 실제, 점선 = AI 예측. 테스트 연도마다 그 해 앨범 중 해당 등급의 비율입니다.</p>
+    </div>
+    <ul class="점목록">
+      <li>초동 30만 이상 비율은 2018년 5% → 2024년 56%로 커졌고, AI 예측 비율도 8% → 67%로 따라갔습니다.</li>
+      <li>시기에서 '150일 이하'를 골라 보면, AI 예측 비율이 2023년(11%)을 빼면 모든 해에 0%입니다.</li>
+    </ul>
+  </section>
+
+  <!-- 7 -->
+  <section id="몇개" class="장">
+    <h2><span class="장번호">7</span>직전 몇 개 앨범까지 볼까 (초동) <span class="장출처">노트북 10장</span></h2>
+    <p>최근 k개(1~5) 초동 평균으로 예측해, 최종 모델(12장)과 같은 val(2023~25, <span id="k문제수"></span>문제)로만 비교했습니다.</p>
+    <div class="카드 차트카드">
+      <div class="차트틀"><canvas id="차트_k" role="img" aria-label="최근 몇 개 앨범의 평균을 볼 때의 val 정답률"></canvas></div>
+    </div>
+    <p>직전 1개만 볼 때 82.6%로 가장 높고, 최근 5개 평균은 76.1%입니다. 설문에서 사람들이 직전을 따라간 것이 데이터상으로도 가장 나은 단순 규칙입니다.</p>
+  </section>
+
+  <!-- 8 -->
+  <section id="설문" class="장">
+    <h2><span class="장번호">8</span>설문: 말한 것 vs 고른 것 <span class="장출처">노트북 5장</span></h2>
+    <div class="두열">
+      <div class="카드 차트카드">
+        <h3 class="카드제목">규칙 6가지와 응답의 일치 수</h3>
+        <div class="차트틀 낮게"><canvas id="차트_규칙" role="img" aria-label="규칙별 응답과 일치한 문제 수: 직전 6.6, 최고치 6.2, 최근2·3평균 5.9, 전체평균 5.3, 추세 3.7"></canvas></div>
+        <p class="작게">10문제 중 사람 평균 5.5개, 직전 규칙 6개, AI 6개를 맞혔습니다.</p>
+      </div>
+      <div class="카드 차트카드">
+        <h3 class="카드제목">'흐름을 봤다'고 답한 31명(44%)은 실제로…</h3>
+        <div class="차트틀 낮게"><canvas id="차트_말과선택" role="img" aria-label="흐름을 봤다고 답한 31명이 직전과 추세가 갈린 문제에서 직전 쪽 60%, 추세 쪽 23%를 골랐다"></canvas></div>
+        <p class="작게">직전과 추세가 갈리는 문제에서 직전 쪽을 60%, 추세 쪽을 23% 골랐습니다. 그래서 사람 기준을 자기 보고가 아니라 실제 선택으로 정했습니다.</p>
+      </div>
+    </div>
+    <p class="작게">설문 설계와 이항검정 결과는 <a href="about.html#사람">프로젝트 소개 5번</a>에 있습니다.</p>
+  </section>
+
+  <!-- 9 -->
+  <section id="재료" class="장">
+    <h2><span class="장번호">9</span>어떤 재료가 영향력이 큰가 (순열 중요도) <span class="장출처">노트북 11-3</span></h2>
+    <p>해마다 뽑힌 AI 모델로 test를 맞힐 때, 재료 하나를 앨범끼리 섞으면 정답률이 몇 %p 떨어지는지 쟀습니다 (50번 평균).
+      많이 떨어질수록 AI가 그 재료에 많이 기댄 것입니다. 모델 종류와 상관없이 같은 기준으로 잴 수 있습니다 (Breiman 2001).</p>
+    <div class="두열">
+      <div class="카드 차트카드">
+        <h3 class="카드제목">초동</h3>
+        <div class="차트틀 낮게"><canvas id="차트_재료초동" role="img" aria-label="초동: 직전 초동 36.3, 최근 2개 평균 5.6, 앨범 종류 4.7, 연도 2.3, 공백 기간 0.5 (%p)"></canvas></div>
+      </div>
+      <div class="카드 차트카드">
+        <h3 class="카드제목">컴백 시기</h3>
+        <div class="차트틀 높게"><canvas id="차트_재료시기" role="img" aria-label="시기: 회사 14.8, 팀경향 4.0, 앨범 순번 1.8, 공백 기간 1.1, 나머지 0.5 이하 (%p)"></canvas></div>
+      </div>
+    </div>
+    <p class="작게">막대 끝의 선은 50번 반복의 표준편차입니다. '(후보)'는 5묶음 후보 재료입니다.</p>
+  </section>
+
+  <!-- 10 -->
+  <section id="사람ai" class="장">
+    <h2><span class="장번호">10</span>사람이 중요하다고 한 것 vs AI가 기댄 것 (초동) <span class="장출처">노트북 11-4</span></h2>
+    <p>설문 "주로 무엇을 보고 예상했나요?" (<span id="설문인원"></span>명)의 답을, 같은 정보를 담은 AI 재료와 짝지었습니다.</p>
+    <div class="표감싸기" id="사람ai표"></div>
+    <ul class="점목록">
+      <li>사람 1등은 '흐름'(44.3%)인데, AI에는 '오르는 중인지'를 보는 재료가 없어서 최근 2개 평균(5.6%p)과 짝지었습니다. AI 1등은 '직전 초동'(36.3%p)이고, 사람 응답은 11.4%였습니다.</li>
+      <li>그런데 사람들이 실제로 고른 답은 직전 규칙과 가장 잘 맞았습니다 (10문제 중 평균 6.6개 일치, 추세 3.7개). 말은 '흐름', 행동은 AI와 같은 '직전'입니다.</li>
+    </ul>
+  </section>
+
+  <!-- 11 -->
+  <section id="그림" class="장">
+    <h2><span class="장번호">11</span>학습 과정 그림 <span class="장출처">노트북 11~12장</span></h2>
+    <div class="그림들">
+      <figure class="카드 그림칸">
+        <img src="img/learning_curve.png" alt="로지스틱의 epoch별 loss와 정답률">
+        <div class="그림자리">그림 준비 중<br><code>img/learning_curve.png</code></div>
+        <figcaption><b>학습 곡선</b> — 로지스틱의 epoch별 loss·정답률 (초동 13, 시기 10 epoch에 수렴)</figcaption>
+      </figure>
+      <figure class="카드 그림칸">
+        <img src="img/c_curve.png" alt="로지스틱 C별 train, val 정답률">
+        <div class="그림자리">그림 준비 중<br><code>img/c_curve.png</code></div>
+        <figcaption><b>하이퍼파라미터 곡선</b> — 로지스틱 C별 train·val과 고른 값</figcaption>
+      </figure>
+      <figure class="카드 그림칸">
+        <img src="img/feature_effect.png" alt="로지스틱 재료별 표준화 계수">
+        <div class="그림자리">그림 준비 중<br><code>img/feature_effect.png</code></div>
+        <figcaption><b>재료별 영향 (12장)</b> — 로지스틱 표준화 계수와 표준화 확인</figcaption>
+      </figure>
+    </div>
+  </section>
+</main>
+
+<footer class="바닥">
+  <div class="감싸기">
+    K-pop 컴백 예측 · AI 동아리 개인 프로젝트 · <a href="quiz.html">나도 맞혀보기</a><br>
+    데이터 기준: 2015~2025 학습, 사이트 목록은 2026-11-18까지 반영
+  </div>
+</footer>
+
+<script src="js/vendor/chart.umd.min.js"></script>
+<script src="js/chartData.js"></script>
+<script src="js/app.js"></script>
+<script src="js/results.js"></script>
+</body>
+</html>

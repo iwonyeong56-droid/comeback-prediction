@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>예측해보기 · K-pop 컴백 예측</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="머리">
+  <div class="감싸기">
+    <a class="로고" href="index.html">K-pop <span>컴백 예측</span></a>
+    <button class="메뉴버튼" type="button" aria-expanded="false" aria-label="메뉴 열기">☰</button>
+    <ul class="메뉴">
+      <li><a href="index.html" aria-current="page">예측해보기</a></li>
+      <li><a href="about.html">프로젝트 소개</a></li>
+      <li><a href="results.html">결과·시각화</a></li>
+      <li><a href="limits.html">장점·한계</a></li>
+      <li><a href="refs.html">참고 자료</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="감싸기 맞춰보기" id="예측페이지">
+  <h1 class="페이지제목">AI와 다음 앨범 맞춰보기</h1>
+  <p class="페이지설명">아티스트를 고르고 앨범 하나를 눌러 보세요. 그 앨범이 막 나온 날로 돌아가서 AI가 <b>다음 앨범</b>을 예측합니다. 그다음 실제 결과와 맞춰 보세요.</p>
+
+  <!-- 1. 아티스트 -->
+  <section class="단계카드 카드" id="단계1">
+    <h2><span class="단계번호">1</span>아티스트 고르기</h2>
+    <input id="검색" class="검색 큰검색" type="search" placeholder="아티스트 이름을 입력하세요 (예: 엔믹스)" aria-label="아티스트 이름 검색" autocomplete="off">
+    <p class="작게 검색안내" id="검색안내">이름을 입력하거나, 아래에서 소속사를 눌러 팀을 찾아보세요.</p>
+    <div class="회사목록" id="회사목록"></div>
+  </section>
+
+  <!-- 2. 앨범 -->
+  <section class="단계카드 카드 숨김" id="단계2">
+    <h2><span class="단계번호">2</span><span id="앨범제목">앨범 고르기</span></h2>
+    <p class="작게" id="앨범설명"></p>
+    <ol class="앨범목록" id="앨범목록"></ol>
+    <p class="작게 메모" id="앨범메모"></p>
+  </section>
+
+  <!-- 3. 예측 -->
+  <section class="단계카드 카드 숨김" id="단계3" aria-live="polite">
+    <h2><span class="단계번호">3</span>AI 예측</h2>
+    <div class="로딩 숨김" id="로딩">
+      <div class="빙글" aria-hidden="true"></div>
+      <p id="로딩글">계산하고 있습니다…</p>
+    </div>
+    <div class="숨김" id="예측결과">
+      <p class="기준줄" id="기준줄"></p>
+      <div class="예측두칸">
+        <div class="예측칸">
+          <div class="예측이름">다음 앨범 초동</div>
+          <div class="등급" id="초동등급"></div>
+          <div class="막대들" id="초동막대"></div>
+          <p class="작게" id="초동설명"></p>
+        </div>
+        <div class="예측칸">
+          <div class="예측이름">다음 컴백</div>
+          <div class="등급" id="시기등급"></div>
+          <p class="날짜범위" id="시기날짜"></p>
+          <div class="막대들" id="시기막대"></div>
+          <p class="작게" id="시기설명"></p>
+        </div>
+      </div>
+      <button type="button" class="큰버튼 실제버튼" id="실제버튼">실제 값 확인해 보기</button>
+    </div>
+  </section>
+
+  <!-- 4. 실제 값 -->
+  <section class="단계카드 카드 숨김" id="단계4" aria-live="polite">
+    <h2><span class="단계번호">4</span>실제로는?</h2>
+    <div class="예측두칸" id="실제두칸"></div>
+    <p class="작게" id="실제메모"></p>
+    <p class="작게">'사람'은 직전 앨범을 그대로 따라가는 기준입니다 (설문 70명으로 확인한 방식). 성능 숫자는 <a href="results.html">결과·시각화</a>에서 볼 수 있습니다.</p>
+  </section>
+
+  <!-- 목록에 없는 팀: 직접 입력 -->
+  <details class="카드 직접입력">
+    <summary>목록에 없는 팀인가요? 숫자로 직접 넣어 보기</summary>
+    <form id="직접모드" onsubmit="return false" novalidate>
+      <p class="작게">가장 최근 앨범 정보를 넣으면 그다음 앨범을 예측합니다. (실제 값 확인은 목록에 있는 팀만 됩니다)</p>
+      <div class="입력폼 넓게">
+        <label>최근 앨범 초동 (장)<input name="초동" type="number" min="1" step="1" value="150000" inputmode="numeric"></label>
+        <label>최근 앨범 발매일<input name="발매일" type="date" value="2026-06-01"></label>
+        <label>그 앞 앨범 발매일<input name="앞발매일" id="앞발매일" type="date" value="2025-12-01"></label>
+        <label class="체크"><input id="데뷔작" type="checkbox"> 최근 앨범이 데뷔작입니다</label>
+        <label>앨범 유형<select name="유형"><option>미니</option><option>정규</option><option>싱글</option></select></label>
+        <label>앨범순번 (몇 번째 앨범)<input name="앨범순번" type="number" min="1" step="1" value="3" inputmode="numeric"></label>
+        <label>소속사<select name="회사"><option value="SM">SM</option><option value="JYP">JYP</option><option value="STARSHIP">스타쉽</option><option value="그 외">다른 소속사 (하이브·YG 등)</option></select></label>
+        <label>성별<select name="성별"><option value="여">여자</option><option value="남">남자</option></select></label>
+        <label>구성<select name="그룹"><option value="1">그룹</option><option value="0">솔로</option></select></label>
+      </div>
+      <p class="오류" id="직접오류" role="alert"></p>
+      <div class="예측두칸" id="직접결과"></div>
+    </form>
+  </details>
+</main>
+
+<footer class="바닥">
+  <div class="감싸기">
+    K-pop 컴백 예측 · AI 동아리 개인 프로젝트 · <a href="quiz.html">나도 맞혀보기</a><br>
+    데이터 기준: 2015~2025 학습, 사이트 목록은 2026-11-18까지 반영
+  </div>
+</footer>
+
+<script src="js/model.js"></script>
+<script src="js/artists.js"></script>
+<script src="js/albums.js"></script>
+<script src="js/predict.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

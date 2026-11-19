@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>나도 맞혀보기 · K-pop 컴백 예측</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="머리">
+  <div class="감싸기">
+    <a class="로고" href="index.html">K-pop <span>컴백 예측</span></a>
+    <button class="메뉴버튼" type="button" aria-expanded="false" aria-label="메뉴 열기">☰</button>
+    <ul class="메뉴">
+      <li><a href="index.html">예측해보기</a></li>
+      <li><a href="about.html">프로젝트 소개</a></li>
+      <li><a href="results.html">결과·시각화</a></li>
+      <li><a href="limits.html">장점·한계</a></li>
+      <li><a href="refs.html">참고 자료</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="감싸기 글페이지 퀴즈페이지">
+  <h1 class="페이지제목">나도 맞혀보기</h1>
+  <p class="페이지설명">설문 70명이 풀었던 10문제 그대로입니다. 최근 앨범 초동 막대만 보고, 다음 앨범의 초동 등급을 골라 보세요.</p>
+
+  <!-- 시작 -->
+  <section class="카드 퀴즈카드" id="시작화면">
+    <h2>규칙</h2>
+    <ul class="점목록">
+      <li>막대에는 숫자가 없습니다. 점선 두 개가 <b>10만</b>, <b>30만</b> 경계입니다.</li>
+      <li>맨 오른쪽 막대가 가장 최근 앨범입니다.</li>
+      <li>다음 앨범 초동이 <b>10만 미만 / 10~30만 / 30만 이상</b> 중 어디일지 골라 주세요.</li>
+    </ul>
+    <button type="button" class="큰버튼" id="시작">시작하기</button>
+  </section>
+
+  <!-- 문제 -->
+  <section class="카드 퀴즈카드 숨김" id="문제화면">
+    <div class="퀴즈머리">
+      <span class="진행" id="진행"></span>
+      <div class="진행막대"><div id="진행막대"></div></div>
+    </div>
+    <h2 class="문제팀" id="문제팀"></h2>
+    <div class="최근틀">
+      <div class="최근" id="퀴즈막대"></div>
+      <div class="최근이름" id="퀴즈이름"></div>
+    </div>
+    <p class="질문글">다음 앨범의 초동은?</p>
+    <div class="선택들" id="선택들">
+      <button type="button" data-k="0">10만 미만</button>
+      <button type="button" data-k="1">10~30만</button>
+      <button type="button" data-k="2">30만 이상</button>
+    </div>
+    <div class="정답풀이 숨김" id="정답풀이" aria-live="polite"></div>
+    <button type="button" class="큰버튼 숨김" id="다음">다음 문제</button>
+  </section>
+
+  <!-- 결과 -->
+  <section class="카드 퀴즈카드 숨김" id="결과화면" aria-live="polite">
+    <h2>결과</h2>
+    <div class="점수비교" id="점수비교"></div>
+    <p class="작게">사람 평균·직전 규칙·AI 숫자는 PDF 5장 설문 결과입니다. 직전 규칙은 '가장 최근 막대의 등급 그대로' 고르는 방법입니다.</p>
+    <p id="결과말"></p>
+    <h3>문제별로 보기</h3>
+    <div class="표감싸기">
+      <table class="표">
+        <thead><tr><th>#</th><th>팀</th><th>내 답</th><th>직전 규칙</th><th>정답 (실제)</th></tr></thead>
+        <tbody id="돌아보기"></tbody>
+      </table>
+    </div>
+    <p class="작게">직전 규칙이 틀린 4문제(4·5·7·8번)는 전부 등급이 오른 경우입니다. 사람 방식의 약점은 성장을 못 따라간다는 것입니다.</p>
+    <div class="버튼줄">
+      <button type="button" class="큰버튼" id="다시">다시 풀기</button>
+      <a class="큰버튼 보조" href="index.html">AI 예측 해보기</a>
+    </div>
+  </section>
+</main>
+
+<footer class="바닥">
+  <div class="감싸기">
+    K-pop 컴백 예측 · AI 동아리 개인 프로젝트 · <a href="quiz.html">나도 맞혀보기</a><br>
+    데이터 기준: 2015~2025 학습, 사이트 목록은 2026-11-18까지 반영
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+<script>
+(function () {
+  "use strict";
+  // PDF 5장 설문 10문제 (단위: 만 장). 막대 = 보여준 최근 앨범, 실제 = 다음 앨범 초동
+  var 문제들 = [
+    { 팀: "NCT 드림",   막대: [3.4, 12.4, 18.3, 41.2],  실제: 101.1 },
+    { 팀: "태민",       막대: [7.2, 6.3, 2.2],          실제: 8.5 },
+    { 팀: "키",         막대: [6.6, 7.7, 7.1, 10.6],    실제: 11.5 },
+    { 팀: "라이즈",     막대: [101.7, 125.5, 27.4],     실제: 179.7 },
+    { 팀: "있지",       막대: [6.5, 14.4, 20.0, 26.0],  실제: 47.2 },
+    { 팀: "스트레이키즈", 막대: [12.8, 23.3, 64.2, 47.1], 실제: 85.3 },
+    { 팀: "트와이스",   막대: [15.4, 33.2, 24.6, 27.8], 실제: 31.9 },
+    { 팀: "태연",       막대: [8.7, 3.4, 3.8, 4.2],     실제: 13.3 },
+    { 팀: "레드벨벳",   막대: [4.2, 20.7, 44.4, 49.7],  실제: 41.1 },
+    { 팀: "슈퍼주니어", 막대: [8.7, 27.0, 7.6, 26.0],   실제: 10.1 }
+  ];
+  var 비교 = { 사람평균: 5.5, 직전규칙: 6, AI: 6 };       // PDF 5장
+  var 이름 = ["10만 미만", "10~30만", "30만 이상"];
+  var 등급 = function (만장) { return 만장 < 10 ? 0 : 만장 < 30 ? 1 : 2; };   // 10만 '이상'부터 다음 등급
+  var $ = function (id) { return document.getElementById(id); };
+
+  var 지금 = 0, 답들 = [];
+
+  function 보이기(id) {
+    ["시작화면", "문제화면", "결과화면"].forEach(function (x) { $(x).classList.toggle("숨김", x !== id); });
+  }
+
+  function 문제그리기() {
+    var q = 문제들[지금];
+    $("진행").textContent = (지금 + 1) + " / " + 문제들.length;
+    $("진행막대").style.width = (지금 / 문제들.length * 100) + "%";
+    $("문제팀").textContent = q.팀;
+    // 높이는 data-v(만 장)만 적어 두고 높이맞추기()에서 계산 → 정답을 보여줄 때 축을 다시 맞출 수 있게
+    $("퀴즈막대").innerHTML = [10, 30].map(function (b) {
+      return "<div class='선' data-v='" + b + "'><span>" + b + "만</span></div>";
+    }).join("") + q.막대.map(function (v, i) {
+      return "<div class='기둥" + (i === q.막대.length - 1 ? " 마지막" : "") + "' data-v='" + v + "'></div>";
+    }).join("") + "<div class='기둥 정답기둥 숨김' id='정답기둥' data-v='" + q.실제 + "'></div>";
+    높이맞추기(Math.max(33, Math.max.apply(null, q.막대) * 1.08));   // 문제일 때는 보여준 막대 기준 (정답이 축으로 새지 않게)
+    $("퀴즈이름").innerHTML = q.막대.map(function (_, i) {
+      return "<div" + (i === q.막대.length - 1 ? " class='마지막'" : "") + ">" + (i === q.막대.length - 1 ? "직전" : (q.막대.length - i) + "개 전") + "</div>";
+    }).join("") + "<div class='정답이름 숨김' id='정답이름'>다음</div>";
+    Array.prototype.forEach.call($("선택들").querySelectorAll("button"), function (b) {
+      b.disabled = false; b.className = "";
+    });
+    $("정답풀이").classList.add("숨김");
+    $("다음").classList.add("숨김");
+  }
+
+  function 높이맞추기(최대) {
+    Array.prototype.forEach.call($("퀴즈막대").querySelectorAll("[data-v]"), function (el) {
+      var p = (Math.min(+el.dataset.v, 최대) / 최대 * 100).toFixed(2) + "%";
+      if (el.classList.contains("선")) el.style.bottom = p; else el.style.height = p;
+    });
+  }
+
+  $("선택들").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-k]");
+    if (!b || b.disabled) return;
+    var q = 문제들[지금], 내답 = +b.dataset.k, 정답 = 등급(q.실제), 직전 = 등급(q.막대[q.막대.length - 1]);
+    답들[지금] = 내답;
+    Array.prototype.forEach.call($("선택들").querySelectorAll("button"), function (x) {
+      x.disabled = true;
+      var k = +x.dataset.k;
+      if (k === 정답) x.className = "정답";
+      else if (k === 내답) x.className = "오답";
+    });
+    $("정답기둥").classList.remove("숨김");
+    $("정답이름").classList.remove("숨김");
+    // 정답까지 들어가게 축을 다시 맞춤 (막대들이 줄어드는 움직임으로 보임)
+    높이맞추기(Math.max(33, Math.max.apply(null, q.막대.concat(q.실제)) * 1.08));
+    $("정답풀이").innerHTML = (내답 === 정답 ? "<b class='맞음글'>맞았습니다!</b>" : "<b class='틀림글'>아쉽습니다!</b>") +
+      " 실제 다음 앨범은 <b>" + q.실제 + "만 장</b> → " + 이름[정답] + "입니다." +
+      "<br><span class='작게'>직전 규칙(가장 최근 막대 그대로)이라면 " + 이름[직전] + " — " + (직전 === 정답 ? "맞음" : "틀림") + "</span>";
+    $("정답풀이").classList.remove("숨김");
+    $("다음").textContent = 지금 === 문제들.length - 1 ? "결과 보기" : "다음 문제";
+    $("다음").classList.remove("숨김");
+    $("다음").focus();
+  });
+
+  $("다음").addEventListener("click", function () {
+    지금++;
+    if (지금 < 문제들.length) 문제그리기(); else 결과();
+  });
+
+  function 결과() {
+    var 맞힘 = 문제들.filter(function (q, i) { return 답들[i] === 등급(q.실제); }).length;
+    var 줄 = [
+      { 이름: "나", 값: 맞힘, 색: "강조" },
+      { 이름: "설문 70명 평균", 값: 비교.사람평균, 색: "사람" },
+      { 이름: "직전 규칙", 값: 비교.직전규칙, 색: "사람" },
+      { 이름: "AI", 값: 비교.AI, 색: "ai" }
+    ];
+    $("점수비교").innerHTML = 줄.map(function (r) {
+      return "<div class='점수줄 " + r.색 + "'><span>" + r.이름 + "</span><div class='점수틀'><div style='width:" + (r.값 * 10) + "%'></div></div><b>" + r.값 + "개</b></div>";
+    }).join("");
+    $("결과말").textContent = 맞힘 > 비교.AI ? "AI보다 많이 맞혔습니다!" : 맞힘 === 비교.AI ? "AI와 똑같이 맞혔습니다." :
+      맞힘 >= 비교.사람평균 ? "설문 평균보다는 많이 맞혔습니다." : "설문 평균보다 조금 적습니다. 직전 막대만 따라가도 6개를 맞힐 수 있습니다.";
+    $("돌아보기").innerHTML = 문제들.map(function (q, i) {
+      var 정답 = 등급(q.실제), 직전 = 등급(q.막대[q.막대.length - 1]);
+      return "<tr><td>" + (i + 1) + "</td><th>" + q.팀 + "</th><td class='" + (답들[i] === 정답 ? "맞음글" : "틀림글") + "'>" + 이름[답들[i]] + "</td><td>" + 이름[직전] + (직전 === 정답 ? "" : " ✗") + "</td><td>" + 이름[정답] + " (" + q.실제 + "만)</td></tr>";
+    }).join("");
+    $("진행막대").style.width = "100%";
+    보이기("결과화면");
+  }
+
+  function 처음부터() { 지금 = 0; 답들 = []; 문제그리기(); 보이기("문제화면"); }
+  $("시작").addEventListener("click", 처음부터);
+  $("다시").addEventListener("click", 처음부터);
+})();
+</script>
+</body>
+</html>

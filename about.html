@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>프로젝트 소개 · K-pop 컴백 예측</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="머리">
+  <div class="감싸기">
+    <a class="로고" href="index.html">K-pop <span>컴백 예측</span></a>
+    <button class="메뉴버튼" type="button" aria-expanded="false" aria-label="메뉴 열기">☰</button>
+    <ul class="메뉴">
+      <li><a href="index.html">예측해보기</a></li>
+      <li><a href="about.html" aria-current="page">프로젝트 소개</a></li>
+      <li><a href="results.html">결과·시각화</a></li>
+      <li><a href="limits.html">장점·한계</a></li>
+      <li><a href="refs.html">참고 자료</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="감싸기 글페이지">
+  <h1 class="페이지제목">프로젝트 소개</h1>
+  <p class="페이지설명">무엇을 묻고, 어떤 데이터로, 어떻게 검증했는지 순서대로 정리했습니다. 장 번호는 노트북의 장 번호입니다.</p>
+
+  <nav class="차례" aria-label="이 페이지 차례">
+    <a href="#질문">1 질문</a>
+    <a href="#데이터">2 데이터</a>
+    <a href="#등급">3 등급 기준</a>
+    <a href="#재료">4 재료</a>
+    <a href="#사람">5 설문·사람 기준</a>
+    <a href="#검증">6 검증 방법</a>
+    <a href="#모델">7 모델</a>
+  </nav>
+
+  <!-- 1. 질문 -->
+  <section id="질문" class="장">
+    <h2><span class="장번호">1</span>질문</h2>
+    <p class="큰질문">K-pop 아티스트의 다음 컴백은 언제이고, 얼마나 잘될까요?</p>
+    <div class="두열">
+      <div class="카드 문제카드">
+        <div class="문제이름">문제 1 · 초동</div>
+        <p>다음 앨범의 초동(발매 첫 주 판매량)은 어느 등급일까요?</p>
+        <div class="등급칩들"><span>10만 미만</span><span>10~30만</span><span>30만 이상</span></div>
+      </div>
+      <div class="카드 문제카드">
+        <div class="문제이름">문제 2 · 컴백 시기</div>
+        <p>다음 앨범이 나올 때까지 며칠이 걸릴까요?</p>
+        <div class="등급칩들"><span>150일 이하</span><span>151~300일</span><span>300일 초과</span></div>
+      </div>
+    </div>
+    <p>AI가 잘 맞혔는지는 <b>사람이 실제로 예측하는 방식</b>과 같은 문제로 비교했습니다.
+      그 방식은 설문 70명의 답을 분석해 <b>직전 앨범 따라가기</b>로 정했습니다 (<a href="#사람">5번</a>).</p>
+  </section>
+
+  <!-- 2. 데이터 -->
+  <section id="데이터" class="장">
+    <h2><span class="장번호">2</span>데이터 <span class="장출처">노트북 1장</span></h2>
+    <div class="숫자줄">
+      <div class="숫자칸"><b>433</b><span>앨범</span></div>
+      <div class="숫자칸"><b>100</b><span>팀</span></div>
+      <div class="숫자칸"><b>3</b><span>기획사 (SM·JYP·스타쉽)</span></div>
+      <div class="숫자칸"><b>2015~2025</b><span>발매 연도</span></div>
+    </div>
+    <p>직접 만든 엑셀 <code>comeback_data_v16.xlsx</code>의 앨범 437개에서 컴필레이션 앨범 4개를 빼고 433개·100팀을 썼습니다.
+      컴필레이션 앨범은 이미 발표되었거나 특정 주제·기획에 맞춰 여러 음원을 하나로 엮은 앨범이라, 새 컴백이 아니고 아티스트별 '직전 앨범'도 성립하지 않아서 뺐습니다.</p>
+    <div class="표감싸기">
+      <table class="표">
+        <tbody>
+          <tr><th>범위</th><td>SM 250 / JYP 113 / 스타쉽 74개 (컴필 포함), 2015~2025년 발매</td></tr>
+          <tr><th>열</th><td>날짜, 회사, 아티스트, 앨범명, 앨범유형, 성별, 그룹여부, 초동</td></tr>
+          <tr><th>초동 출처</th><td>나무위키의 한터차트 기록을 위키백과 디스코그래피로 대조</td></tr>
+          <tr><th>앨범유형</th><td>미니 246 / 정규 112 / 리패키지 33 / 싱글 26 / 스페셜 16</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="쌓은막대" role="img" aria-label="앨범유형: 미니 246, 정규 112, 리패키지 33, 싱글 26, 스페셜 16">
+      <div style="flex:246" class="색1"><span>미니 246</span></div>
+      <div style="flex:112" class="색2"><span>정규 112</span></div>
+      <div style="flex:33" class="색3"></div>
+      <div style="flex:26" class="색4"></div>
+      <div style="flex:16" class="색5"></div>
+    </div>
+    <div class="범례 쌓은범례">
+      <span><i class="색1"></i>미니 246</span><span><i class="색2"></i>정규 112</span><span><i class="색3"></i>리패키지 33</span>
+      <span><i class="색4"></i>싱글 26</span><span><i class="색5"></i>스페셜 16</span>
+    </div>
+    <p class="작게">아티스트 → 날짜 순으로 정렬해, 앨범마다 '직전 앨범' 값을 가져올 수 있게 했습니다.</p>
+  </section>
+
+  <!-- 3. 등급 기준 -->
+  <section id="등급" class="장">
+    <h2><span class="장번호">3</span>등급 기준과 근거 <span class="장출처">노트북 2장</span></h2>
+    <p>초동은 506장~461만 장으로 범위가 너무 넓어서, 숫자 대신 <b>3등급 분류</b>로 맞힙니다.
+      Spotify 차트 예측 연구(arXiv 2025)와 경상국립대 음원 차트 연구도 연속값을 구간으로 나눠 분류했습니다.</p>
+    <div class="표감싸기">
+      <table class="표">
+        <thead><tr><th>문제</th><th>등급</th><th>근거</th></tr></thead>
+        <tbody>
+          <tr><td><b>초동</b></td><td>10만 미만 / 10~30만 / 30만 이상</td>
+            <td>김정섭(2026)이 단일 앨범 판매량 10만·30만을 기준점으로 썼습니다 (30만 = 손익분기점). 2018년 이후 초동을 3등분해도 8.7만 / 27.7만으로 비슷합니다.</td></tr>
+          <tr><td><b>컴백 시기</b><br><span class="작게">다음 앨범까지 일수</span></td><td>150일 이하 / 151~300일 / 300일 초과</td>
+            <td>업계의 연 2회(약 180일) 컴백 주기 (더팩트 2026). 업계가 150·300을 직접 쓰지는 않아서 초동보다 근거가 약합니다.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="작게">10만 / 50만 / 100만으로 나누면 위쪽 두 등급이 9%·8%뿐이라, 한 등급에 쏠리지 않는 지금 기준을 택했습니다.</p>
+
+    <h3>시기에서는 스페셜·리패키지를 뺐습니다 (49개)</h3>
+    <p>두 유형은 회사가 정규·미니 사이에 따로 끼워 넣는 발매라서 컴백 간격 계산에서 뺐습니다. 초동 예측에는 그대로 둡니다.</p>
+    <ul class="점목록">
+      <li><b>리패키지</b>: 기존 앨범에 신곡을 더해 활동을 이어가는 앨범입니다. 33개 중 29개가 정규 바로 다음에 나왔고, 정규 발매 후 중앙값 70일입니다.</li>
+      <li><b>스페셜</b>: 기념일·연말 같은 계기로 냅니다 (카라 15주년, 여자친구 10주년). 16개 중 7개가 12월 발매입니다.</li>
+    </ul>
+
+    <h3>등급별 개수</h3>
+    <div class="등급개수">
+      <div class="등급개수줄">
+        <span class="줄이름">초동 <small>전체 앨범 433</small></span>
+        <div class="쌓은막대 작은">
+          <div style="flex:202" class="낮"><span>202</span></div>
+          <div style="flex:118" class="가"><span>118</span></div>
+          <div style="flex:113" class="높"><span>113</span></div>
+        </div>
+      </div>
+      <div class="등급개수줄">
+        <span class="줄이름">시기 <small>다음 앨범이 있는 것 286</small></span>
+        <div class="쌓은막대 작은">
+          <div style="flex:38" class="낮"><span>38</span></div>
+          <div style="flex:134" class="가"><span>134</span></div>
+          <div style="flex:114" class="높"><span>114</span></div>
+        </div>
+      </div>
+      <div class="범례"><span><i class="낮"></i>낮은 등급</span><span><i class="가"></i>가운데</span><span><i class="높"></i>높은 등급</span></div>
+    </div>
+    <p class="작게">시기 테스트에서 2025년은 뺍니다. 다음 앨범이 이미 나온 2025년 앨범은 빨리 컴백한 경우뿐이라 치우치기 때문입니다.</p>
+  </section>
+
+  <!-- 4. 재료 -->
+  <section id="재료" class="장">
+    <h2><span class="장번호">4</span>재료(특성) <span class="장출처">노트북 3장</span></h2>
+    <p>모든 재료는 <b>이번 앨범 발매일 전에 알 수 있는 정보만</b> 썼습니다. 후보 재료를 넣을지는 validation으로 정했습니다 (재료 조합도 하이퍼파라미터로 취급).</p>
+    <div class="표감싸기">
+      <table class="표">
+        <thead><tr><th>문제</th><th>기본 재료</th><th>후보 재료</th></tr></thead>
+        <tbody>
+          <tr><td><b>초동</b> <span class="작게">333개</span></td><td>log직전초동, 공백일, 연도, 앨범유형</td><td>log최근2평균 (직전·직직전 평균)</td></tr>
+          <tr><td><b>시기</b> <span class="작게">286개</span></td><td>log초동, 공백일, 데뷔작, 연도, 앨범순번, 그룹여부, 앨범유형·회사·성별</td><td>아래 5묶음 (넣고 빼는 32가지 조합)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="표감싸기">
+      <table class="표">
+        <thead><tr><th>시기 후보 묶음</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><th>팀경향</th><td>그 팀의 지난 공백 평균과 짧은·긴 공백 비율. 앨범이 적은 팀은 전체 경향 쪽으로 당깁니다 (부분 풀링, Gelman &amp; Hill 2007)</td></tr>
+          <tr><th>앨범순서</th><td>직전 앨범 유형, 마지막 정규 이후 몇 번째 앨범인지</td></tr>
+          <tr><th>회사일정</th><td>같은 회사 다른 팀이 최근 90일에 낸 앨범 수, 마지막 발매 후 지난 날</td></tr>
+          <tr><th>가족유닛</th><td>같은 그룹 출신 솔로·유닛의 최근 1년 앨범 수, 유닛 여부</td></tr>
+          <tr><th>발매월</th><td>월을 sin·cos로 바꿔 12월과 1월이 가깝게 했습니다</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="점목록">
+      <li><b>끝난 공백 보강 (62개)</b>: 다음 앨범 없이 300일이 넘게 지난 마지막 앨범은 정답이 '300일 초과'로 이미 정해졌습니다. 학습 시점에 300일이 지난 것만 학습에 추가할 수 있게 했고, 테스트에는 넣지 않습니다 (생존분석에서 끝나지 않은 기록도 쓰는 것과 같은 생각, Cox 1972).</li>
+      <li>초동 값은 단위 차이가 커서 log10을 씌웠습니다. 나무는 크기 순서만 보므로 원래 값을 씁니다.</li>
+      <li>시기 재료는 스페셜·리패키지를 뺀 앨범끼리 계산했습니다.</li>
+    </ul>
+  </section>
+
+  <!-- 5. 설문과 사람 기준 -->
+  <section id="사람" class="장">
+    <h2><span class="장번호">5</span>설문과 사람 기준 <span class="장출처">노트북 5장</span></h2>
+    <div class="두열">
+      <div class="카드">
+        <h3 class="카드제목">설문 설계</h3>
+        <ul class="점목록">
+          <li>네이버 폼, 응답 <b>70명</b> (약 20명은 엔믹스 팬 커뮤니티 응답자)</li>
+          <li>초동 10문제: 한 아티스트의 최근 앨범 3~4개 초동을 막대로 보여주고 (숫자 없이 10만·30만 점선만), 다음 앨범 등급을 고르게 했습니다</li>
+          <li>추가 문항: 주로 무엇을 보고 예상했는지, 평소 관심 정도, 문제의 그룹을 따로 알아봤는지</li>
+        </ul>
+        <p class="작게"><a href="quiz.html">나도 맞혀보기</a>에서 같은 10문제를 직접 풀어 볼 수 있습니다.</p>
+      </div>
+      <div class="카드">
+        <h3 class="카드제목">사람이 쓸 만한 규칙 6가지와 응답의 일치 수 <small>(10문제 중)</small></h3>
+        <div class="가로막대들">
+          <div class="가로막대줄 강조"><span>직전</span><div class="가로틀"><div style="width:66%"></div></div><b>6.6</b></div>
+          <div class="가로막대줄"><span>최고치</span><div class="가로틀"><div style="width:62%"></div></div><b>6.2</b></div>
+          <div class="가로막대줄"><span>최근2·3평균</span><div class="가로틀"><div style="width:59%"></div></div><b>5.9</b></div>
+          <div class="가로막대줄"><span>전체평균</span><div class="가로틀"><div style="width:53%"></div></div><b>5.3</b></div>
+          <div class="가로막대줄"><span>추세</span><div class="가로틀"><div style="width:37%"></div></div><b>3.7</b></div>
+        </div>
+      </div>
+    </div>
+
+    <h3>두 규칙의 답이 갈리는 문제만 따로 봤습니다</h3>
+    <p>두 규칙의 답이 같은 문제는 어느 쪽을 따랐는지 알 수 없어서, 답이 갈리는 문제만 비교했습니다 (이항검정).</p>
+    <div class="표감싸기">
+      <table class="표 숫자표">
+        <thead><tr><th>직전 vs</th><th>답이 갈린 문제</th><th>직전 쪽 선택</th><th>상대 쪽 선택</th><th>p값</th></tr></thead>
+        <tbody>
+          <tr><th>최근2평균</th><td>3</td><td><b>59%</b></td><td>34%</td><td>0.007</td></tr>
+          <tr><th>전체평균</th><td>4</td><td><b>64%</b></td><td>30%</td><td>&lt;0.001</td></tr>
+          <tr><th>추세</th><td>7</td><td><b>63%</b></td><td>21%</td><td>&lt;0.001</td></tr>
+          <tr><th>최고치</th><td>2</td><td><b>57%</b></td><td>36%</td><td>0.01</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="카드 강조카드">
+      <b>말한 것과 고른 것이 달랐습니다.</b> '흐름을 봤다'고 답한 31명(44%)도 직전과 추세가 갈리는 문제에서 직전 쪽을 60%, 추세 쪽을 23% 골랐습니다.
+      그래서 사람 기준을 자기 보고가 아니라 <b>실제 선택</b>으로 정했습니다.
+      <span class="작게">정확한 표현은 '사람은 직전만 본다'가 아니라 '6가지 규칙 중 직전 규칙과 가장 잘 맞았다'입니다.</span>
+    </div>
+
+    <h3>그래서 사람 기준은</h3>
+    <div class="표감싸기">
+      <table class="표">
+        <thead><tr><th></th><th>사람 기준</th><th>검증 결과</th></tr></thead>
+        <tbody>
+          <tr><th>초동</th><td>직전 앨범 초동의 등급 그대로</td><td>77.0% (211/274)</td></tr>
+          <tr><th>시기</th><td>직전 공백의 등급 그대로 (데뷔작은 학습 데이터에서 가장 많은 등급)</td><td>54.3% (113/208)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="점목록">
+      <li>직전 규칙이 틀린 4문제(4·5·7·8번)는 전부 등급이 오른 경우입니다. 사람 방식의 약점은 성장을 못 따라간다는 것입니다.</li>
+      <li>10문제 중 사람 평균 5.5개, 직전 규칙 6개, AI 6개를 맞혔습니다. 사람 오답의 92%(313개 중 288개)는 한 칸 차이였습니다.</li>
+      <li>설문은 초동만 물었습니다. 시기의 사람 기준은 초동에서 확인된 방식을 옮겨 쓴 것입니다.</li>
+    </ul>
+  </section>
+
+  <!-- 6. 검증 방법 (PDF ver2 4장) -->
+  <section id="검증" class="장">
+    <h2><span class="장번호">6</span>검증 방법: 중첩 시계열 교차검증 <span class="장출처">노트북 4장</span></h2>
+    <p>원칙은 <b>앞의 연도로 학습하고, 뒤의 연도로 평가한다</b>입니다. 시간 순서를 섞으면 미래 정보로 과거를 맞히게 됩니다
+      (scikit-learn TimeSeriesSplit·Common pitfalls 문서). 이 원칙을 테스트 연도마다 반복했습니다.</p>
+
+    <div class="표감싸기">
+      <table class="표">
+        <thead><tr><th>구분</th><th>연도 (테스트 연도 T 기준)</th><th>쓰임</th></tr></thead>
+        <tbody>
+          <tr><th>test</th><td>T년</td><td>고르기가 끝난 뒤 한 번만 테스트</td></tr>
+          <tr><th>validation</th><td>T−3, T−2, T−1년 (한 해씩)</td><td>모델·재료·하이퍼파라미터 고르기</td></tr>
+          <tr><th>train (고를 때)</th><td>2015 ~ 각 val 연도의 전년</td><td>val 연도마다 그 전 해까지로 학습해서 그 해를 평가</td></tr>
+          <tr><th>train (최종)</th><td>2015 ~ T−1년</td><td>고른 설정으로 다시 학습한 뒤 테스트</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="카드 타임라인카드">
+      <div class="타임라인" role="img" aria-label="예시. 2024년 테스트: 2015~2020 train, 2021~2023 val, 2024 test. 2025년 테스트: 2015~2021 train, 2022~2024 val, 2025 test.">
+        <div class="타임줄 머리줄">
+          <span class="타임이름"></span>
+          <div class="연도들" id="연도머리"></div>
+        </div>
+        <div class="타임줄">
+          <span class="타임이름">2024년 테스트</span>
+          <div class="연도들" data-train="2020" data-val="2023" data-test="2024"></div>
+        </div>
+        <div class="타임줄">
+          <span class="타임이름">2025년 테스트</span>
+          <div class="연도들" data-train="2021" data-val="2024" data-test="2025"></div>
+        </div>
+      </div>
+      <div class="범례 타임범례">
+        <span><i class="칸train"></i>train (학습)</span>
+        <span><i class="칸val"></i>validation (고르기)</span>
+        <span><i class="칸test"></i>test (한 번만 평가)</span>
+      </div>
+      <p class="작게">예시입니다. 아래 1~3단계는 2024년 테스트 한 줄을 따라가며 설명합니다.</p>
+    </div>
+
+    <h3>1단계. 테스트 연도 하나 정하기</h3>
+    <p>2024년을 테스트 연도로 정하면, 2024년은 모른다고 보고 2015~2023년 데이터만 꺼냅니다. 2024년 데이터는 3단계에서 채점할 때까지 쓰지 않습니다.</p>
+
+    <h3>2단계. validation으로 1등 모델 고르기</h3>
+    <p>후보 모델 8종(의사결정나무, 로지스틱 회귀, 순서형 로지스틱, SVM, KNN, 랜덤포레스트, 그래디언트 부스팅, 투표)을
+      2021·2022·2023년에 각각 전부 돌려 봅니다. 각 val 연도는 그 전 해까지의 데이터로 학습하고 그 해를 맞힙니다.
+      투표는 탐색이 끝난 나머지 7개 모델을 묶어 답을 정합니다. hard voting은 각 모델이 고른 등급의 다수결, soft voting은 등급별 확률의 평균이며, 둘 중 무엇을 쓸지도 validation으로 골랐습니다.</p>
+    <div class="표감싸기">
+      <table class="표 숫자표">
+        <thead><tr><th>학습</th><th>평가 (val)</th></tr></thead>
+        <tbody>
+          <tr><td>2015 ~ 2020</td><td>2021</td></tr>
+          <tr><td>2015 ~ 2021</td><td>2022</td></tr>
+          <tr><td>2015 ~ 2022</td><td>2023</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>세 해의 정답률을 문제 수로 가중 평균한 값이 그 모델의 val 점수입니다. 8종의 val 점수를 비교해 1등을 고르고, 이 모델이 그 해의 <b>'AI'</b>입니다 (동점이면 후보 목록 앞쪽).</p>
+
+    <h3>3단계. 1등 모델로 테스트하기</h3>
+    <p>1등 모델을 2015~2023년 전체로 다시 학습하고, 2024년을 딱 한 번 맞히고 채점합니다. test 점수는 이때 처음 계산합니다.</p>
+
+    <h3>4단계. 테스트 연도를 바꿔 가며 반복하기</h3>
+    <p>1~3단계를 초동은 2018~2025년(8번), 시기는 2018~2024년(7번) 반복합니다. 모델 고르기도 매번 새로 하므로 해마다 뽑히는 모델이 다를 수 있습니다 (<a href="#모델">8장</a>).
+      테스트 연도별로 맞힌 개수를 합쳐 정답률을 냅니다 (초동 <b>274문제</b>, 시기 <b>208문제</b>).</p>
+    <div class="표감싸기">
+      <table class="표 숫자표">
+        <thead><tr><th>테스트 연도 (초동)</th><th>val</th><th>최종 학습</th></tr></thead>
+        <tbody>
+          <tr><th>2018</th><td>2017</td><td>2015 ~ 2017</td></tr>
+          <tr><th>2019</th><td>2017 · 2018</td><td>2015 ~ 2018</td></tr>
+          <tr><th>2020</th><td>2017 · 2018 · 2019</td><td>2015 ~ 2019</td></tr>
+          <tr><th>2021</th><td>2018 · 2019 · 2020</td><td>2015 ~ 2020</td></tr>
+          <tr><th>2022</th><td>2019 · 2020 · 2021</td><td>2015 ~ 2021</td></tr>
+          <tr><th>2023</th><td>2020 · 2021 · 2022</td><td>2015 ~ 2022</td></tr>
+          <tr><th>2024</th><td>2021 · 2022 · 2023</td><td>2015 ~ 2023</td></tr>
+          <tr><th>2025</th><td>2022 · 2023 · 2024</td><td>2015 ~ 2024</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="점목록">
+      <li><b>val 연도 건너뛰기</b>: 학습 데이터에 3등급이 다 없는 val 연도는 건너뜁니다. val 2015년은 이전 데이터가 없고, val 2016년은 학습 데이터가 2015년뿐이라 둘 다 빠집니다. 그래서 2018년 테스트는 val이 2017년 하나, 2019년은 2017·2018년 두 개입니다.</li>
+      <li><b>2018년부터 테스트</b>: 2017년을 테스트로 하면 초동 학습 데이터가 28개, 그중 30만 이상이 2개뿐입니다.</li>
+      <li><b>이 반복의 역할</b>: 모델을 고르는 과정이 아니라, 이 고르는 방법이 얼마나 맞히는지 채점하는 과정입니다.</li>
+    </ul>
+
+    <h3>5단계. 실전용 최종 모델 만들기 <span class="장출처">노트북 12장</span></h3>
+    <p>2026년을 테스트 연도로 놓고 같은 과정을 한 번 더 합니다. 초동은 val 2023·2024·2025년으로 8종을 전부 돌려 1등을 고르고, 2015~2025년 전체로 다시 학습합니다.
+      시기는 val 2022·2023·2024년, 학습 2015~2024년입니다. 2026년은 아직 결과가 없어 예측만 합니다. 1페이지에서 돌아가는 모델이 이 최종 모델입니다.</p>
+    <div class="표감싸기">
+      <table class="표">
+        <thead><tr><th></th><th>하는 일</th><th>기준 시점</th><th>학습</th><th>평가</th></tr></thead>
+        <tbody>
+          <tr><th>중첩 교차검증 (8장)</th><td>고르는 방법 채점</td><td>테스트 연도마다</td><td>그 해 이전</td><td>그 해 (테스트)</td></tr>
+          <tr><th>최종 모델 (12장)</th><td>실전용 모델 만들기</td><td>2026년</td><td>2015~2025</td><td>2026년 이후 (예측만)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>왜 이렇게 나누나요</h3>
+    <ul class="점목록">
+      <li><b>같은 해가 test였다가 학습 데이터가 되는 이유</b>: 2024년은 2024년 테스트에서는 test, 2025년 테스트에서는 val입니다. 2024년 테스트는 '2024년 초에 2024년을 예측하는 상황'이라 2024년 결과를 쓰면 안 되고, 2025년 테스트는 '2025년 초'라 2024년이 이미 끝난 과거입니다. 어느 테스트 연도에서도 그보다 앞인 데이터만 씁니다.</li>
+      <li><b>val과 test를 나누는 이유</b>: 고르는 데 쓴 점수를 성능으로 쓰면 부풀려집니다 (Cawley &amp; Talbot 2010).</li>
+      <li><b>12장 최종 모델만으로 부족한 이유</b>: 12장의 val 점수(초동 82.6%)는 고르는 데 쓴 점수이고, 2026년은 채점할 결과가 없습니다. 그래서 같은 방법을 과거 연도마다 적용해 test 정답률을 따로 내고, 이 정답률로 사람 기준과 비교합니다.</li>
+      <li><b>3분할을 메인으로 쓰지 않은 이유</b>: 한 번만 나누면 test가 2년치(초동 74문제)뿐입니다.</li>
+    </ul>
+  </section>
+
+  <!-- 7. 모델 -->
+  <section id="모델" class="장">
+    <h2><span class="장번호">7</span>후보 8종과 최종 모델 2개 <span class="장출처">노트북 6~8장, 12장</span></h2>
+    <p>후보 모델 8종과 탐색 범위는 <b>결과를 보기 전에</b> 정했습니다. 결과를 보고 범위를 고치면 잘 나온 쪽으로 맞추는 셈이기 때문입니다.</p>
+    <div class="표감싸기">
+      <table class="표">
+        <thead><tr><th>모델</th><th>판단 방식</th><th>탐색한 하이퍼파라미터</th></tr></thead>
+        <tbody>
+          <tr><th>의사결정나무</th><td>질문을 차례로 던져 나눔 (표준화 없이 원래 값)</td><td>깊이 1~10, 잎 최소 샘플 30~1, class_weight</td></tr>
+          <tr><th>로지스틱 회귀</th><td>재료별 가중치로 등급 확률 계산 (saga, elasticnet)</td><td>C 0.001~100 (11개), L1 비율 0/0.5/1, class_weight</td></tr>
+          <tr><th>순서형 로지스틱</th><td>'0등급보다 위?' '1등급보다 위?' 두 문제로 나눠 풀기 (Frank &amp; Hall 2001)</td><td>C 0.001~100, class_weight</td></tr>
+          <tr><th>SVM</th><td>등급 사이에 경계선을 그음. 확률은 Platt 보정 (Platt 1999)</td><td>kernel linear/rbf, C 0.01~100, gamma 0.001~1, class_weight</td></tr>
+          <tr><th>KNN</th><td>재료가 비슷한 과거 앨범 k개의 다수결</td><td>이웃 수 51~1, 거리 가중 여부</td></tr>
+          <tr><th>랜덤포레스트</th><td>서로 다른 표본·재료로 만든 나무 100개의 다수결 (Breiman 2001, 표준화 없이 원래 값)</td><td>깊이 2~12, 잎 최소 샘플 30~1, class_weight</td></tr>
+          <tr><th>그래디언트 부스팅</th><td>앞 나무가 틀린 만큼을 다음 나무가 고쳐 가며 쌓음 (Friedman 2001, 표준화 없이 원래 값)</td><td>나무 개수 25~200, 학습률 0.01~0.3, 깊이 1~4</td></tr>
+          <tr><th>투표</th><td>튜닝이 끝난 7개 모델을 묶어 다수결(hard) 또는 확률 평균(soft)</td><td>hard / soft voting</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="작게">공통으로 재료 조합(초동 2가지, 시기 32가지)과 시기의 끝난 공백 보강 켜기/끄기도 탐색했습니다. 범위는 '단순한 값 → 복잡한 값' 순서로 적어, 점수가 비슷하면 단순한 쪽을 고릅니다.</p>
+
+    <h3>하이퍼파라미터 고르는 법 <span class="장출처">노트북 7장</span></h3>
+    <p>테스트 연도마다(초동 8번, 시기 7번) 후보 8종을 따로 탐색했고, 점수는 validation만 봤습니다.</p>
+    <ol class="단계">
+      <li><b>하나씩 바꾸기</b>: 파라미터 하나의 범위를 훑으면서 나머지는 고정하고 train·val 정답률을 잽니다 (scikit-learn validation_curve). val은 3개 연도를 문제 수로 가중 평균합니다.</li>
+      <li><b>2바퀴</b>: 1바퀴는 val 최고값으로 대략 찾고, 2바퀴는 다른 값이 정해진 상태에서 다시 확인합니다.</li>
+      <li><b>1-표준오차 규칙</b>: 마지막 바퀴에서 '최고 val − 표준오차' 안에 드는 값 중 가장 단순한 값을 고릅니다 (The Elements of Statistical Learning 7.10절). val 문제가 약 100개라 1등에도 운이 섞이기 때문입니다. 표준오차 = √(p(1−p)/n).</li>
+      <li><b>경고</b>: 최고값이 범위 끝이면 '범위 끝', train − val이 20%p를 넘으면 '과적합'을 표시합니다.</li>
+    </ol>
+    <p class="작게">투표는 다른 7개의 탐색이 끝난 뒤, 그 모델들로 구성해 탐색합니다.</p>
+
+    <h3>해마다 val 1등 모델 = 'AI' <span class="장출처">노트북 8장</span></h3>
+    <p>테스트 연도마다 val 1등 모델을 'AI'로 뽑고 (동점이면 후보 목록 앞쪽), 그 설정 그대로 그 해 이전 전체를 다시 학습해서 그 해를 테스트했습니다. test 점수는 이때 처음 계산합니다.</p>
+    <div class="표감싸기">
+      <table class="표 숫자표">
+        <thead><tr><th>테스트 연도</th><th>초동: 뽑힌 모델</th><th>시기: 뽑힌 모델 (val)</th><th>시기 test 맞힘</th></tr></thead>
+        <tbody>
+          <tr><th>2018</th><td>SVM</td><td>순서형 (66.7%)</td><td>21/32</td></tr>
+          <tr><th>2019</th><td>SVM</td><td>순서형 (66.2%)</td><td>26/32</td></tr>
+          <tr><th>2020</th><td>랜덤포레스트</td><td>KNN (74.4%)</td><td>18/28</td></tr>
+          <tr><th>2021</th><td>순서형</td><td>나무 (71.7%)</td><td>19/27</td></tr>
+          <tr><th>2022</th><td>로지스틱</td><td>나무 (73.6%)</td><td>25/32</td></tr>
+          <tr><th>2023</th><td>로지스틱</td><td>KNN (73.6%)</td><td>17/28</td></tr>
+          <tr><th>2024</th><td>로지스틱</td><td>SVM (70.1%)</td><td>20/29</td></tr>
+          <tr><th>2025</th><td>나무</td><td>(테스트 제외)</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="점목록">
+      <li>해마다 뽑히는 모델이 다릅니다. 모델 하나를 7년 내내 썼을 때 시기 test는 67.8~69.7%로 AI(70.2%)와 1~5문제 차이입니다. 성능을 가른 것은 모델 종류보다 문제 정의와 재료입니다.</li>
+      <li><b>튜닝 효과</b>: 기본 설정 로지스틱(튜닝 전)은 초동 75.9%, 시기 64.4%입니다. AI는 각각 +2.9%p, +5.8%p입니다.</li>
+      <li><b>시드 반복</b>: 후보 8종으로 바꾼 버전의 시드 반복(시드 6개)은 아직 돌리지 않았습니다. 후보 6종 버전에서는 6개 모두 초동 78.5%, 시기 70.2%로 같았습니다.</li>
+    </ul>
+
+    <h3>사이트에서 돌아가는 최종 모델 2개 <span class="장출처">노트북 12장</span></h3>
+    <p>실전용 모델은 마지막 3년을 val로 같은 탐색을 해서 하나로 정했고, 전체 기간으로 다시 학습했습니다.
+      13장에서 입력할 수 있는 재료만 쓰는 모델 중 val 1등입니다 (팀경향 같은 후보 재료는 팀의 과거 기록이 있어야 계산돼서 실전 후보에서 뺐습니다).</p>
+    <div class="두열">
+      <div class="카드 최종카드">
+        <div class="문제이름">초동 · 의사결정나무</div>
+        <dl class="정보목록">
+          <dt>학습 범위</dt><dd>2015~2025 (333개)</dd>
+          <dt>val</dt><dd>2023·2024·2025</dd>
+          <dt>설정</dt><dd>깊이 2, 잎 최소 30</dd>
+          <dt>val 점수</dt><dd><b>82.6%</b> (랜덤포레스트·부스팅·사람 기준과 동점)</dd>
+        </dl>
+        <p class="작게">직전초동 하나만 봅니다. 아래 칸은 <code>model.js</code>의 나무에서 바로 그린 것입니다.</p>
+        <div class="나무칸들" id="나무칸들"></div>
+        <p class="작게">사람 기준의 경계(10만·30만)를 조금 낮춘 것과 같고 (시장 성장을 배운 결과), 사람 기준과 89.9% 같은 답을 냅니다.</p>
+      </div>
+      <div class="카드 최종카드">
+        <div class="문제이름">시기 · 로지스틱 회귀</div>
+        <dl class="정보목록">
+          <dt>학습 범위</dt><dd>2015~2024 (276개)</dd>
+          <dt>val</dt><dd>2022·2023·2024</dd>
+          <dt>설정</dt><dd>C = 0.001, 기본 재료</dd>
+          <dt>val 점수</dt><dd><b>68.5%</b> (순서형·SVM과 동점, 사람 기준 57.3%)</dd>
+        </dl>
+        <p class="작게">쓰는 재료 <span id="시기재료수"></span>개:</p>
+        <div class="재료칩들" id="시기재료"></div>
+        <p class="작게">재료를 표준화한 뒤 등급마다 점수를 계산하고 softmax로 확률을 냅니다.</p>
+      </div>
+    </div>
+    <p class="작게">확률: 나무는 같은 칸에 들어간 과거 앨범의 등급 비율을, 로지스틱은 자체 확률을 줍니다. 확률을 못 주는 모델이 뽑히면 Platt 보정 등으로 대신하도록 해 두었습니다.</p>
+    <p class="주의 왼쪽">주의: <a href="results.html">결과·시각화</a> 맨 위의 78.8%·70.2%는 '해마다 validation 1등 모델'의 검증 결과이고, 위 82.6%·68.5%는 최종 모델의 val 점수입니다. 서로 다른 숫자입니다.</p>
+  </section>
+</main>
+
+<footer class="바닥">
+  <div class="감싸기">
+    K-pop 컴백 예측 · AI 동아리 개인 프로젝트 · <a href="quiz.html">나도 맞혀보기</a><br>
+    데이터 기준: 2015~2025 학습, 사이트 목록은 2026-11-18까지 반영
+  </div>
+</footer>
+
+<script src="js/model.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  "use strict";
+  var M = window.MODEL;
+
+  // 검증 타임라인: 2015~2025, 각 줄의 train 끝·val 끝·test 연도로 칸 색칠 (PDF 4장 예시 두 줄)
+  var 연도 = []; for (var y = 2015; y <= 2025; y++) 연도.push(y);
+  document.getElementById("연도머리").innerHTML = 연도.map(function (y) {
+    return "<span class='연도글' title='" + y + "'>'" + String(y).slice(2) + "</span>";   // '15 ~ '25 (폰에서 줄바꿈 안 되게)
+  }).join("");
+  Array.prototype.forEach.call(document.querySelectorAll(".연도들[data-test]"), function (줄) {
+    var tr = +줄.dataset.train, va = +줄.dataset.val, te = +줄.dataset.test;
+    줄.innerHTML = 연도.map(function (y) {
+      var 종류 = y <= tr ? "train" : y <= va ? "val" : y === te ? "test" : "빈";
+      return "<span class='칸" + 종류 + "' title='" + y + " " + (종류 === "빈" ? "안 씀" : 종류) + "'>" + (종류 === "test" ? "test" : "") + "</span>";
+    }).join("");
+  });
+
+  // 최종 초동 나무: 잎을 왼쪽→오른쪽 순서로 모아서 직전초동 구간으로 보여줌
+  var 노드 = M.초동.노드, 잎들 = [];
+  (function 걷기(i, 아래, 위) {
+    var n = 노드[i];
+    if (n.왼쪽 === -1) { 잎들.push({ 아래: 아래, 위: 위, n: n }); return; }
+    걷기(n.왼쪽, 아래, n.기준);
+    걷기(n.오른쪽, n.기준, 위);
+  })(0, null, null);
+  var 만 = function (v) { return +(v / 10000).toFixed(2) + "만"; };
+  document.getElementById("나무칸들").innerHTML = 잎들.map(function (잎) {
+    var p = 잎.n.확률, k = p.indexOf(Math.max.apply(null, p));
+    var 구간 = 잎.아래 === null ? "≤ " + 만(잎.위) : 잎.위 === null ? "> " + 만(잎.아래) : 만(잎.아래) + " ~ " + 만(잎.위);
+    return "<div class='나무칸 등급" + k + "'><span class='구간'>직전초동 " + 구간 + "</span>" +
+      "<b>" + M.초동_이름[k] + "</b><span>" + (p[k] * 100).toFixed(1) + "% · 과거 앨범 " + 잎.n.앨범수 + "개</span></div>";
+  }).join("");
+
+  // 최종 시기 재료 목록
+  document.getElementById("시기재료수").textContent = M.시기.재료.length;
+  document.getElementById("시기재료").innerHTML = M.시기.재료.map(function (r) { return "<span>" + r + "</span>"; }).join("");
+})();
+</script>
+</body>
+</html>
