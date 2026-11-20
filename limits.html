@@ -40,12 +40,12 @@
       <article class="카드 장점카드">
         <div class="장점숫자"><b>7년</b><span>/ 7년</span></div>
         <h3>컴백 시기는 7년 모두 AI가 앞섰습니다</h3>
-        <p>2018~2024년 테스트에서 해마다 AI가 사람 기준보다 더 맞혔습니다. 합치면 208문제 중 AI 70.2%, 사람 기준 54.3%로 33문제 차이입니다.</p>
+        <p>2018~2024년 테스트에서 해마다 AI가 사람 모델보다 더 맞혔습니다. 합치면 <span id="한시기문제"></span>문제 중 AI <span id="한시기AI"></span>%, 사람 모델 <span id="한시기사람"></span>%로 <span id="한시기차"></span>문제 차이입니다.</p>
       </article>
       <article class="카드 장점카드">
-        <div class="장점숫자"><b>79.2%</b><span>vs 사람 58.3%</span></div>
+        <div class="장점숫자"><b><span id="한리팩AI"></span>%</b><span>vs 사람 <span id="한리팩사람"></span>%</span></div>
         <h3>직전 앨범이 리패키지일 때 AI가 확실히 앞섭니다</h3>
-        <p>리패키지는 팬이 이미 원본을 사서 덜 팔리므로, 그다음 앨범은 등급이 오르는 경우가 많습니다 (41.7%). 직전만 따라가는 사람 기준은 이를 따라가지 못합니다 (24문제).</p>
+        <p>리패키지는 팬이 이미 원본을 사서 덜 팔리므로, 그다음 앨범은 등급이 오르는 경우가 많습니다 (41.7%). 사람 모델은 이를 AI만큼 따라가지 못합니다 (24문제).</p>
       </article>
       <article class="카드 장점카드">
         <div class="장점숫자"><b>0</b><span>미래 정보 사용</span></div>
@@ -55,7 +55,7 @@
       <article class="카드 장점카드">
         <div class="장점숫자"><b>70명</b><span>설문</span></div>
         <h3>비교 기준을 실제 선택으로 정했습니다</h3>
-        <p>'흐름을 봤다'고 말한 사람도 실제로는 직전 쪽을 60% 골랐습니다. 그래서 자기 보고가 아니라 설문 70명의 실제 답으로 사람 기준(직전 따라가기)을 정했습니다.</p>
+        <p>'흐름을 봤다'고 말한 사람도 실제로는 직전 쪽을 60% 골랐습니다. 그래서 자기 보고가 아니라 설문 70명의 실제 답으로 사람 모델을 정했습니다.</p>
       </article>
     </div>
   </section>
@@ -66,24 +66,23 @@
     <ol class="한계목록">
       <li><b>데이터 범위</b>대형 기획사 3곳의 앨범뿐입니다. 논문에서 30만을 넘긴 그룹은 3.55%인데 우리 데이터는 앨범의 26%라, 중소 기획사에 그대로 쓰기 어렵습니다.</li>
       <li><b>등급 기준</b>'10만 = 팬덤 형성 시작'은 논문 원문에서 확인하지 못했고, 논문 기준은 초동이 아니라 단일 앨범 판매량입니다. 150·300일은 업계가 쓰는 숫자가 아닙니다.</li>
-      <li><b>작은 차이와 표본</b>초동은 274문제 중 5문제 차이입니다. 시기는 연도당 27~32문제라 한 문제가 약 3%p입니다.</li>
-      <li><b>짧은 공백</b>시기 '150일 이하'는 26문제 중 하나도 못 맞혔습니다. 사이트의 최종 모델도 학습 데이터 276개 중 한 번도 '150일 이하'를 예측하지 않습니다 (최대 확률 14.5%).</li>
-      <li><b>설문 범위</b>설문은 초동만 물었습니다. 시기의 사람 기준은 초동에서 확인된 방식을 옮겨 쓴 것입니다.</li>
+      <li><b>작은 차이와 표본</b>초동은 사람 모델이 이미 강해서 AI와 차이가 작습니다. 시기는 연도당 27~32문제라 한 문제가 약 3%p입니다.</li>
+      <li><b>짧은 공백</b>시기 '150일 이하'는 26문제 중 하나도 못 맞혔습니다. <span id="안나옴"></span></li>
+      <li><b>설문 범위</b>설문은 초동만 물었습니다. 시기의 사람 모델은 초동에서 확인된 방식을 옮겨 쓴 것입니다.</li>
       <li><b>엑셀에 없는 요인</b>화제성(리센느 PULSE), 입대, 회사 사정은 모델이 볼 수 없습니다. 실전 초동 나무는 직전초동만 써서 리패키지 다음 앨범도 구분하지 못합니다.</li>
-      <li><b>시드 반복</b>후보 8종 버전의 시드 반복은 아직 돌리지 않았습니다.</li>
     </ol>
   </section>
 
   <!-- 3. 실전 오답 -->
   <section id="오답" class="장">
     <h2><span class="장번호">3</span>실전 오답 2건과 이유 <span class="장출처">노트북 13장</span></h2>
-    <p>결과가 이미 나온 2026년 앨범 4건 중 2건을 맞혔고, 사람 기준도 같은 2건만 맞혔습니다. 틀린 2건은 둘 다 엑셀에 없는 정보 때문입니다.</p>
+    <p>결과가 이미 나온 2026년 앨범 4건 중 2건을 맞혔고, 사람 모델도 같은 2건만 맞혔습니다. 틀린 2건은 둘 다 엑셀에 없는 정보 때문입니다.</p>
     <div class="두열">
       <article class="카드 사례 틀림">
         <div class="사례머리"><span class="표시">틀림</span><span class="종류">초동</span></div>
         <h3>리센느 PULSE</h3>
         <dl>
-          <dt>AI 예측</dt><dd>10~30만 (63.4%)</dd>
+          <dt>AI 예측</dt><dd data-정답지="1"></dd>
           <dt>실제</dt><dd><b>602,688장</b> (30만 이상)</dd>
         </dl>
         <p class="틀린이유">리센느는 데이터에 없는 회사(더뮤즈)라 회사 정보 없이 예측했습니다. 직전 10.4만의 5.8배가 팔렸는데,
@@ -93,7 +92,7 @@
         <div class="사례머리"><span class="표시">틀림</span><span class="종류">시기</span></div>
         <h3>리센느 lip bomb → PULSE</h3>
         <dl>
-          <dt>AI 예측</dt><dd>151~300일 (52.4%)</dd>
+          <dt>AI 예측</dt><dd data-정답지="3"></dd>
           <dt>실제</dt><dd><b>343일 뒤</b> (2026-11-03)</dd>
         </dl>
         <p class="틀린이유">lip bomb과 PULSE 사이에 디지털 싱글 활동이 있었습니다. 데이터는 실물 앨범만 세서 공백이 343일로 잡혔습니다.</p>
@@ -135,12 +134,12 @@
       <table class="표">
         <thead><tr><th>시도</th><th>결과</th><th>뺀 이유</th></tr></thead>
         <tbody>
-          <tr><th>3분할 한 번 나누기<br><span class="작게">train ~2021 / val 2022~23 / test 2024~25</span></th><td>초동 AI 81.1% = 사람 기준 81.1% (74문제)</td><td>test가 62~74문제뿐이고 그 연도는 중첩 시계열 교차검증에서 전부 테스트됨</td></tr>
-          <tr><th>찍기 기준선 (가장 흔한 등급)</th><td>초동 36.1%</td><td>목표가 '사람보다 나은가'라서 비교 대상을 사람 기준 하나로 정함</td></tr>
+          <tr><th>3분할 한 번 나누기<br><span class="작게">train ~2021 / val 2022~23 / test 2024~25</span></th><td>초동 AI 81.1% = 사람 모델 81.1% (74문제)</td><td>test가 62~74문제뿐이고 그 연도는 중첩 시계열 교차검증에서 전부 테스트됨</td></tr>
+          <tr><th>찍기 기준선 (가장 흔한 등급)</th><td>초동 36.1%</td><td>목표가 '사람보다 나은가'라서 비교 대상을 사람 모델 하나로 정함</td></tr>
           <tr><th>맥니마 검정</th><td>초동 AI vs 사람 차이는 우연 범위</td><td>'차이가 있긴 하지만 크지 않다'로 표현하고 검정은 뺌</td></tr>
           <tr><th>최근 데이터 가중치<br><span class="작게">반감기, Gama 외 2014</span></th><td>15번 중 1번만 뽑힘</td><td>시기 val이 어느 해도 오르지 않음</td></tr>
           <tr><th>등급 비율 보정<br><span class="작게">Saerens 외 2002</span></th><td>한 번도 뽑히지 않음</td><td>위와 같음</td></tr>
-          <tr><th>사람+AI 협업<br><span class="작게">AI 확신이 문턱 미만이면 사람 기준 답</span></th><td>후보 6종 기준, 넣었을 때 초동 78.1%, 뺐을 때 78.5% (시기는 70.2%로 같음)</td><td>점수를 올리지 못하고 구조만 복잡해짐</td></tr>
+          <tr><th>사람+AI 협업<br><span class="작게">AI 확신이 문턱 미만이면 사람 모델 답</span></th><td>후보 6종 기준, 넣었을 때 초동 78.1%, 뺐을 때 78.5% (시기는 70.2%로 같음)</td><td>점수를 올리지 못하고 구조만 복잡해짐</td></tr>
           <tr><th>그룹별 따로 학습</th><td>그룹마다 val로 고르기 55.7% vs 전체 모델 57.4% (이전 시기 정의, 237문제)</td><td>가장 많은 트와이스도 시기 정답 22개뿐이라 표본이 부족함. 유닛·솔로는 300일 초과가 55%로 본 그룹(20%)과 달라 묶으면 더 떨어짐</td></tr>
         </tbody>
       </table>
@@ -160,6 +159,9 @@
   </div>
 </footer>
 
+<script src="js/model.js"></script>
+<script src="js/predict.js"></script>
+<script src="js/chartData.js"></script>
 <script src="js/artists.js"></script>
 <script src="js/albums.js"></script>
 <script src="js/app.js"></script>
@@ -170,6 +172,41 @@
   function 글(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function 이름(t) { return t.정식이름 || t.이름; }
   function 칩(t) { return "<span>" + 글(이름(t)) + "</span>"; }
+
+  // 장점 카드의 숫자는 chartData.js에서 채운다 (노트북을 다시 돌려도 맞게)
+  (function () {
+    var C = window.CHART; if (!C) return;
+    function 글(id, s) { var e = document.getElementById(id); if (e) e.textContent = s; }
+    var 합 = function (a) { return a.reduce(function (x, y) { return x + y; }, 0); };
+    var 시 = C.시기;
+    글("한시기문제", 시.문제수); 글("한시기AI", 시.정답률.AI.toFixed(1)); 글("한시기사람", 시.정답률["사람 기준"].toFixed(1));
+    글("한시기차", 합(시.연도별.AI) - 합(시.연도별["사람 기준"]));
+    var 리 = (C.리패키지 || []).filter(function (r) { return r["직전 리패키지"] === "직전 리패키지"; })[0];
+    if (리) { 글("한리팩AI", 리["AI(%)"].toFixed(1)); 글("한리팩사람", 리["사람 기준(%)"].toFixed(1)); }
+  })();
+
+  // 정답지(MODEL.정답지)를 사이트 계산으로 돌린 값으로 '이미 결과가 나온 예측' 문구를 채운다
+  Array.prototype.forEach.call(document.querySelectorAll("[data-정답지]"), function (칸) {
+    try {
+      var r = window.Predict.정답지계산(window.MODEL.정답지[+칸.dataset.정답지]);
+      var 글 = r.등급이름 + " (" + r.퍼센트 + "%)";
+      if (r.날짜) {
+        var 범위 = r.날짜.까지 ? r.날짜.부터 + " ~ " + r.날짜.까지 : r.날짜.부터 + " 이후";
+        if (칸.tagName === "TD") 글 += " → " + 범위; else 글 += "<br><span class='작게'>" + 범위 + "</span>";
+      }
+      칸.innerHTML = 글;
+    } catch (e) { 칸.textContent = "(계산 실패)"; }
+  });
+
+  // 사이트 최종 모델이 '150일 이하'를 예측하는지: model.js에 적힌 학습 데이터 예측 분포로 말한다
+  (function () {
+    var M = window.MODEL, 칸 = document.getElementById("안나옴");
+    if (!M || !M.시기 || !M.시기.학습_예측분포 || !칸) return;
+    var 분포 = M.시기.학습_예측분포, 총 = M.학습앨범수 && M.학습앨범수.시기;
+    칸.textContent = 분포[0] === 0
+      ? "사이트의 최종 모델도 학습 데이터 " + 총 + "개 중 한 번도 '150일 이하'를 예측하지 않습니다."
+      : "사이트의 최종 모델은 학습 데이터 " + 총 + "개 중 '150일 이하'를 " + 분포[0] + "번 예측합니다.";
+  })();
 
   // 1페이지 목록(albums.js의 TEAMS) 기준
   var 밖 = T.filter(function (t) { return t.회사 === "그 외"; });

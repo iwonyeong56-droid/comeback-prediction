@@ -74,7 +74,7 @@
     <h2><span class="단계번호">4</span>실제로는?</h2>
     <div class="예측두칸" id="실제두칸"></div>
     <p class="작게" id="실제메모"></p>
-    <p class="작게">'사람'은 직전 앨범을 그대로 따라가는 기준입니다 (설문 70명으로 확인한 방식). 성능 숫자는 <a href="results.html">결과·시각화</a>에서 볼 수 있습니다.</p>
+    <p class="작게">'사람 모델'은 초동은 설문 70명이 '주로 본 것'을 응답 비율대로 섞은 모델, 시기는 직전 공백 그대로입니다. 성능 숫자는 <a href="results.html">결과·시각화</a>에서 볼 수 있습니다.</p>
   </section>
 
   <!-- 목록에 없는 팀: 직접 입력 -->
@@ -87,6 +87,10 @@
         <label>최근 앨범 발매일<input name="발매일" type="date" value="2026-06-01"></label>
         <label>그 앞 앨범 발매일<input name="앞발매일" id="앞발매일" type="date" value="2025-12-01"></label>
         <label class="체크"><input id="데뷔작" type="checkbox"> 최근 앨범이 데뷔작입니다</label>
+        <label>그 앞 앨범 초동 (장, 선택)<input name="앞초동" type="number" min="1" step="1" inputmode="numeric" placeholder="비우면 최근 앨범 초동으로 계산"></label>
+        <label class="체크"><input name="최근리패" type="checkbox"> 최근 앨범이 리패키지입니다 (사람 모델용)</label>
+        <label>다음 앨범 발매 예정일 (초동 예측용)<input name="다음발매일" type="date"></label>
+        <label>다음 앨범 유형<select name="다음유형"><option>미니</option><option>정규</option><option>싱글</option><option>리패키지</option><option>스페셜</option></select></label>
         <label>앨범 유형<select name="유형"><option>미니</option><option>정규</option><option>싱글</option></select></label>
         <label>앨범순번 (몇 번째 앨범)<input name="앨범순번" type="number" min="1" step="1" value="3" inputmode="numeric"></label>
         <label>소속사<select name="회사"><option value="SM">SM</option><option value="JYP">JYP</option><option value="STARSHIP">스타쉽</option><option value="그 외">다른 소속사 (하이브·YG 등)</option></select></label>
