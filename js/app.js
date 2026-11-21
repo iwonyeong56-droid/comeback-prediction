@@ -23,6 +23,19 @@
   var 줄이기 = function (s) { return String(s || "").toLowerCase().replace(/[\s'’"!.\-&(),·]/g, ""); };
   function 소속사(a) { return a.소속사 || (a.회사 === "그 외" ? "그 밖의 소속사" : a.회사); }
   function 보일이름(a) { return a.정식이름 || a.이름; }
+
+  // ---------- 첫 화면 앨범 벽: 초동이 있는 앨범을 최근 발매 순으로, 색 = 초동 등급 ----------
+  (function () {
+    var 벽 = document.getElementById("앨범벽");
+    if (!벽 || !P || !P.초동등급) return;
+    var 모음 = [];
+    Object.keys(AL).forEach(function (팀) { AL[팀].forEach(function (x) { if (x.초동 != null) 모음.push({ 팀: 팀, x: x }); }); });
+    모음.sort(function (a, b) { return a.x.날짜 < b.x.날짜 ? 1 : a.x.날짜 > b.x.날짜 ? -1 : 0; });
+    벽.innerHTML = 모음.slice(0, 160).map(function (o, i) {
+      var k = P.초동등급(o.x.초동);
+      return "<span class='벽칸 등급" + k + "' style='--i:" + i + "' title='" + 글(o.팀 + " · " + o.x.앨범 + " · " + M.초동_이름[k]) + "'></span>";
+    }).join("");
+  })();
   // 팀마다 검색 열쇠: 한글 이름 + 정식 이름 + 별칭들
   A.forEach(function (a) {
     a.열쇠 = [a.이름, a.정식이름].concat(String(a.별칭 || "").split(/\s+/)).map(줄이기).filter(Boolean);
@@ -126,9 +139,10 @@
       " · 앨범 " + 목록.length + "개. 하나를 누르면 그 앨범이 막 나온 날을 기준으로 예측합니다.";
     // 최신이 위로. 활동을 마친 그룹의 마지막 앨범은 '다음 앨범'이 없으니 예측하지 않음
     var 끝난팀 = !!a.활동종료, 마지막 = 목록.length - 1;
-    $("앨범목록").innerHTML = 목록.map(function (x, i) { return { x: x, i: i }; }).reverse().map(function (o) {
+    $("앨범목록").innerHTML = 목록.map(function (x, i) { return { x: x, i: i }; }).reverse().map(function (o, 줄) {
       var x = o.x, 끝 = 끝난팀 && o.i === 마지막, 못씀 = x.초동 == null || 끝;
       return "<li><button type='button' class='앨범줄' data-i='" + o.i + "'" + (못씀 ? " disabled" : "") + ">" +
+        "<span class='트랙번호' aria-hidden='true'>" + (줄 < 9 ? "0" : "") + (줄 + 1) + "</span>" +     // 트랙리스트처럼 위에서부터 01, 02…
         "<span class='앨범날짜'>" + x.날짜 + "</span>" +
         "<span class='앨범이름'>" + 글(x.앨범) + "</span>" +
         "<span class='앨범유형 유형" + 글(x.유형) + "'>" + 글(x.유형) + "</span>" +
@@ -218,7 +232,10 @@
     if (r.시기) {
       $("시기등급").className = "등급";
       $("시기등급").innerHTML = M.시기_이름[r.시기.등급] + "<small>" + 퍼(r.시기.확률[r.시기.등급]) + "</small>";
-      $("시기날짜").textContent = r.시기날짜.까지 ? r.시기날짜.부터 + " ~ " + r.시기날짜.까지 + " 사이" : r.시기날짜.부터 + " 이후";
+      // 플레이어의 재생 시간처럼: 시작 날짜 ─── 끝 날짜
+      $("시기날짜").className = "날짜범위 시간줄";
+      $("시기날짜").innerHTML = "<span>" + r.시기날짜.부터 + "</span><i aria-hidden='true'></i><span>" + (r.시기날짜.까지 || "이후") + "</span>";
+      $("시기날짜").setAttribute("aria-label", r.시기날짜.까지 ? r.시기날짜.부터 + "부터 " + r.시기날짜.까지 + "까지" : r.시기날짜.부터 + " 이후");
       $("시기막대").innerHTML = 막대들(r.시기.확률, M.시기_이름, r.시기.등급);
       var 차 = Math.abs(r.시기.확률[1] - r.시기.확률[2]);
       $("시기설명").textContent = (r.시기재료.데뷔작 ? "데뷔작이라 공백일을 0으로 넣었습니다. " : "그 앞 본앨범과 " + r.공백일 + "일 간격, " + (r.앨범.본순번 || 1) + "번째 본앨범입니다. ") +

@@ -22,8 +22,20 @@
 </header>
 
 <main class="감싸기 맞춰보기" id="예측페이지">
-  <h1 class="페이지제목">AI와 다음 앨범 맞춰보기</h1>
-  <p class="페이지설명">아티스트를 고르고 앨범 하나를 눌러 보세요. 그 앨범이 막 나온 날로 돌아가서 AI가 <b>다음 앨범</b>을 예측합니다. 그다음 실제 결과와 맞춰 보세요.</p>
+  <!-- 첫 화면: 앨범 재킷 + 반쯤 빠져나온 레코드판 (그림 파일 없이 도형만) -->
+  <section class="재킷판" aria-label="소개">
+    <div class="큰판" aria-hidden="true"></div>
+    <div class="재킷">
+      <p class="재킷머리">K-pop 컴백 예측</p>
+      <h1 class="페이지제목">AI와 다음 앨범 맞춰보기</h1>
+      <p class="페이지설명">아티스트를 고르고 앨범 하나를 눌러 보세요. 그 앨범이 막 나온 날로 돌아가서 AI가 <b>다음 앨범</b>을 예측합니다. 그다음 실제 결과와 맞춰 보세요.</p>
+    </div>
+  </section>
+  <!-- 앨범 벽: 네모 하나 = 앨범 하나, 색 = 초동 등급 (albums.js에서 그림. 사진·커버 없음) -->
+  <div class="앨범벽틀">
+    <div class="앨범벽" id="앨범벽" role="img" aria-label="최근 앨범들의 초동 등급을 색으로 나타낸 네모 격자"></div>
+    <p class="작게 앨범벽설명"><span><i class="벽칸 등급0"></i>10만 미만</span><span><i class="벽칸 등급1"></i>10~30만</span><span><i class="벽칸 등급2"></i>30만 이상</span><span>네모 하나가 앨범 하나입니다 (최근 발매 순)</span></p>
+  </div>
 
   <!-- 1. 아티스트 -->
   <section class="단계카드 카드" id="단계1">

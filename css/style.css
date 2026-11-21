@@ -389,7 +389,7 @@ h2 { font-size: 18px; font-weight: 600; margin: 0 0 8px; }          /* H2 18 Sem
 @media (max-width: 520px) { .묶음 { grid-template-columns: 1fr !important; gap: 4px !important; } .묶음이름 { padding-top: 0 !important; } }
 .팀칩.고름 { background: var(--ai); border-color: var(--ai); color: #fff; font-weight: 700; }
 .앨범목록 { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; max-height: 420px; overflow-y: auto; }
-.앨범줄 { width: 100%; display: grid; grid-template-columns: 92px minmax(0, 1fr) auto auto; align-items: center; gap: 4px 12px; padding: 12px 16px; border: 0; border-radius: 12px; background: var(--바탕); text-align: left; cursor: pointer; font-size: 15px; }
+.앨범줄 { width: 100%; display: grid; grid-template-columns: 28px 92px minmax(0, 1fr) auto auto; align-items: center; gap: 4px 12px; padding: 12px 16px; border: 0; border-radius: 12px; background: var(--바탕); text-align: left; cursor: pointer; font-size: 15px; }
 .앨범줄:hover:not(:disabled) { background: var(--ai연); }
 .앨범줄.고름 { background: var(--ai연); box-shadow: inset 4px 0 0 var(--ai); }
 .앨범줄:disabled { cursor: default; opacity: .5; }
@@ -399,13 +399,20 @@ h2 { font-size: 18px; font-weight: 600; margin: 0 0 8px; }          /* H2 18 Sem
 .앨범유형.유형리패키지, .앨범유형.유형스페셜 { background: var(--강조연); color: var(--글); }
 .새앨범 { font-size: 12px; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: var(--강조); color: var(--글); white-space: nowrap; }   /* 새 것 = 강조 색 배지 */
 @media (max-width: 520px) {
-  .앨범줄 { grid-template-columns: minmax(0, 1fr) auto; }
-  .앨범날짜 { grid-column: 1 / -1; }
+  .앨범줄 { grid-template-columns: 28px minmax(0, 1fr) auto; }
+  .앨범줄 .트랙번호 { grid-row: span 2; }
+  .앨범날짜 { grid-column: 2 / -1; }
 }
 .메모 { color: var(--흐림); }
 .로딩 { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 28px 0; }
 .로딩 p { margin: 0; font-weight: 600; color: var(--흐림); }
-.빙글 { width: 46px; height: 46px; border-radius: 50%; border: 4px solid var(--ai연); border-top-color: var(--ai); animation: 빙글 .8s linear infinite; }
+/* LP판: 가운데 라벨(주 색) + 홈(줄무늬) + 빛 반사. 그림 파일 없이 CSS 도형만 */
+.빙글 { width: 72px; height: 72px; border-radius: 50%;
+  background:
+    radial-gradient(circle, var(--바탕) 0 5%, var(--ai) 5% 30%, transparent 31%),
+    conic-gradient(from 0deg, rgba(255,255,255,.22), transparent 18%, transparent 50%, rgba(255,255,255,.14) 62%, transparent 80%),
+    repeating-radial-gradient(circle, #1F1F2E 0 2px, #34314D 2px 4px);
+  animation: 빙글 1.8s linear infinite; }
 @keyframes 빙글 { to { transform: rotate(360deg); } }
 .기준줄 { margin: 0 0 12px; }
 .예측두칸 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -507,3 +514,86 @@ h2 { font-size: 18px; font-weight: 600; margin: 0 0 8px; }          /* H2 18 Sem
 .가로막대 { position: relative; min-width: 120px; height: 24px; display: flex; align-items: center; }
 .가로막대 i { position: absolute; left: 0; top: 3px; bottom: 3px; border-radius: 4px; opacity: .35; }
 .가로막대 b { position: relative; padding-left: 8px; font-size: 12px; }
+
+/* ---------- 1페이지: 음악 앱 느낌 (앨범 벽 · 트랙리스트 · 재생바) ---------- */
+/* 앨범 벽: 네모 하나 = 앨범 하나, 색 = 초동 등급 */
+.앨범벽틀 { margin: 4px 0 16px; }
+.앨범벽 { display: grid; grid-template-columns: repeat(auto-fill, 16px); grid-auto-rows: 16px; gap: 4px; max-height: 56px; overflow: hidden; }
+.벽칸 { display: inline-block; width: 16px; height: 16px; border-radius: 4px; }
+.앨범벽 .벽칸 { animation: 벽등장 .5s ease both; animation-delay: calc(var(--i) * 6ms); transition: transform .15s ease; }
+.앨범벽 .벽칸:hover { transform: scale(1.35); }
+.벽칸.등급0 { background: #D9D5F7; }
+.벽칸.등급1 { background: #A79FEB; }
+.벽칸.등급2 { background: var(--ai); }
+@keyframes 벽등장 { from { opacity: 0; transform: translateY(4px); } }
+.앨범벽설명 { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 8px 0 0; }
+.앨범벽설명 span { display: inline-flex; align-items: center; gap: 4px; }
+.앨범벽설명 .벽칸 { width: 12px; height: 12px; border-radius: 3px; }
+@media (max-width: 520px) { .앨범벽 { max-height: 36px; } }
+
+/* 트랙리스트: 01, 02… 고르거나 올리면 ▶ */
+.트랙번호 { color: var(--흐림); font-size: 12px; font-variant-numeric: tabular-nums; text-align: center; }
+.앨범줄:hover:not(:disabled) .트랙번호, .앨범줄.고름 .트랙번호 { font-size: 0; }
+.앨범줄:hover:not(:disabled) .트랙번호::before, .앨범줄.고름 .트랙번호::before { content: "▶"; font-size: 12px; color: var(--ai); }
+
+/* 결과 카드: 이퀄라이저 표시 + 재생바 모양 확률 막대 */
+.예측칸 .예측이름::before { content: ""; display: inline-block; width: 13px; height: 12px; margin-right: 8px; vertical-align: -1px;
+  background: linear-gradient(var(--ai), var(--ai)) 0 100% / 3px 55% no-repeat,
+              linear-gradient(var(--ai), var(--ai)) 5px 100% / 3px 100% no-repeat,
+              linear-gradient(var(--ai), var(--ai)) 10px 100% / 3px 35% no-repeat; }
+.예측칸 .막대틀 { height: 8px; border-radius: 999px; overflow: visible; }
+.예측칸 .막대 { position: relative; border-radius: 999px; }
+.예측칸 .막대줄.예측 .막대::after { content: ""; position: absolute; right: -7px; top: 50%; width: 14px; height: 14px; margin-top: -7px; border-radius: 50%; background: var(--ai); box-shadow: 0 0 0 3px var(--바탕); }
+
+/* ---------- 1페이지 A: 첫 화면 = 앨범 재킷 + 레코드판 ---------- */
+.재킷판 { position: relative; margin: 24px 0 16px; padding-right: 148px; overflow-x: clip; }   /* 도는 판의 모서리 때문에 가로 스크롤이 생기지 않게 */
+.재킷 { position: relative; z-index: 1; min-height: 260px; padding: 32px; border-radius: var(--반지름); overflow: hidden;
+  display: flex; flex-direction: column; justify-content: flex-end; color: #fff;
+  background: radial-gradient(circle at 85% 15%, rgba(255,255,255,.16) 0 18%, transparent 19%),
+              radial-gradient(circle at 92% 8%, rgba(255,255,255,.10) 0 30%, transparent 31%),
+              linear-gradient(135deg, #7468DD 0%, #5B4FD6 45%, #2D2780 100%); }
+.재킷머리 { margin: 0; font-size: 12px; font-weight: 700; letter-spacing: .16em; color: rgba(255,255,255,.85); }
+.재킷 .페이지제목 { margin: 8px 0; color: #fff; font-size: clamp(28px, 4.6vw, 40px); line-height: 1.25; }
+.재킷 .페이지설명 { margin: 0; max-width: 560px; color: rgba(255,255,255,.88); }
+.재킷 .페이지설명 b { color: #fff; }
+.큰판 { position: absolute; right: 0; top: 50%; width: 288px; height: 288px; margin-top: -144px; border-radius: 50%; z-index: 0;
+  background:
+    radial-gradient(circle, var(--바탕) 0 3%, var(--강조) 3% 22%, #1F1F2E 22.5% 24%, transparent 24.5%),
+    conic-gradient(from 0deg, rgba(255,255,255,.20), transparent 15%, transparent 48%, rgba(255,255,255,.12) 60%, transparent 78%),
+    repeating-radial-gradient(circle, #1F1F2E 0 2px, #2E2B45 2px 4px);
+  animation: 빙글 12s linear infinite; }
+@media (max-width: 640px) {
+  .재킷판 { padding: 64px 0 0; overflow: hidden; }
+  .큰판 { width: 168px; height: 168px; top: 0; right: -24px; margin-top: 0; }
+  .재킷 { min-height: 0; padding: 24px 20px; }
+}
+
+/* ---------- 1페이지 C: 예측 결과 = 뮤직 플레이어 화면 ---------- */
+#예측결과 .예측칸 { position: relative; overflow: hidden; color: #fff; background: linear-gradient(160deg, #2D2780 0%, #1F1F2E 100%); }
+#예측결과 .예측칸::after { content: ""; position: absolute; top: 16px; right: 16px; width: 44px; height: 44px; border-radius: 50%; opacity: .95;
+  background:
+    radial-gradient(circle, #1F1F2E 0 6%, var(--강조) 6% 30%, transparent 31%),
+    conic-gradient(from 0deg, rgba(255,255,255,.25), transparent 20%, transparent 50%, rgba(255,255,255,.15) 62%, transparent 80%),
+    repeating-radial-gradient(circle, #0F0E1A 0 1.5px, #34314D 1.5px 3px);
+  animation: 빙글 4s linear infinite; }
+#예측결과 .예측이름 { color: rgba(255,255,255,.75); padding-right: 52px; }
+#예측결과 .예측이름::before { background: linear-gradient(#A79FEB, #A79FEB) 0 100% / 3px 55% no-repeat, linear-gradient(#A79FEB, #A79FEB) 5px 100% / 3px 100% no-repeat, linear-gradient(#A79FEB, #A79FEB) 10px 100% / 3px 35% no-repeat; }
+#예측결과 .등급 { color: #fff; padding-right: 52px; }
+#예측결과 .등급 small { color: rgba(255,255,255,.7); }
+#예측결과 .등급.없음 { color: rgba(255,255,255,.7); }
+#예측결과 .막대줄 { color: rgba(255,255,255,.8); }
+#예측결과 .막대줄.예측 { color: #fff; }
+#예측결과 .막대틀 { background: rgba(255,255,255,.16); }
+#예측결과 .막대 { background: rgba(255,255,255,.4); }
+#예측결과 .막대줄.예측 .막대 { background: #fff; }
+#예측결과 .막대줄.예측 .막대::after { background: #fff; box-shadow: 0 0 0 3px rgba(167,159,235,.55); }
+#예측결과 .작게 { color: rgba(255,255,255,.72); }
+.시간줄 { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.시간줄 i { flex: 1; height: 2px; border-radius: 2px; background: rgba(255,255,255,.35); }
+#예측결과 .시간줄 { color: rgba(255,255,255,.9); margin: 8px 0 0; }
+#예측결과 .시간줄 span { display: inline; color: inherit; font-size: 12px; font-weight: 600; }
+#예측결과 .등급 small { white-space: nowrap; }
+@media (max-width: 520px) {
+  #예측결과 .예측칸::after { width: 36px; height: 36px; top: 12px; right: 12px; }
+  #예측결과 .등급 { padding-right: 40px; }
+}
