@@ -13,7 +13,7 @@
   var 색 = { ai: "#5B4FD6", 사람: "#62627A", 강조: "#F2B544", 오류: "#C93C3C", 경계: "#C4C2DB", train: "#B9B3EE", 글: "#1F1F2E" };
   var 등급색 = ["#D9D5F7", "#7468DD", "#5B4FD6"];
   var $ = function (id) { return document.getElementById(id); };
-  var 표시 = function (이름) { return 이름 === "사람 기준" ? "사람 모델" : 이름; };      // chartData의 키는 '사람 기준', 화면에는 '사람 모델'
+  var 표시 = function (이름) { return 이름 === "사람 기준" ? "휴리스틱 베이스라인" : 이름 === "AI" ? "ours" : 이름; };      // chartData의 키는 '사람 기준'·'AI', 화면에는 새 이름
   var 숫자 = function (n) { return Math.round(n).toLocaleString("ko-KR"); };
   var 만 = function (v) { return v >= 10000 ? +(v / 10000).toFixed(1) + "만" : 숫자(v); };
 
@@ -33,7 +33,7 @@
     var 튜 = "로지스틱(튜닝 전)";
     if (C.초동.정답률[튜] == null || C.시기.정답률[튜] == null) { var e = $("튜닝글"); if (e) e.remove(); return; }
     var 차 = function (문제) { var d = C[문제].정답률.AI - C[문제].정답률[튜]; return (d >= 0 ? "+" : "") + d.toFixed(1) + "%p"; };
-    글("튜닝글", "튜닝·합치기 효과: 기본 설정 로지스틱(튜닝 전)과 비교해 AI는 초동 " + 차("초동") + ", 시기 " + 차("시기") + "입니다.");
+    글("튜닝글", "튜닝·합치기 효과: 기본 설정 로지스틱(튜닝 전)과 비교해 ours는 초동 " + 차("초동") + ", 시기 " + 차("시기") + "입니다.");
   })();
   (function () {
     var m = C.초동.혼동행렬, 두칸 = m[0][2] + m[2][0];
@@ -41,18 +41,25 @@
     var s = C.시기.혼동행렬, 짧 = 합(s[0]), 맞 = s[0][0];
     글("짧은공백글", "'150일 이하'는 " + 짧 + "문제 중 " + 맞 + "개를 맞혔습니다." + (맞 === 0 ? " 스페셜·리패키지를 빼면서 짧은 간격이 줄어, 사실상 151~300일과 300일 초과를 고르는 문제가 됐습니다." : ""));
     var 줄 = C.분포_초동, 앞 = 줄[0], 뒤 = 줄[줄.length - 1], 최고 = 줄.reduce(function (a, r) { return r.연도 === 2024 ? r : a; }, 뒤);
-    글("시장글", "초동 30만 이상 비율은 " + 앞.연도 + "년 " + 앞["실제(%) 30만 이상"] + "% → " + 최고.연도 + "년 " + 최고["실제(%) 30만 이상"] + "%로 커졌고, AI 예측 비율도 " +
+    글("시장글", "초동 30만 이상 비율은 " + 앞.연도 + "년 " + 앞["실제(%) 30만 이상"] + "% → " + 최고.연도 + "년 " + 최고["실제(%) 30만 이상"] + "%로 커졌고, ours 예측 비율도 " +
       앞["AI 예측(%) 30만 이상"] + "% → " + 최고["AI 예측(%) 30만 이상"] + "%로 따라갔습니다.");
   })();
 
   // 정답지(MODEL.정답지)를 사이트 계산으로 돌린 값으로 '이미 결과가 나온 예측' 문구를 채운다
   Array.prototype.forEach.call(document.querySelectorAll("[data-정답지]"), function (칸) {
     try {
-      var r = window.Predict.정답지계산(window.MODEL.정답지[+칸.dataset.정답지]);
+      var 정 = window.MODEL.정답지[+칸.dataset.정답지];
+      var r = window.Predict.정답지계산(정);
       var 글 = r.등급이름 + " (" + r.퍼센트 + "%)";
       if (r.날짜) {
         var 범위 = r.날짜.까지 ? r.날짜.부터 + " ~ " + r.날짜.까지 : r.날짜.부터 + " 이후";
-        if (칸.tagName === "TD") 글 += " → " + 범위; else 글 += "<br><span class='작게'>" + 범위 + "</span>";
+        if (칸.tagName === "TD") {
+          글 += " → " + 범위;
+          // 나머지 두 등급도 같이: 150일 이하 8.5% (~날짜) · 300일 초과 10.8% (날짜 ~)
+          var 이름들 = window.MODEL.시기_이름, 퍼 = function (k) { return (r.결과.확률[k] * 100).toFixed(1) + "%"; };
+          var 짧 = window.Predict.시기날짜(정.입력.발매일, 0), 길 = window.Predict.시기날짜(정.입력.발매일, 2);
+          글 += "<br><span class='작게'>" + 이름들[0] + " " + 퍼(0) + " (~" + 짧.까지 + ") · " + 이름들[2] + " " + 퍼(2) + " (" + 길.부터 + " ~)</span>";
+        } else 글 += "<br><span class='작게'>" + 범위 + "</span>";
       }
       칸.innerHTML = 글;
     } catch (e) { 칸.textContent = "(계산 실패)"; }
@@ -128,14 +135,14 @@
     연도차트.$문제수 = d.문제수;
     연도차트.data.labels = d.연도.map(String);
     연도차트.data.datasets = [
-      { label: "사람 모델", data: d["사람 기준"], backgroundColor: 색.사람, borderRadius: 4 },
-      { label: "AI", data: d.AI, backgroundColor: 색.ai, borderRadius: 4 }
+      { label: "휴리스틱 베이스라인", data: d["사람 기준"], backgroundColor: 색.사람, borderRadius: 4 },
+      { label: "ours", data: d.AI, backgroundColor: 색.ai, borderRadius: 4 }
     ];
     연도차트.update();
     var 승 = 0, 무 = 0, 패 = 0;
     d.AI.forEach(function (a, i) { var s = d["사람 기준"][i]; if (a > s) 승++; else if (a === s) 무++; else 패++; });
     var 합AI = d.AI.reduce(function (a, b) { return a + b; }), 합사람 = d["사람 기준"].reduce(function (a, b) { return a + b; });
-    $("연도요약").textContent = (문제 === "초동" ? "초동" : "컴백 시기") + ": AI 기준 " + 승 + "승 " + 무 + "무 " + 패 + "패, 합계 " +
+    $("연도요약").textContent = (문제 === "초동" ? "초동" : "컴백 시기") + ": ours 기준 " + 승 + "승 " + 무 + "무 " + 패 + "패, 합계 " +
       합AI + " vs " + 합사람 + " (" + (합AI - 합사람) + "문제 차이)";
   }
   토글("연도별", 연도그리기);
@@ -212,7 +219,7 @@
 
   // ---------- 5. 리패키지 ----------
   var 리 = C.리패키지;
-  $("리팩표").innerHTML = "<table class='표 숫자표'><thead><tr><th>직전 앨범</th><th>문제 수</th><th>사람 모델</th><th>AI</th><th>등급 상승</th><th>등급 하락</th></tr></thead><tbody>" +
+  $("리팩표").innerHTML = "<table class='표 숫자표'><thead><tr><th>직전 앨범</th><th>문제 수</th><th>휴리스틱 베이스라인</th><th>ours</th><th>등급 상승</th><th>등급 하락</th></tr></thead><tbody>" +
     리.map(function (r) {
       var 이름 = r["직전 리패키지"] === "직전 리패키지" ? "리패키지" : "그 외";
       return "<tr><th>" + 이름 + "</th><td>" + r.문제수 + "</td><td>" + r["사람 기준(%)"].toFixed(1) + "%</td><td><b>" + r["AI(%)"].toFixed(1) +
@@ -223,8 +230,8 @@
     data: {
       labels: 리.map(function (r) { return (r["직전 리패키지"] === "직전 리패키지" ? "직전 = 리패키지" : "그 외") + " (" + r.문제수 + "문제)"; }),
       datasets: [
-        { label: "사람 모델", data: 리.map(function (r) { return r["사람 기준(%)"]; }), backgroundColor: 색.사람, borderRadius: 6, maxBarThickness: 56 },
-        { label: "AI", data: 리.map(function (r) { return r["AI(%)"]; }), backgroundColor: 색.ai, borderRadius: 6, maxBarThickness: 56 }
+        { label: "휴리스틱 베이스라인", data: 리.map(function (r) { return r["사람 기준(%)"]; }), backgroundColor: 색.사람, borderRadius: 6, maxBarThickness: 56 },
+        { label: "ours", data: 리.map(function (r) { return r["AI(%)"]; }), backgroundColor: 색.ai, borderRadius: 6, maxBarThickness: 56 }
       ]
     },
     options: {
@@ -250,7 +257,7 @@
     분포차트.data.labels = 줄.map(function (r) { return String(r.연도); });
     분포차트.data.datasets = [
       { label: "실제 " + 이름, data: 줄.map(function (r) { return r["실제(%) " + 이름]; }), borderColor: 색.사람, backgroundColor: 색.사람, borderWidth: 3, pointRadius: 4, tension: .2 },
-      { label: "AI 예측 " + 이름, data: 줄.map(function (r) { return r["AI 예측(%) " + 이름]; }), borderColor: 색.ai, backgroundColor: 색.ai, borderWidth: 3, pointRadius: 4, borderDash: [6, 4], tension: .2 }
+      { label: "ours 예측 " + 이름, data: 줄.map(function (r) { return r["AI 예측(%) " + 이름]; }), borderColor: 색.ai, backgroundColor: 색.ai, borderWidth: 3, pointRadius: 4, borderDash: [6, 4], tension: .2 }
     ];
     분포차트.update();
     // 등급 버튼 이름 바꾸기
@@ -383,7 +390,7 @@
     });
     var 칸 = function (v, 단위) { return v == null ? "<span class='작게'>-</span>" : "<div class='가로막대'><i style='width:" + Math.min(100, v / 50 * 100) + "%;background:" + 색.ai + "'></i><b>" + v + 단위 + "</b></div>"; };
     var AI줄 = 줄들.filter(function (r) { return r["AI(%p)"] != null; });
-    $("사람ai표").innerHTML = "<table class='표'><thead><tr><th>설문 보기</th><th>짝지은 AI 재료</th><th>사람: 답한 대로</th><th>사람: 실제 행동</th><th>AI 영향</th></tr></thead><tbody>" +
+    $("사람ai표").innerHTML = "<table class='표'><thead><tr><th>설문 보기</th><th>짝지은 ours 재료</th><th>사람: 답한 대로</th><th>사람: 실제 행동</th><th>ours 영향</th></tr></thead><tbody>" +
       줄들.map(function (r) {
         return "<tr><th>" + r["설문 보기"] + "</th><td>" + r["AI 재료"] + "</td><td>" + (r["사람 답(%)"] == null ? "-" : r["사람 답(%)"] + "%") + "</td><td>" + (r["사람 실제(%)"] == null ? "-" : r["사람 실제(%)"] + "%") + "</td><td>" + 칸(r["AI(%p)"], "%p") + "</td></tr>";
       }).join("") + "</tbody></table>";
@@ -394,7 +401,7 @@
     var 글목록 = [];
     if (말1 && 행1) 글목록.push("답한 대로는 '" + 말1["설문 보기"] + "'이 " + 말1["사람 답(%)"] + "%로 가장 많았지만, 실제 행동으로 옮기면 '" + 행1["설문 보기"] + "'이 " + 행1["사람 실제(%)"] + "%로 가장 많습니다." +
       (흐름 ? " '흐름'은 " + 흐름["사람 답(%)"] + "% → " + 흐름["사람 실제(%)"] + "%로 줄어듭니다." : ""));
-    if (AI1) 글목록.push("AI가 가장 크게 기댄 재료는 '" + AI1["AI 재료"] + "'(" + AI1["AI(%p)"] + "%p)입니다. 말은 '흐름'이어도 행동은 AI와 같은 '직전 판매량'입니다.");
+    if (AI1) 글목록.push("ours가 가장 크게 기댄 재료는 '" + AI1["AI 재료"] + "'(" + AI1["AI(%p)"] + "%p)입니다. 말은 '흐름'이어도 행동은 ours와 같은 '직전 판매량'입니다.");
     $("사람ai글").innerHTML = 글목록.map(function (s) { return "<li>" + s + "</li>"; }).join("");
   }
 
@@ -411,7 +418,7 @@
       if (typeof v === "boolean") return v ? "✓" : "";
       return String(v).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; });
     };
-    칸.innerHTML = "<table class='표 숫자표'><thead><tr>" + 열.filter(function (k) { return k !== 최종열; }).map(function (k) { return "<th>" + k + "</th>"; }).join("") + "<th>최종 AI</th></tr></thead><tbody>" +
+    칸.innerHTML = "<table class='표 숫자표'><thead><tr>" + 열.filter(function (k) { return k !== 최종열; }).map(function (k) { return "<th>" + k + "</th>"; }).join("") + "<th>최종 ours</th></tr></thead><tbody>" +
       줄.map(function (r) {
         var 최 = 최종열 && 최종이냐(r);
         return "<tr" + (최 ? " style='background:#ECEAFD'" : "") + ">" + 열.filter(function (k) { return k !== 최종열; }).map(function (k, i) { return (i === 0 ? "<th>" : "<td>") + 서식(k, r[k]) + (i === 0 ? "</th>" : "</td>"); }).join("") +
