@@ -13,7 +13,7 @@
   var 색 = { ai: "#5B4FD6", 사람: "#62627A", 강조: "#F2B544", 오류: "#C93C3C", 경계: "#C4C2DB", train: "#B9B3EE", 글: "#1F1F2E" };
   var 등급색 = ["#D9D5F7", "#7468DD", "#5B4FD6"];
   var $ = function (id) { return document.getElementById(id); };
-  var 표시 = function (이름) { return 이름 === "사람 기준" ? "휴리스틱 베이스라인" : 이름 === "AI" ? "ours" : 이름; };      // chartData의 키는 '사람 기준'·'AI', 화면에는 새 이름
+  var 표시 = function (이름) { return 이름 === "사람 기준" ? "베이스라인모델(휴리스틱)" : 이름 === "AI" ? "ours" : 이름; };      // chartData의 키는 '사람 기준'·'AI', 화면에는 새 이름
   var 숫자 = function (n) { return Math.round(n).toLocaleString("ko-KR"); };
   var 만 = function (v) { return v >= 10000 ? +(v / 10000).toFixed(1) + "만" : 숫자(v); };
 
@@ -135,7 +135,7 @@
     연도차트.$문제수 = d.문제수;
     연도차트.data.labels = d.연도.map(String);
     연도차트.data.datasets = [
-      { label: "휴리스틱 베이스라인", data: d["사람 기준"], backgroundColor: 색.사람, borderRadius: 4 },
+      { label: "베이스라인모델(휴리스틱)", data: d["사람 기준"], backgroundColor: 색.사람, borderRadius: 4 },
       { label: "ours", data: d.AI, backgroundColor: 색.ai, borderRadius: 4 }
     ];
     연도차트.update();
@@ -219,7 +219,7 @@
 
   // ---------- 5. 리패키지 ----------
   var 리 = C.리패키지;
-  $("리팩표").innerHTML = "<table class='표 숫자표'><thead><tr><th>직전 앨범</th><th>문제 수</th><th>휴리스틱 베이스라인</th><th>ours</th><th>등급 상승</th><th>등급 하락</th></tr></thead><tbody>" +
+  $("리팩표").innerHTML = "<table class='표 숫자표'><thead><tr><th>직전 앨범</th><th>문제 수</th><th>베이스라인모델(휴리스틱)</th><th>ours</th><th>등급 상승</th><th>등급 하락</th></tr></thead><tbody>" +
     리.map(function (r) {
       var 이름 = r["직전 리패키지"] === "직전 리패키지" ? "리패키지" : "그 외";
       return "<tr><th>" + 이름 + "</th><td>" + r.문제수 + "</td><td>" + r["사람 기준(%)"].toFixed(1) + "%</td><td><b>" + r["AI(%)"].toFixed(1) +
@@ -230,7 +230,7 @@
     data: {
       labels: 리.map(function (r) { return (r["직전 리패키지"] === "직전 리패키지" ? "직전 = 리패키지" : "그 외") + " (" + r.문제수 + "문제)"; }),
       datasets: [
-        { label: "휴리스틱 베이스라인", data: 리.map(function (r) { return r["사람 기준(%)"]; }), backgroundColor: 색.사람, borderRadius: 6, maxBarThickness: 56 },
+        { label: "베이스라인모델(휴리스틱)", data: 리.map(function (r) { return r["사람 기준(%)"]; }), backgroundColor: 색.사람, borderRadius: 6, maxBarThickness: 56 },
         { label: "ours", data: 리.map(function (r) { return r["AI(%)"]; }), backgroundColor: 색.ai, borderRadius: 6, maxBarThickness: 56 }
       ]
     },

@@ -30,15 +30,15 @@
     <div class="핵심줄">
       <div class="핵심칸">
         <span class="핵심이름">다음 컴백 시기</span>
-        <span><b class="ai">ours <span id="핵심시기AI">69.2</span>%</b> <span class="vs">vs</span> <b class="사람">휴리스틱 베이스라인 <span id="핵심시기사람">54.3</span>%</b></span>
+        <span><b class="ai">ours <span id="핵심시기AI">69.2</span>%</b> <span class="vs">vs</span> <b class="사람">베이스라인모델(휴리스틱) <span id="핵심시기사람">54.3</span>%</b></span>
       </div>
       <div class="핵심칸">
         <span class="핵심이름">초동</span>
-        <span><b class="ai">ours <span id="핵심초동AI">78.8</span>%</b> <span class="vs">vs</span> <b class="사람">휴리스틱 베이스라인 <span id="핵심초동사람">75.9</span>%</b></span>
+        <span><b class="ai">ours <span id="핵심초동AI">78.8</span>%</b> <span class="vs">vs</span> <b class="사람">베이스라인모델(휴리스틱) <span id="핵심초동사람">75.9</span>%</b></span>
       </div>
     </div>
     <p class="주의">이 숫자는 ours(스태킹 앙상블: 후보 모델 7개를 섞음)을 중첩 시계열 교차검증으로 확인한 결과입니다 (초동 <span id="핵심초동문제">274</span>문제, 시기 <span id="핵심시기문제">208</span>문제).
-      휴리스틱 베이스라인(사람의 예측 방식을 규칙으로 만든 기준 모델): 초동은 설문 70명이 '주로 본 것'을 응답 비율대로 섞은 모델, 시기는 직전 공백 그대로입니다.</p>
+      베이스라인모델(휴리스틱, 사람의 예측 방식을 규칙으로 만든 기준 모델): 초동은 설문 70명이 '주로 본 것'을 응답 비율대로 섞은 모델, 시기는 직전 공백 그대로입니다.</p>
   </section>
   <p class="주의 왼쪽">이 페이지의 ours(스태킹 앙상블)은 <b>후보 모델 7개(나무, 로지스틱, 순서형, SVM, KNN, 랜덤포레스트, 그래디언트 부스팅)를 학습시키고, 메타 로지스틱이 '어느 모델을 얼마나 믿을지' 배워서 섞는 스태킹</b>입니다 (노트북 8~10장).
     0번(실전 예측)은 2026년용 최종 모델의 결과입니다.</p>
@@ -62,7 +62,7 @@
   <!-- 0. 이미 결과가 나온 예측 (PDF 12~13장) -->
   <section id="실전" class="장">
     <h2><span class="장번호">0</span>이미 결과가 나온 예측 (최종 모델) <span class="장출처">노트북 13장</span></h2>
-    <p>학습 데이터에 없는 2026년 앨범으로 최종 모델을 확인했습니다. 4건 중 2건을 맞혔고, 휴리스틱 베이스라인도 같은 2건만 맞혔습니다.
+    <p>학습 데이터에 없는 2026년 앨범으로 최종 모델을 확인했습니다. 4건 중 2건을 맞혔고, 베이스라인모델(휴리스틱)도 같은 2건만 맞혔습니다.
       컴백 시기는 직전 앨범이 나온 시점에서 예측한 것입니다. 1페이지에서 같은 앨범을 눌러 보면 똑같은 예측이 나옵니다.</p>
     <div class="사례들">
       <article class="카드 사례 맞음">
@@ -71,7 +71,7 @@
         <dl>
           <dt>ours 예측</dt><dd data-정답지="0"></dd>
           <dt>실제</dt><dd><b>349,988장</b></dd>
-          <dt>휴리스틱 베이스라인</dt><dd>맞음</dd>
+          <dt>베이스라인모델(휴리스틱)</dt><dd>맞음</dd>
         </dl>
       </article>
       <article class="카드 사례 맞음">
@@ -80,7 +80,7 @@
         <dl>
           <dt>ours 예측</dt><dd data-정답지="2"></dd>
           <dt>실제</dt><dd><b>2026-10-19</b> (161일 뒤)</dd>
-          <dt>휴리스틱 베이스라인</dt><dd>맞음</dd>
+          <dt>베이스라인모델(휴리스틱)</dt><dd>맞음</dd>
         </dl>
       </article>
       <article class="카드 사례 틀림">
@@ -89,7 +89,7 @@
         <dl>
           <dt>ours 예측</dt><dd data-정답지="1"></dd>
           <dt>실제</dt><dd><b>602,688장</b> (30만 이상)</dd>
-          <dt>휴리스틱 베이스라인</dt><dd>10~30만 — 같이 틀림</dd>
+          <dt>베이스라인모델(휴리스틱)</dt><dd>10~30만 — 같이 틀림</dd>
         </dl>
         <p class="틀린이유"><b>왜 틀렸나:</b> 리센느는 데이터에 없는 회사(더뮤즈)라 회사 정보 없이 예측했습니다.
           직전 10.4만의 5.8배가 팔렸는데, 유튜브로 쌓인 화제성이 음반 구매로 옮겨간 결과라는 풀이가 있습니다 (iMBC). 엑셀에 없는 요인입니다.</p>
@@ -100,7 +100,7 @@
         <dl>
           <dt>ours 예측</dt><dd data-정답지="3"></dd>
           <dt>실제</dt><dd><b>2026-11-03</b> (343일 뒤)</dd>
-          <dt>휴리스틱 베이스라인</dt><dd>150일 이하 — 같이 틀림</dd>
+          <dt>베이스라인모델(휴리스틱)</dt><dd>150일 이하 — 같이 틀림</dd>
         </dl>
         <p class="틀린이유"><b>왜 틀렸나:</b> lip bomb과 PULSE 사이에 디지털 싱글 활동이 있었습니다.
           데이터는 실물 앨범만 세서 공백이 343일로 잡혔습니다.</p>
@@ -121,12 +121,12 @@
 
   <!-- 1 -->
   <section id="한눈" class="장">
-    <h2><span class="장번호">1</span>휴리스틱 베이스라인 vs ours <span class="장출처">노트북 9장</span></h2>
+    <h2><span class="장번호">1</span>베이스라인모델(휴리스틱) vs ours <span class="장출처">노트북 9장</span></h2>
     <div class="카드 차트카드">
-      <div class="차트틀"><canvas id="차트_정답률" aria-label="휴리스틱 베이스라인, 튜닝 전 로지스틱, ours의 정답률 막대그래프" role="img"></canvas></div>
+      <div class="차트틀"><canvas id="차트_정답률" aria-label="베이스라인모델(휴리스틱), 튜닝 전 로지스틱, ours의 정답률 막대그래프" role="img"></canvas></div>
     </div>
     <ul class="점목록">
-      <li><b>초동</b>: 휴리스틱 베이스라인도 직전 앨범 판매량에 크게 기대는 방식이라 이미 강해서, ours와 사람이 비슷했습니다.</li>
+      <li><b>초동</b>: 베이스라인모델(휴리스틱)도 직전 앨범 판매량에 크게 기대는 방식이라 이미 강해서, ours와 사람이 비슷했습니다.</li>
       <li><b>컴백 시기</b>: ours가 확실히 앞섰습니다.</li>
       <li id="튜닝글"></li>
     </ul>
@@ -140,7 +140,7 @@
         <button type="button" data-값="초동" aria-pressed="true">초동 (2018~2025)</button>
         <button type="button" data-값="시기" aria-pressed="false">컴백 시기 (2018~2024)</button>
       </div>
-      <div class="차트틀"><canvas id="차트_연도별" role="img" aria-label="테스트 연도별 휴리스틱 베이스라인과 ours가 맞힌 문제 수"></canvas></div>
+      <div class="차트틀"><canvas id="차트_연도별" role="img" aria-label="테스트 연도별 베이스라인모델(휴리스틱)과 ours가 맞힌 문제 수"></canvas></div>
       <p class="차트요약" id="연도요약"></p>
     </div>
     <p class="작게">시기 테스트에서 2025년은 뺍니다. 다음 앨범이 이미 나온 2025년 앨범은 빨리 컴백한 경우뿐이라 치우치기 때문입니다.</p>
@@ -174,11 +174,11 @@
   <section id="리팩" class="장">
     <h2><span class="장번호">5</span>직전 앨범이 리패키지일 때 (초동) <span class="장출처">노트북 10장</span></h2>
     <div class="두열 넓은왼쪽">
-      <div class="카드 차트카드"><div class="차트틀"><canvas id="차트_리팩" role="img" aria-label="직전 앨범이 리패키지일 때와 아닐 때 휴리스틱 베이스라인과 ours 정답률"></canvas></div></div>
+      <div class="카드 차트카드"><div class="차트틀"><canvas id="차트_리팩" role="img" aria-label="직전 앨범이 리패키지일 때와 아닐 때 베이스라인모델(휴리스틱)과 ours 정답률"></canvas></div></div>
       <div>
         <div class="표감싸기" id="리팩표"></div>
         <p>ours가 사람을 확실히 이기는 경우입니다. 리패키지는 팬이 이미 원본을 사서 덜 팔리므로, 그다음 앨범은 등급이 올라가는 경우가 많습니다 (41.7%).
-          휴리스틱 베이스라인은 이 상승을 ours만큼 따라가지 못합니다.</p>
+          베이스라인모델(휴리스틱)은 이 상승을 ours만큼 따라가지 못합니다.</p>
       </div>
     </div>
   </section>
@@ -229,7 +229,7 @@
       <div class="카드 차트카드">
         <h3 class="카드제목">'흐름을 봤다'고 답한 31명(44%)은 실제로…</h3>
         <div class="차트틀 낮게"><canvas id="차트_말과선택" role="img" aria-label="흐름을 봤다고 답한 31명이 직전과 추세가 갈린 문제에서 직전 쪽 60%, 추세 쪽 23%를 골랐다"></canvas></div>
-        <p class="작게">직전과 추세가 갈리는 문제에서 직전 쪽을 60%, 추세 쪽을 23% 골랐습니다. 그래서 휴리스틱 베이스라인을 자기 보고가 아니라 실제 선택으로 정했습니다.</p>
+        <p class="작게">직전과 추세가 갈리는 문제에서 직전 쪽을 60%, 추세 쪽을 23% 골랐습니다. 그래서 베이스라인모델(휴리스틱)을 자기 보고가 아니라 실제 선택으로 정했습니다.</p>
       </div>
     </div>
     <p class="작게">설문 설계와 이항검정 결과는 <a href="about.html#사람">프로젝트 소개 5번</a>에 있습니다.</p>
