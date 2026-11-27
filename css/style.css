@@ -643,3 +643,7 @@ h2 { font-size: 18px; font-weight: 600; margin: 0 0 8px; }          /* H2 18 Sem
 .믿음카드.믿음 { border-left-color: var(--ai); } .믿음카드.믿음 .믿음이름 { color: var(--ai); }
 .믿음카드.비슷 { border-left-color: var(--막대회색); }
 .믿음카드.조심 { border-left-color: var(--강조); background: var(--강조연); }
+.두숫자 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.두숫자 small { display: block; font-size: 12px; color: var(--흐림); font-weight: 600; }
+.두숫자 b { font-size: 30px; font-weight: 800; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.두숫자 .틀림색 { color: var(--오류); }
