@@ -23,15 +23,40 @@
 
 <main class="감싸기 글페이지">
   <h1 class="페이지제목">장점·한계</h1>
-  <p class="페이지설명">잘한 점과 부족한 점을 숫자와 함께 정리했습니다. 1~3·5번의 숫자는 모두 PDF '모델 정리'에 있는 값입니다.</p>
+  <p class="페이지설명">실제로 쓸 때 어디까지 믿어도 되는지, 잘한 점과 부족한 점을 숫자와 함께 정리했습니다. 0~3·5번의 숫자는 모두 PDF '모델 정리'에 있는 값입니다.</p>
 
   <nav class="차례" aria-label="이 페이지 차례">
+    <a href="#쓸모">0 어디까지 믿나</a>
     <a href="#장점">1 장점</a>
     <a href="#한계">2 한계</a>
     <a href="#오답">3 실전 오답</a>
     <a href="#사이트">4 사이트 목록의 한계</a>
     <a href="#뺀것">5 시도했지만 뺀 것</a>
   </nav>
+
+  <!-- 0. 실제로 쓰려면 -->
+  <section id="쓸모" class="장">
+    <h2><span class="장번호">0</span>실제로 쓴다면, 어디까지 믿어도 되나요</h2>
+    <div class="믿음들">
+      <div class="카드 믿음카드 믿음"><span class="믿음이름">믿을 만해요</span>
+        <ul>
+          <li><b>컴백 시기</b>: ours(스태킹 앙상블) <b data-쓸모="시기ours"></b> vs 베이스라인모델(휴리스틱, 사람의 예측 방식을 규칙으로 만든 기준 모델) <b data-쓸모="시기사람"></b>, 7년 모두 ours가 앞섬</li>
+          <li><b>직전 앨범이 리패키지일 때의 초동</b>: ours <b data-쓸모="리팩ours"></b> vs 베이스라인모델 <b data-쓸모="리팩사람"></b></li>
+        </ul></div>
+      <div class="카드 믿음카드 비슷"><span class="믿음이름">직전 앨범을 보는 것과 비슷해요</span>
+        <ul>
+          <li><b>그 밖의 초동</b> (<span data-쓸모="그외수"></span>문제): ours <b data-쓸모="그외ours"></b> vs 베이스라인모델 <b data-쓸모="그외사람"></b>. 다음 앨범이 직전과 같은 등급인 경우가 78.4%라, 직전 앨범만 봐도 대체로 맞습니다.</li>
+        </ul></div>
+      <div class="카드 믿음카드 조심"><span class="믿음이름">이럴 땐 조심하세요</span>
+        <ul>
+          <li>결과는 <b>수량이 아니라 3등급</b>입니다. '30만 이상' 안에도 30만 장부터 수백만 장까지 들어갑니다.</li>
+          <li>화제성, 디지털 싱글처럼 <b>데이터에 없는 정보</b>는 못 봅니다 (2026년 실전 오답 2건의 이유, <a href="#오답">3번</a>).</li>
+          <li>예약 판매량처럼 <b>기획사 안에만 있는 정보</b>는 쓰지 않았습니다. 기획사가 쓴다면 예약 판매 전 첫 판단용입니다.</li>
+          <li>초동 예측은 <b>다음 앨범의 발매일·유형</b>을 알아야 계산됩니다.</li>
+          <li>베이스라인모델은 업계 담당자가 아니라 <b>설문 70명</b>의 응답으로 만들었습니다.</li>
+        </ul></div>
+    </div>
+  </section>
 
   <!-- 1. 장점 -->
   <section id="장점" class="장">
@@ -40,7 +65,7 @@
       <article class="카드 장점카드">
         <div class="장점숫자"><b>7년</b><span>/ 7년</span></div>
         <h3>컴백 시기는 7년 모두 ours가 앞섰습니다</h3>
-        <p>2018~2024년 테스트에서 해마다 ours(스태킹 앙상블)이 베이스라인모델(휴리스틱, 사람의 예측 방식을 규칙으로 만든 기준 모델)보다 더 맞혔습니다. 합치면 <span id="한시기문제"></span>문제 중 ours <span id="한시기AI"></span>%, 베이스라인모델(휴리스틱) <span id="한시기사람"></span>%로 <span id="한시기차"></span>문제 차이입니다.</p>
+        <p>2018~2024년 테스트에서 해마다 ours가 베이스라인모델(휴리스틱)보다 더 맞혔습니다. 합치면 <span id="한시기문제"></span>문제 중 ours <span id="한시기AI"></span>%, 베이스라인모델(휴리스틱) <span id="한시기사람"></span>%로 <span id="한시기차"></span>문제 차이입니다.</p>
       </article>
       <article class="카드 장점카드">
         <div class="장점숫자"><b><span id="한리팩AI"></span>%</b><span>vs 베이스라인모델(휴리스틱) <span id="한리팩사람"></span>%</span></div>
@@ -142,7 +167,7 @@
           <tr><th>맥니마 검정</th><td>초동 ours vs 베이스라인모델(휴리스틱) 차이는 우연 범위</td><td>'차이가 있긴 하지만 크지 않다'로 표현하고 검정은 뺌</td></tr>
           <tr><th>최근 데이터 가중치<br><span class="작게">반감기, Gama 외 2014</span></th><td>15번 중 1번만 뽑힘</td><td>시기 val이 어느 해도 오르지 않음</td></tr>
           <tr><th>등급 비율 보정<br><span class="작게">Saerens 외 2002</span></th><td>한 번도 뽑히지 않음</td><td>위와 같음</td></tr>
-          <tr><th>휴리스틱+ours 협업<br><span class="작게">ours 확신이 문턱 미만이면 베이스라인모델(휴리스틱) 답</span></th><td>후보 6종 기준, 넣었을 때 초동 78.1%, 뺐을 때 78.5% (시기는 70.2%로 같음)</td><td>점수를 올리지 못하고 구조만 복잡해짐</td></tr>
+          <tr><th>베이스라인모델(휴리스틱)+ours 협업<br><span class="작게">ours 확신이 문턱 미만이면 베이스라인모델(휴리스틱) 답</span></th><td>후보 6종 기준, 넣었을 때 초동 78.1%, 뺐을 때 78.5% (시기는 70.2%로 같음)</td><td>점수를 올리지 못하고 구조만 복잡해짐</td></tr>
           <tr><th>그룹별 따로 학습</th><td>그룹마다 val로 고르기 55.7% vs 전체 모델 57.4% (이전 시기 정의, 237문제)</td><td>가장 많은 트와이스도 시기 정답 22개뿐이라 표본이 부족함. 유닛·솔로는 300일 초과가 55%로 본 그룹(20%)과 달라 묶으면 더 떨어짐</td></tr>
         </tbody>
       </table>
@@ -153,6 +178,7 @@
       <li>채택한 것: 시기 후보 재료 5묶음과 끝난 공백 보강(탐색 후보로 남김), 시기에서 스페셜·리패키지 제외, 랜덤포레스트·그래디언트 부스팅(후보 8종).</li>
     </ul>
   </section>
+  <nav class="다음이야기" aria-label="다음 페이지"><a class="큰버튼 보조" href="refs.html">다음: 참고 자료 →</a></nav>
 </main>
 
 <footer class="바닥">
@@ -231,6 +257,16 @@
   document.getElementById("시기없음").innerHTML = 시없.length ? "<small>" + 시없.length + "팀:</small> " + 시없.map(function (a) {
     var t = T.filter(function (x) { return x.이름 === a.이름; })[0] || a; return 칩(t);
   }).join("") : "";
+})();
+</script>
+<script>
+(function () {
+  var C = window.CHART; if (!C) return;
+  var 리 = C.리패키지 || [], 직 = 리.filter(function (r) { return r["직전 리패키지"] === "직전 리패키지"; })[0], 외 = 리.filter(function (r) { return r["직전 리패키지"] !== "직전 리패키지"; })[0];
+  var 값 = { 시기ours: C.시기.정답률.AI.toFixed(1) + "%", 시기사람: C.시기.정답률["사람 기준"].toFixed(1) + "%" };
+  if (직) { 값.리팩ours = 직["AI(%)"].toFixed(1) + "%"; 값.리팩사람 = 직["사람 기준(%)"].toFixed(1) + "%"; }
+  if (외) { 값.그외ours = 외["AI(%)"].toFixed(1) + "%"; 값.그외사람 = 외["사람 기준(%)"].toFixed(1) + "%"; 값.그외수 = 외.문제수; }
+  Array.prototype.forEach.call(document.querySelectorAll("[data-쓸모]"), function (el) { el.textContent = 값[el.getAttribute("data-쓸모")] || ""; });
 })();
 </script>
 </body>

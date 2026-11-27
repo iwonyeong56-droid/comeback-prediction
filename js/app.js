@@ -24,17 +24,69 @@
   function 소속사(a) { return a.소속사 || (a.회사 === "그 외" ? "그 밖의 소속사" : a.회사); }
   function 보일이름(a) { return a.정식이름 || a.이름; }
 
-  // ---------- 첫 화면 앨범 벽: 초동이 있는 앨범을 최근 발매 순으로, 색 = 초동 등급 ----------
+  // ---------- 이야기 카드 5장 ----------
   (function () {
-    var 벽 = document.getElementById("앨범벽");
-    if (!벽 || !P || !P.초동등급) return;
-    var 모음 = [];
-    Object.keys(AL).forEach(function (팀) { AL[팀].forEach(function (x) { if (x.초동 != null) 모음.push({ 팀: 팀, x: x }); }); });
-    모음.sort(function (a, b) { return a.x.날짜 < b.x.날짜 ? 1 : a.x.날짜 > b.x.날짜 ? -1 : 0; });
-    벽.innerHTML = 모음.slice(0, 160).map(function (o, i) {
-      var k = P.초동등급(o.x.초동);
-      return "<span class='벽칸 등급" + k + "' style='--i:" + i + "' title='" + 글(o.팀 + " · " + o.x.앨범 + " · " + M.초동_이름[k]) + "'></span>";
-    }).join("");
+    var 판 = $("이야기판");
+    if (!판) return;
+    // 숫자 채우기: chartData.js (키 이름 'AI'·'사람 기준'은 그대로, 화면 이름만 다름)
+    var C = window.CHART;
+    if (C) {
+      var 리 = (C.리패키지 || []).filter(function (r) { return r["직전 리패키지"] === "직전 리패키지"; })[0];
+      var 승 = 0;
+      C.시기.연도별.AI.forEach(function (a, i) { if (a > C.시기.연도별["사람 기준"][i]) 승++; });
+      var 값 = {
+        초동사람: C.초동.정답률["사람 기준"].toFixed(1) + "%",
+        시기사람: C.시기.정답률["사람 기준"].toFixed(1) + "%", 시기ours: C.시기.정답률.AI.toFixed(1) + "%",
+        리팩사람: 리 ? 리["사람 기준(%)"].toFixed(1) + "%" : "", 리팩ours: 리 ? 리["AI(%)"].toFixed(1) + "%" : "",
+        시기승: 승 + "년 중 " + C.시기.연도별.AI.length
+      };
+      Array.prototype.forEach.call(document.querySelectorAll("[data-차트]"), function (el) { el.textContent = 값[el.getAttribute("data-차트")] || ""; });
+    }
+
+    // 카드 1: 설문 문제(PDF 5장, quiz.html과 같은 숫자) 중 '있지' — 최근 앨범 4개 초동(만 장)과 실제 다음 초동
+    var 문제 = { 팀: "있지", 막대: [6.5, 14.4, 20.0, 26.0], 실제: 47.2 };
+    var 최대 = Math.max.apply(null, 문제.막대.concat([30])) * 1.25;
+    $("미니막대").innerHTML = 문제.막대.map(function (v) { return "<i style='height:" + (v / 최대 * 100) + "%'></i>"; }).join("") +
+      "<i class='물음' style='height:90%'>?</i>" +
+      "<span class='기준선' style='bottom:" + (10 / 최대 * 100) + "%'>10만</span><span class='기준선' style='bottom:" + (30 / 최대 * 100) + "%'>30만</span>";
+    var 정답 = P.초동등급(문제.실제 * 10000), 직전답 = P.초동등급(문제.막대[문제.막대.length - 1] * 10000);
+    $("이야기고르기").addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-k]");
+      if (!b) return;
+      var k = +b.dataset.k;
+      Array.prototype.forEach.call(this.querySelectorAll("button"), function (x) {
+        x.classList.toggle("고름", x === b);
+        x.classList.toggle("정답", +x.dataset.k === 정답);
+        x.setAttribute("aria-pressed", x === b ? "true" : "false");
+      });
+      $("이야기고른말").innerHTML = (k === 정답 ? "<b class='맞음글'>맞혔어요!</b> " : "<b class='틀림글'>아쉬워요.</b> ") +
+        글(문제.팀) + "의 실제 다음 초동은 <b>" + 문제.실제 + "만 장(" + M.초동_이름[정답] + ")</b>입니다. 직전 앨범만 따라가면 '" + M.초동_이름[직전답] + "'으로 틀립니다. 그런데 사람들은 실제로 무엇을 봤을까요? 다음 →";
+    });
+
+    // 넘기기 + 진행 표시
+    var 카드 = 판.children;
+    function 지금() {
+      var 폭 = 카드[0].offsetWidth + 12, i = Math.round(판.scrollLeft / 폭);
+      return Math.max(0, Math.min(카드.length - 1, i));
+    }
+    function 표시() {
+      var i = 지금();
+      // 끝까지 밀었으면 마지막 카드
+      if (판.scrollLeft + 판.clientWidth >= 판.scrollWidth - 4) i = 카드.length - 1;
+      $("이야기진행").textContent = (i + 1) + " / " + 카드.length;
+      $("이야기이전").disabled = i === 0;
+      $("이야기다음").disabled = i === 카드.length - 1;
+    }
+    function 가기(d) {
+      var i = Math.max(0, Math.min(카드.length - 1, 지금() + d));
+      판.scrollTo({ left: 카드[i].offsetLeft - 판.offsetLeft, behavior: "smooth" });
+    }
+    판.addEventListener("scroll", function () { requestAnimationFrame(표시); });
+    $("이야기이전").addEventListener("click", function () { 가기(-1); });
+    $("이야기다음").addEventListener("click", function () { 가기(1); });
+    판.addEventListener("keydown", function (e) { if (e.key === "ArrowRight") { 가기(1); e.preventDefault(); } if (e.key === "ArrowLeft") { 가기(-1); e.preventDefault(); } });
+    window.addEventListener("resize", 표시);
+    표시();
   })();
   // 팀마다 검색 열쇠: 한글 이름 + 정식 이름 + 별칭들
   A.forEach(function (a) {
@@ -136,7 +188,7 @@
     // '기타 소속사'·하이브는 안쪽 줄(묶음)이 실제 소속사·레이블 이름이라 그걸 보여줌
     var 보일소속 = 소속사(a) === "기타 소속사" && a.묶음 ? a.묶음 : /하이브/.test(소속사(a)) && a.묶음 ? 소속사(a) + " · " + a.묶음 : 소속사(a);
     $("앨범설명").textContent = 보일소속 + " · " + (a.성별 === "남" ? "남자" : "여자") + " " + (a.그룹여부 ? "그룹" : "솔로") +
-      " · 앨범 " + 목록.length + "개. 하나를 누르면 그 앨범이 막 나온 날을 기준으로 예측합니다.";
+      " · 앨범 " + 목록.length + "개. 하나를 누르면, 그 앨범이 나온 날까지의 정보만으로 다음 앨범을 예측합니다.";
     // 최신이 위로. 활동을 마친 그룹의 마지막 앨범은 '다음 앨범'이 없으니 예측하지 않음
     var 끝난팀 = !!a.활동종료, 마지막 = 목록.length - 1;
     $("앨범목록").innerHTML = 목록.map(function (x, i) { return { x: x, i: i }; }).reverse().map(function (o, 줄) {
@@ -215,7 +267,7 @@
     var x = r.앨범;
     $("로딩").classList.add("숨김");
     $("예측결과").classList.remove("숨김");
-    $("기준줄").innerHTML = "<b>" + 글(보일이름(지금팀)) + " · " + 글(x.앨범) + "</b> (" + x.날짜 + ", " + 글(x.유형) + ")이(가) 막 나온 날로 돌아가서, <b>그다음 앨범</b>을 예측했습니다.";
+    $("기준줄").innerHTML = "<b>" + 글(보일이름(지금팀)) + " · " + 글(x.앨범) + "</b> (" + x.날짜 + ", " + 글(x.유형) + ")이(가) 나온 날까지의 정보만으로 <b>그다음 앨범</b>을 예측했습니다.";
     // 초동
     if (r.초동) {
       $("초동등급").className = "등급";
@@ -298,6 +350,41 @@
   function 보이기(n) {
     for (var k = 2; k <= 4; k++) $("단계" + k).classList.toggle("숨김", k > n);
   }
+
+  // ================= 이야기 카드의 시연 버튼: 팀과 앨범을 대신 골라 예측까지 =================
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-시연팀]");
+    if (!b) return;
+    var 팀 = A.filter(function (a) { return a.이름 === b.getAttribute("data-시연팀"); })[0];
+    if (!팀) return;
+    팀고름(팀);
+    var i = (AL[팀.이름] || []).map(function (x) { return x.앨범; }).indexOf(b.getAttribute("data-시연앨범"));
+    var 줄 = $("앨범목록").querySelector("button[data-i='" + i + "']");
+    if (줄) 줄.click();
+  });
+
+  // '예측해 보기' 버튼: 1단계로 가서 검색칸에 바로 입력할 수 있게
+  Array.prototype.forEach.call(document.querySelectorAll("[data-예측으로]"), function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      $("단계1").scrollIntoView({ block: "start", behavior: "smooth" });
+      setTimeout(function () { $("검색").focus({ preventScroll: true }); }, 400);
+    });
+  });
+  // 폰 아래 고정 버튼: 첫 화면 버튼이 안 보이고, 예측 영역도 아직 안 보일 때만
+  (function () {
+    var 바 = $("하단버튼"), 첫 = document.querySelector(".첫버튼들"), 체험 = $("체험");
+    if (!바 || !window.IntersectionObserver) return;
+    var 보임 = {};
+    var 관찰 = new IntersectionObserver(function (목록) {
+      목록.forEach(function (x) {
+        if (x.target === 첫) 보임.첫 = x.isIntersecting;
+        else 보임.체험 = x.isIntersecting || x.boundingClientRect.top < 0;     // 예측 영역에 왔거나 지나갔으면
+      });
+      바.classList.toggle("보임", !보임.첫 && !보임.체험);
+    });
+    관찰.observe(첫); 관찰.observe(체험);
+  })();
 
   // ================= 목록에 없는 팀: 직접 입력 =================
   var 폼 = $("직접모드");

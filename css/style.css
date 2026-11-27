@@ -516,21 +516,6 @@ h2 { font-size: 18px; font-weight: 600; margin: 0 0 8px; }          /* H2 18 Sem
 .가로막대 b { position: relative; padding-left: 8px; font-size: 12px; }
 
 /* ---------- 1페이지: 음악 앱 느낌 (앨범 벽 · 트랙리스트 · 재생바) ---------- */
-/* 앨범 벽: 네모 하나 = 앨범 하나, 색 = 초동 등급 */
-.앨범벽틀 { margin: 4px 0 16px; }
-.앨범벽 { display: grid; grid-template-columns: repeat(auto-fill, 16px); grid-auto-rows: 16px; gap: 4px; max-height: 56px; overflow: hidden; }
-.벽칸 { display: inline-block; width: 16px; height: 16px; border-radius: 4px; }
-.앨범벽 .벽칸 { animation: 벽등장 .5s ease both; animation-delay: calc(var(--i) * 6ms); transition: transform .15s ease; }
-.앨범벽 .벽칸:hover { transform: scale(1.35); }
-.벽칸.등급0 { background: #D9D5F7; }
-.벽칸.등급1 { background: #A79FEB; }
-.벽칸.등급2 { background: var(--ai); }
-@keyframes 벽등장 { from { opacity: 0; transform: translateY(4px); } }
-.앨범벽설명 { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 8px 0 0; }
-.앨범벽설명 span { display: inline-flex; align-items: center; gap: 4px; }
-.앨범벽설명 .벽칸 { width: 12px; height: 12px; border-radius: 3px; }
-@media (max-width: 520px) { .앨범벽 { max-height: 36px; } }
-
 /* 트랙리스트: 01, 02… 고르거나 올리면 ▶ */
 .트랙번호 { color: var(--흐림); font-size: 12px; font-variant-numeric: tabular-nums; text-align: center; }
 .앨범줄:hover:not(:disabled) .트랙번호, .앨범줄.고름 .트랙번호 { font-size: 0; }
@@ -544,29 +529,6 @@ h2 { font-size: 18px; font-weight: 600; margin: 0 0 8px; }          /* H2 18 Sem
 .예측칸 .막대틀 { height: 8px; border-radius: 999px; overflow: visible; }
 .예측칸 .막대 { position: relative; border-radius: 999px; }
 .예측칸 .막대줄.예측 .막대::after { content: ""; position: absolute; right: -7px; top: 50%; width: 14px; height: 14px; margin-top: -7px; border-radius: 50%; background: var(--ai); box-shadow: 0 0 0 3px var(--바탕); }
-
-/* ---------- 1페이지 A: 첫 화면 = 앨범 재킷 + 레코드판 ---------- */
-.재킷판 { position: relative; margin: 24px 0 16px; padding-right: 148px; overflow-x: clip; }   /* 도는 판의 모서리 때문에 가로 스크롤이 생기지 않게 */
-.재킷 { position: relative; z-index: 1; min-height: 260px; padding: 32px; border-radius: var(--반지름); overflow: hidden;
-  display: flex; flex-direction: column; justify-content: flex-end; color: #fff;
-  background: radial-gradient(circle at 85% 15%, rgba(255,255,255,.16) 0 18%, transparent 19%),
-              radial-gradient(circle at 92% 8%, rgba(255,255,255,.10) 0 30%, transparent 31%),
-              linear-gradient(135deg, #7468DD 0%, #5B4FD6 45%, #2D2780 100%); }
-.재킷머리 { margin: 0; font-size: 12px; font-weight: 700; letter-spacing: .16em; color: rgba(255,255,255,.85); }
-.재킷 .페이지제목 { margin: 8px 0; color: #fff; font-size: clamp(28px, 4.6vw, 40px); line-height: 1.25; }
-.재킷 .페이지설명 { margin: 0; max-width: 560px; color: rgba(255,255,255,.88); }
-.재킷 .페이지설명 b { color: #fff; }
-.큰판 { position: absolute; right: 0; top: 50%; width: 288px; height: 288px; margin-top: -144px; border-radius: 50%; z-index: 0;
-  background:
-    radial-gradient(circle, var(--바탕) 0 3%, var(--강조) 3% 22%, #1F1F2E 22.5% 24%, transparent 24.5%),
-    conic-gradient(from 0deg, rgba(255,255,255,.20), transparent 15%, transparent 48%, rgba(255,255,255,.12) 60%, transparent 78%),
-    repeating-radial-gradient(circle, #1F1F2E 0 2px, #2E2B45 2px 4px);
-  animation: 빙글 12s linear infinite; }
-@media (max-width: 640px) {
-  .재킷판 { padding: 64px 0 0; overflow: hidden; }
-  .큰판 { width: 168px; height: 168px; top: 0; right: -24px; margin-top: 0; }
-  .재킷 { min-height: 0; padding: 24px 20px; }
-}
 
 /* ---------- 1페이지 C: 예측 결과 = 뮤직 플레이어 화면 ---------- */
 #예측결과 .예측칸 { position: relative; overflow: hidden; color: #fff; background: linear-gradient(160deg, #2D2780 0%, #1F1F2E 100%); }
@@ -597,3 +559,87 @@ h2 { font-size: 18px; font-weight: 600; margin: 0 0 8px; }          /* H2 18 Sem
   #예측결과 .예측칸::after { width: 36px; height: 36px; top: 12px; right: 12px; }
   #예측결과 .등급 { padding-right: 40px; }
 }
+
+/* ---------- 1페이지: 첫 화면 + 이야기 카드 (샘플 B) ---------- */
+.첫화면 { padding: 40px 0 24px; max-width: 760px; }
+.첫화면 .동기 { display: inline-block; margin: 0 0 12px; padding: 4px 12px; border-radius: 999px; background: var(--강조연); font-size: 13px; }
+.첫화면 .페이지제목 { margin: 0 0 12px; font-size: clamp(28px, 6vw, 44px); line-height: 1.25; font-weight: 800; }
+.첫화면 .페이지설명 { margin: 0 0 20px; color: var(--흐림); font-size: 16px; }
+.첫화면 .페이지설명 b { color: var(--글); }
+.첫버튼들 { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.큰버튼.주버튼 { margin: 0; min-height: 52px; font-size: 17px; font-weight: 700; }
+.큰버튼:hover { filter: brightness(1.08); }
+.큰버튼:active { transform: scale(.98); }
+.보조링크 { font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+
+.이야기틀 { margin: 24px 0 8px; scroll-margin-top: calc(var(--머리높이) + 8px); }
+.이야기머리 { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.이야기머리 h2 { font-size: 22px; font-weight: 700; margin: 0; }
+.이야기머리 .진행 { margin: 0; }
+.이야기 { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 12px 0 8px; scrollbar-width: thin; }
+.이야기카드 { flex: 0 0 min(86%, 360px); scroll-snap-align: start; display: flex; flex-direction: column; gap: 8px;
+  background: var(--카드); border: 1px solid var(--경계); border-radius: var(--반지름); padding: 20px; min-height: 280px; }
+.이야기카드 .카드장 { font-size: 13px; font-weight: 700; color: var(--ai); }
+.이야기카드 h3 { margin: 0; font-size: 19px; }
+.이야기카드 .큰숫자 { font-size: 36px; font-weight: 800; line-height: 1.15; color: var(--ai); font-variant-numeric: tabular-nums; }
+.이야기카드 .큰숫자 small { font-size: 20px; color: var(--흐림); font-weight: 700; }
+.이야기카드 .큰숫자.틀림색 { color: var(--오류); }
+.이야기카드 > .작게 { font-size: 13px; margin: auto 0 0; }
+.이야기카드 .작게 b { color: var(--글); }
+.미니막대 { position: relative; display: flex; align-items: flex-end; gap: 8px; height: 96px; border-bottom: 1px solid var(--경계); }
+.미니막대 i { flex: 1; background: var(--막대회색); border-radius: 6px 6px 0 0; }
+.미니막대 i.물음 { display: grid; place-items: center; font-style: normal; font-weight: 800; color: var(--ai);
+  background: repeating-linear-gradient(45deg, var(--카드), var(--카드) 6px, var(--경계) 6px, var(--경계) 12px); }
+.미니막대 .기준선 { position: absolute; left: 0; right: 0; border-top: 1px dashed var(--흐림); font-size: 10px; color: var(--흐림); line-height: 1; padding: 2px 0 0 2px; pointer-events: none; }
+.고르기 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.고르기 button { min-height: 48px; padding: 4px; border: 2px solid var(--경계); border-radius: 12px; background: var(--카드); font-size: 14px; font-weight: 700; cursor: pointer; }
+.고르기 button:hover { border-color: var(--ai); }
+.고르기 button.고름 { border-color: var(--ai); background: var(--ai연); color: var(--ai); }
+.고르기 button.정답 { border-color: var(--ai); background: var(--ai); color: #fff; }
+.고른말 { margin: 0; font-size: 13px !important; }
+.시연버튼들 { display: grid; gap: 8px; }
+.시연버튼들 .큰버튼 { margin: 0; width: 100%; }
+.넘김 { display: flex; gap: 8px; }
+.넘김버튼 { min-height: 44px; padding: 0 18px; border: 1px solid var(--경계); border-radius: 12px; background: var(--카드); font-weight: 600; cursor: pointer; }
+.넘김버튼:hover:not(:disabled) { border-color: var(--ai); color: var(--ai); }
+.넘김버튼:disabled { opacity: .4; cursor: default; }
+
+.쓸모틀 { margin: 32px 0 8px; }
+.쓸모틀 h2 { font-size: 22px; font-weight: 700; }
+.쓸모들 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 8px; }
+@media (max-width: 760px) { .쓸모들 { grid-template-columns: 1fr; } }
+.쓸모카드 { display: flex; flex-direction: column; gap: 4px; border: 1px solid var(--경계); }
+.쓸모카드 p { margin: 0; font-size: 13px; }
+.쓸모아이콘 { width: 28px; height: 28px; color: var(--ai); }
+.체험제목 { margin: 40px 0 12px; font-size: 22px; font-weight: 700; scroll-margin-top: calc(var(--머리높이) + 8px); }
+.체험제목 .작게 { display: block; font-weight: 400; font-size: 13px; }
+#단계1 { scroll-margin-top: calc(var(--머리높이) + 8px); }
+.다음이야기 { margin: 32px 0 0; text-align: right; }
+.다음이야기 .큰버튼 { margin: 0; }
+
+/* 폰: 아래 고정 주 버튼 */
+.하단버튼 { display: none; }
+@media (max-width: 760px) {
+  .하단버튼.보임 { display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 9; padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(247,247,251,.96); border-top: 1px solid var(--경계); }
+  .하단버튼 .큰버튼 { width: 100%; }
+  .첫버튼들 .주버튼 { width: 100%; }
+}
+.단계수 { margin-left: auto; padding-left: 8px; font-size: 12px; font-weight: 600; color: var(--흐림); white-space: nowrap; }
+
+/* 2페이지 0장: 왜·누구에게 */
+.왜카드들 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 12px 0 16px; }
+@media (max-width: 760px) { .왜카드들 { grid-template-columns: 1fr; } }
+.왜카드 { border: 1px solid var(--경계); }
+.왜카드 p { margin: 4px 0 0; }
+.왜이름 { font-size: 13px; font-weight: 700; color: var(--ai); }
+
+/* 4페이지 0장: 어디까지 믿어도 되나 */
+.믿음들 { display: grid; gap: 12px; }
+.믿음카드 { border: 1px solid var(--경계); border-left-width: 6px; }
+.믿음카드 ul { margin: 8px 0 0; padding-left: 20px; }
+.믿음카드 li { margin: 4px 0; }
+.믿음이름 { font-weight: 700; }
+.믿음카드.믿음 { border-left-color: var(--ai); } .믿음카드.믿음 .믿음이름 { color: var(--ai); }
+.믿음카드.비슷 { border-left-color: var(--막대회색); }
+.믿음카드.조심 { border-left-color: var(--강조); background: var(--강조연); }
