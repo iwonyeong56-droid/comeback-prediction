@@ -24,6 +24,7 @@
 <main class="감싸기 맞춰보기" id="예측페이지">
   <!-- 첫 화면: 질문 하나 + 주 버튼 하나 -->
   <section class="첫화면" aria-labelledby="첫제목">
+    <div class="첫글">
     <p class="동기">아이돌의 한 팬으로서, 다음 앨범이 얼마나 잘될지 궁금해서 시작한 프로젝트입니다.</p>
     <h1 class="페이지제목" id="첫제목">당신의 감, 데이터보다 정확할까요?</h1>
     <p class="페이지설명">다음 앨범이 <b>첫 주에 얼마나 팔릴지(초동)</b>, <b>언제 나올지(컴백 시기)</b>.
@@ -33,6 +34,12 @@
       <a class="큰버튼 주버튼" href="#단계1" data-예측으로>내 최애로 예측해 보기 →</a>
       <a class="보조링크" href="#이야기">먼저 이야기부터 보기 ↓</a>
     </div>
+    </div>
+    <!-- 전시용: 폰으로 이어 보기 (폰 화면에서는 숨김) -->
+    <figure class="큐알카드">
+      <img src="img/qr.png" alt="이 사이트 주소 QR 코드: iwonyeong56-droid.github.io/comeback-prediction" width="160" height="160">
+      <figcaption><b>폰으로 이어 보기</b><span>카메라로 찍으면 이 사이트가 열립니다</span></figcaption>
+    </figure>
   </section>
 
   <!-- 이야기 카드 5장: 옆으로 넘김. 숫자는 chartData.js에서 채우고, 없는 숫자는 PDF 그대로 -->

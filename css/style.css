@@ -561,7 +561,7 @@ h2 { font-size: 18px; font-weight: 600; margin: 0 0 8px; }          /* H2 18 Sem
 }
 
 /* ---------- 1페이지: 첫 화면 + 이야기 카드 (샘플 B) ---------- */
-.첫화면 { padding: 40px 0 24px; max-width: 760px; }
+.첫화면 { padding: 40px 0 24px; display: grid; grid-template-columns: minmax(0, 760px) auto; gap: 32px; align-items: center; justify-content: space-between; }
 .첫화면 .동기 { display: inline-block; margin: 0 0 12px; padding: 4px 12px; border-radius: 999px; background: var(--강조연); font-size: 13px; }
 .첫화면 .페이지제목 { margin: 0 0 12px; font-size: clamp(28px, 6vw, 44px); line-height: 1.25; font-weight: 800; }
 .첫화면 .페이지설명 { margin: 0 0 20px; color: var(--흐림); font-size: 16px; }
@@ -647,3 +647,10 @@ h2 { font-size: 18px; font-weight: 600; margin: 0 0 8px; }          /* H2 18 Sem
 .두숫자 small { display: block; font-size: 12px; color: var(--흐림); font-weight: 600; }
 .두숫자 b { font-size: 30px; font-weight: 800; line-height: 1.15; font-variant-numeric: tabular-nums; }
 .두숫자 .틀림색 { color: var(--오류); }
+
+/* 첫 화면 QR (전시용) */
+.큐알카드 { margin: 0; padding: 16px; background: var(--카드); border: 1px solid var(--경계); border-radius: var(--반지름); text-align: center; }
+.큐알카드 img { display: block; width: 160px; height: 160px; margin: 0 auto 8px; image-rendering: pixelated; }
+.큐알카드 figcaption b { display: block; font-size: 15px; }
+.큐알카드 figcaption span { display: block; font-size: 12px; color: var(--흐림); }
+@media (max-width: 760px) { .첫화면 { grid-template-columns: 1fr; } .큐알카드 { display: none; } }
